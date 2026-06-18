@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82300c40f632ff4a933336bb1446e81, type: 3}
+  m_Name: Alza Precio
+  m_EditorClassIdentifier: Assembly-CSharp::EventoAleatorioData
+  nombreEvento: Alza Precio
+  descripcion: Los productos subiran de precio al mercado, que bueno
+  probabilidadPorCiclo: 0.1
+  tipoEfecto: 0
+  impactoEconomico: 5000
+  impactoRendimiento: 1
+  requiereReparacion: 0
+  costoReparacion: 0
