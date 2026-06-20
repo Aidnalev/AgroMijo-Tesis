@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8c418899012c204ebbf8affa3b0a77a, type: 3}
   m_Name: Yuca
   m_EditorClassIdentifier: Assembly-CSharp::CultivoData
-  nombreCultivo: Nombre del cultivo
+  nombreCultivo: Yuca
   duracionCiclos: 6
   costoSemilla: 30000
   rendimientoBase: 300000

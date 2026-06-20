@@ -1,10 +1,9 @@
 using UnityEngine;
-using UnityEngine.UI;
-using System.Text;
 using TMPro;
+using System.Text;
 
-// Coloca este script en el panel de reporte (inicialmente inactivo).
-// Se muestra automáticamente cada vez que se avanza un ciclo (RF-12, RF-13).
+// Coloca este script en el panel de reporte (inicialmente activo,
+// el propio script lo oculta en Awake()).
 public class ReportePanelUI : MonoBehaviour
 {
     public static ReportePanelUI Instancia { get; private set; }
@@ -45,7 +44,7 @@ public class ReportePanelUI : MonoBehaviour
         panelPrincipal.SetActive(true);
     }
 
-    // Conecta esto al botón "Cerrar" del panel de reporte
+    // Conecta esto al botón "Continuar" del panel de reporte
     public void Cerrar()
     {
         panelPrincipal.SetActive(false);

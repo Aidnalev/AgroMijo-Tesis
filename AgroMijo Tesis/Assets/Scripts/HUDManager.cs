@@ -1,15 +1,13 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
-// Coloca este script en el panel superior (HUD) que muestra
-// el ciclo actual, el presupuesto y el botón de avanzar ciclo.
+// Coloca este script en el panel superior (HUD).
 public class HUDManager : MonoBehaviour
 {
     [Header("Referencias de UI")]
     public TMP_Text textoCiclo;
     public TMP_Text textoPresupuesto;
-    public ParcelaUI[] todasLasParcelasUI; // arrastra aquí todas las tarjetas de parcela
+    public ParcelaUI[] todasLasParcelasUI;
 
     private void Start()
     {
@@ -25,7 +23,7 @@ public class HUDManager : MonoBehaviour
 
         foreach (ParcelaUI parcelaUI in todasLasParcelasUI)
         {
-            parcelaUI.ActualizarVisual(); // todos los checks vuelven a apagarse
+            parcelaUI.ActualizarVisual();
         }
 
         ReportePanelUI.Instancia.Mostrar(reporte);

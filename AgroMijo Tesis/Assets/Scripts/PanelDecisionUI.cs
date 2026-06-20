@@ -1,19 +1,29 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
-// Coloca este script en el panel de decisión (inicialmente inactivo en la jerarquía).
-// Se abre cuando el jugador hace clic en una parcela.
+// Coloca este script en el panel de decisión (inicialmente activo en la jerarquía,
+// el propio script lo oculta en Awake()).
 public class PanelDecisionUI : MonoBehaviour
 {
     public static PanelDecisionUI Instancia { get; private set; }
 
-    [Header("Referencias de UI")]
-    public GameObject panelPrincipal;          // el panel completo, se activa/desactiva
+    [Header("Estructura general")]
+    public GameObject panelPrincipal;       // Panel_Decision completo
     public TMP_Text textoTituloParcela;
-    public GameObject panelSeleccionCultivo;   // submenú con los botones de cultivo, inactivo al inicio
-    public Transform contenedorBotonesCultivo; // contenedor donde se generan los botones de cultivo
-    public Button botonCultivoPrefab;          // prefab de un botón simple con un Text hijo
+
+    [Header("Submenú: opciones principales")]
+    [Tooltip("Objeto que agrupa los botones Plantar/Estudiar/Mejorar/Esperar")]
+    public GameObject panelOpcionesPrincipales;
+
+    [Header("Submenú: selección de cultivo")]
+    [Tooltip("El submenú completo de selección de cultivo (incluye el botón Volver)")]
+    public GameObject panelSeleccionCultivo;
+
+    [Tooltip("OJO: este debe ser un contenedor EXCLUSIVO solo para los botones de cultivo generados. NO uses aquí Panel_Decision, Panel_Cultivos completo, ni el Canvas — si lo haces, Destroy() borrará de más.")]
+    public Transform contenedorBotonesCultivo;
+
+    public Button botonCultivoPrefab;
 
     [Header("Costos de referencia (ajusta luego con datos reales)")]
     public float costoEstudio = 30000f;
@@ -31,6 +41,8 @@ public class PanelDecisionUI : MonoBehaviour
     {
         parcelaActual = parcela;
         textoTituloParcela.text = parcela.parcelaAsociada.nombreParcela;
+
+        panelOpcionesPrincipales.SetActive(true);
         panelSeleccionCultivo.SetActive(false);
         panelPrincipal.SetActive(true);
     }
@@ -45,7 +57,15 @@ public class PanelDecisionUI : MonoBehaviour
     public void OnClickPlantar()
     {
         GenerarBotonesDeCultivo();
+        panelOpcionesPrincipales.SetActive(false);
         panelSeleccionCultivo.SetActive(true);
+    }
+
+    // Conecta esto al botón "Volver" dentro del submenú de selección de cultivo
+    public void OnClickVolverDesdeCultivos()
+    {
+        panelSeleccionCultivo.SetActive(false);
+        panelOpcionesPrincipales.SetActive(true);
     }
 
     private void GenerarBotonesDeCultivo()
@@ -58,7 +78,7 @@ public class PanelDecisionUI : MonoBehaviour
         foreach (CultivoData cultivo in GameManager.Instancia.cultivosDisponibles)
         {
             Button boton = Instantiate(botonCultivoPrefab, contenedorBotonesCultivo);
-            boton.GetComponentInChildren<Text>().text = $"{cultivo.nombreCultivo} (${cultivo.costoSemilla:N0})";
+            boton.GetComponentInChildren<TMP_Text>().text = $"{cultivo.nombreCultivo} (${cultivo.costoSemilla:N0})";
             boton.onClick.AddListener(() => ConfirmarPlantar(cultivo));
         }
     }
@@ -67,7 +87,6 @@ public class PanelDecisionUI : MonoBehaviour
     {
         bool exito = GameManager.Instancia.IntentarPlantar(parcelaActual.parcelaAsociada, cultivo);
         if (exito) FinalizarDecision();
-        // si exito es false, no había presupuesto suficiente; aquí podrías mostrar un aviso
     }
 
     // Conecta esto al botón "Estudiar terreno"

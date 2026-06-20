@@ -16,7 +16,7 @@ MonoBehaviour:
   descripcion: "Se da\xF1o la carretera y no podemos vender nuestros productos"
   probabilidadPorCiclo: 0.1
   tipoEfecto: 1
-  impactoEconomico: -30000
+  impactoEconomico: -10000
   impactoRendimiento: 1
   requiereReparacion: 1
   costoReparacion: 20000
