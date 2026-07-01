@@ -7,6 +7,7 @@ public class ParcelaUI : MonoBehaviour
 {
     [Header("Referencias de UI (arrástralas en el Inspector)")]
     public TMP_Text textoNombre;
+    public TMP_Text textoCultivo; // muestra qué hay plantado y cuántos ciclos faltan
     public GameObject iconoCheck;
 
     [Tooltip("Índice de esta parcela en la lista de GameManager.parcelas (0 = primera)")]
@@ -31,5 +32,16 @@ public class ParcelaUI : MonoBehaviour
     public void ActualizarVisual()
     {
         iconoCheck.SetActive(parcelaAsociada.decisionTomada);
+
+        if (parcelaAsociada.estado == EstadoParcela.Plantada)
+        {
+            int ciclosRestantes = parcelaAsociada.cultivoActual.duracionCiclos
+                                - (GameManager.Instancia.cicloActual - parcelaAsociada.cicloEnQueSePlanto);
+            textoCultivo.text = $"{parcelaAsociada.cultivoActual.nombreCultivo}\n{ciclosRestantes} ciclo(s) para cosechar";
+        }
+        else
+        {
+            textoCultivo.text = "Vacía";
+        }
     }
 }

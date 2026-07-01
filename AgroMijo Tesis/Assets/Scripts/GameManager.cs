@@ -10,14 +10,19 @@ public class GameManager : MonoBehaviour
 
     [Header("Configuración inicial (arrastra tus 4 cultivos y eventos aquí)")]
     public List<CultivoData> cultivosDisponibles;
-    public List<EventoAleatorioData> eventosPosibles;
+    public List<EventoGlobalData> eventosPosibles;
     public List<Parcela> parcelas = new List<Parcela>();
 
     [Header("Estado del juego")]
     public int cicloActual = 0;
     public float presupuesto = 1000000f;
 
+    // Se guarda al inicio de cada ciclo, ANTES de que el jugador gaste en semillas.
+    // Es el valor correcto para mostrar en el reporte como "presupuesto inicial".
+    [HideInInspector] public float presupuestoAlIniciarCiclo = 1000000f;
+
     public List<ReporteCiclo> historialCiclos = new List<ReporteCiclo>();
+    public List<EventoGlobalActivo> eventosActivosPersistentes = new List<EventoGlobalActivo>();
 
     private void Awake()
     {
@@ -36,13 +41,13 @@ public class GameManager : MonoBehaviour
         ReporteCiclo reporte = new ReporteCiclo
         {
             numeroCiclo = cicloActual,
-            presupuestoInicial = presupuesto
+            presupuestoInicial = presupuestoAlIniciarCiclo // lo que había al empezar el ciclo, antes de gastos
         };
+
+        ResolverEventosGlobales(reporte); // una sola vez por ciclo, no por parcela
 
         foreach (Parcela parcela in parcelas)
         {
-            ResolverEventoAleatorio(parcela, reporte);
-
             if (parcela.ListaParaCosecha(cicloActual))
             {
                 ResolverCosecha(parcela, reporte);
@@ -53,6 +58,8 @@ public class GameManager : MonoBehaviour
         historialCiclos.Add(reporte);
         cicloActual++;
 
+        presupuestoAlIniciarCiclo = presupuesto; // se guarda DESPUÉS de eventos y cosechas, para el ciclo siguiente
+
         // Se reinician las decisiones para que el jugador vuelva a elegir en el nuevo ciclo
         foreach (Parcela parcela in parcelas)
         {
@@ -62,20 +69,42 @@ public class GameManager : MonoBehaviour
         return reporte; // la UI usa esto para mostrar la pantalla de reporte (RF-12, RF-13)
     }
 
-    private void ResolverEventoAleatorio(Parcela parcela, ReporteCiclo reporte)
+    private void ResolverEventosGlobales(ReporteCiclo reporte)
     {
-        foreach (EventoAleatorioData evento in eventosPosibles)
+        // 1. Avanzar los eventos persistentes que ya estaban activos
+        foreach (EventoGlobalActivo activo in eventosActivosPersistentes)
+        {
+            if (activo.resuelto) continue;
+
+            activo.ciclosActivo++;
+
+            if (activo.datos.ciclosHastaAutoResolver > 0
+                && activo.ciclosActivo >= activo.datos.ciclosHastaAutoResolver)
+            {
+                activo.resuelto = true;
+                reporte.eventosOcurridos.Add($"[Resuelto] {activo.datos.nombreEvento}");
+            }
+            else
+            {
+                reporte.eventosOcurridos.Add($"[Continúa] {activo.datos.nombreEvento}");
+            }
+        }
+
+        // 2. Evaluar si ocurre algún evento nuevo este ciclo
+        foreach (EventoGlobalData evento in eventosPosibles)
         {
             if (Random.value > evento.probabilidadPorCiclo) continue;
 
-            presupuesto += evento.impactoEconomico;
+            EventoGlobalActivo nuevo = new EventoGlobalActivo
+            {
+                datos = evento,
+                cicloEnQueOcurrio = cicloActual
+            };
 
-            if (evento.impactoEconomico < 0)
-                reporte.gastoTotal += Mathf.Abs(evento.impactoEconomico);
-            else
-                reporte.gananciaTotal += evento.impactoEconomico;
+            if (evento.esPersistente)
+                eventosActivosPersistentes.Add(nuevo);
 
-            reporte.eventosOcurridos.Add($"{evento.nombreEvento} en {parcela.nombreParcela}");
+            reporte.eventosOcurridos.Add($"[Nuevo] {evento.nombreEvento}: {evento.descripcionAlOcurrir}");
         }
     }
 
@@ -85,7 +114,22 @@ public class GameManager : MonoBehaviour
         float modificadorSuelo = cultivo.ObtenerModificadorPorSuelo(parcela.tipoSuelo);
         float modificadorAgua = Mathf.Lerp(0.5f, 1f, parcela.disponibilidadAgua);
 
-        float resultado = cultivo.rendimientoBase * modificadorSuelo * modificadorAgua;
+        // Acumular modificadores de todos los eventos activos que apliquen
+        float modificadorEventos = 1f;
+        foreach (EventoGlobalActivo activo in eventosActivosPersistentes)
+        {
+            if (activo.resuelto) continue;
+
+            // modificadorPrecio aplica si el evento es del cultivo cosechado o es global (null)
+            if (activo.datos.cultivoAfectado == null || activo.datos.cultivoAfectado == cultivo)
+                modificadorEventos += activo.datos.modificadorPrecio;
+
+            // modificadorRendimientoGlobal siempre aplica (clima, etc.)
+            modificadorEventos += activo.datos.modificadorRendimientoGlobal;
+        }
+        modificadorEventos = Mathf.Clamp(modificadorEventos, 0f, 2f);
+
+        float resultado = cultivo.rendimientoBase * modificadorSuelo * modificadorAgua * modificadorEventos;
 
         presupuesto += resultado;
         reporte.gananciaTotal += resultado;
@@ -97,6 +141,7 @@ public class GameManager : MonoBehaviour
     // Llamado desde la UI cuando el jugador elige "Plantar" en una parcela (RF-02, RF-03)
     public bool IntentarPlantar(Parcela parcela, CultivoData cultivo)
     {
+        if (parcela.estado == EstadoParcela.Plantada) return false; // ya hay un cultivo creciendo ahí
         if (presupuesto < cultivo.costoSemilla) return false;
 
         presupuesto -= cultivo.costoSemilla;
@@ -130,5 +175,15 @@ public class GameManager : MonoBehaviour
     public void IntentarEsperar(Parcela parcela)
     {
         parcela.decisionTomada = true;
+    }
+
+    // Usado por el HUD para saber si debe advertir antes de avanzar de ciclo
+    public bool TodasLasParcelasTienenDecision()
+    {
+        foreach (Parcela parcela in parcelas)
+        {
+            if (!parcela.decisionTomada) return false;
+        }
+        return true;
     }
 }

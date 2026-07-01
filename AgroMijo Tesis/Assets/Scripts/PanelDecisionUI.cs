@@ -15,6 +15,7 @@ public class PanelDecisionUI : MonoBehaviour
     [Header("Submenú: opciones principales")]
     [Tooltip("Objeto que agrupa los botones Plantar/Estudiar/Mejorar/Esperar")]
     public GameObject panelOpcionesPrincipales;
+    public Button botonPlantar; // se desactiva si la parcela ya tiene un cultivo creciendo
 
     [Header("Submenú: selección de cultivo")]
     [Tooltip("El submenú completo de selección de cultivo (incluye el botón Volver)")]
@@ -41,6 +42,9 @@ public class PanelDecisionUI : MonoBehaviour
     {
         parcelaActual = parcela;
         textoTituloParcela.text = parcela.parcelaAsociada.nombreParcela;
+
+        bool yaPlantada = parcela.parcelaAsociada.estado == EstadoParcela.Plantada;
+        botonPlantar.interactable = !yaPlantada;
 
         panelOpcionesPrincipales.SetActive(true);
         panelSeleccionCultivo.SetActive(false);

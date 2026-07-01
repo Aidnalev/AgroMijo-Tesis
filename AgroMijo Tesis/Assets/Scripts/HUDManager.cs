@@ -17,6 +17,20 @@ public class HUDManager : MonoBehaviour
     // Conecta esto al botón "Avanzar ciclo"
     public void OnClickAvanzarCiclo()
     {
+        PanelDecisionUI.Instancia.Cerrar(); // por si quedó un menú de parcela abierto
+
+        if (GameManager.Instancia.TodasLasParcelasTienenDecision())
+        {
+            EjecutarAvanceCiclo();
+        }
+        else
+        {
+            PanelAdvertenciaUI.Instancia.Mostrar(EjecutarAvanceCiclo);
+        }
+    }
+
+    private void EjecutarAvanceCiclo()
+    {
         ReporteCiclo reporte = GameManager.Instancia.AvanzarCiclo();
 
         ActualizarHUD();
