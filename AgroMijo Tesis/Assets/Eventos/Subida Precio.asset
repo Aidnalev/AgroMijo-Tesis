@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ba0ca2eabf4214889f7b51d051c931, type: 3}
   m_Name: Subida Precio
   m_EditorClassIdentifier: Assembly-CSharp::EventoGlobalData
-  nombreEvento: Alza Precios
-  descripcionAlOcurrir: 
+  nombreEvento: Alza Precio papa
+  descripcionAlOcurrir: Subieron los precios de la papa
   categoria: 0
-  probabilidadPorCiclo: 0.01
+  probabilidadPorCiclo: 0.2
   esPersistente: 0
   ciclosHastaAutoResolver: 0
   esResolvible: 0
   costoResolucion: 0
   descripcionResolucion: 
-  cultivoAfectado: {fileID: 11400000, guid: dec7e87d750d3274590aeee9aba7fd65, type: 2}
-  modificadorPrecio: 0
-  modificadorRendimientoGlobal: 0
+  cultivoAfectado: {fileID: 11400000, guid: bdc7cee20d69c96418fdf5d90e15ef95, type: 2}
+  modificadorPrecio: 0.1
+  modificadorRendimientoGlobal: 0.2

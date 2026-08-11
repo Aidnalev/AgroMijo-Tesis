@@ -27,6 +27,10 @@ public class Parcela
     // La UI usa esto para mostrar el check. El GameManager lo reinicia al avanzar de ciclo.
     public bool decisionTomada = false;
 
+    // Guarda qu00e9 decidi00f3 el jugador este ciclo, sin aplicarlo todav00eda.
+    // Se aplica al presionar "Avanzar ciclo" y se limpia despu00e9s.
+    public DecisionPendiente decisionPendiente = new DecisionPendiente();
+
     public EstadoParcela estado = EstadoParcela.Vacia;
     public CultivoData cultivoActual;
     public int cicloEnQueSePlanto = -1;

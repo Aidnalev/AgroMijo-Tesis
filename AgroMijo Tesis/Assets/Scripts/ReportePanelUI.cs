@@ -26,6 +26,14 @@ public class ReportePanelUI : MonoBehaviour
         sb.AppendLine($"Ganancias: ${reporte.gananciaTotal:N0}");
         sb.AppendLine($"Gastos: ${reporte.gastoTotal:N0}");
 
+        if (reporte.detalleGastos.Count > 0)
+        {
+            sb.AppendLine();
+            sb.AppendLine("Desglose de gastos:");
+            foreach (GastoRegistrado gasto in reporte.detalleGastos)
+                sb.AppendLine($"  - {gasto.descripcion}: ${gasto.monto:N0}");
+        }
+
         if (reporte.cosechasRealizadas.Count > 0)
         {
             sb.AppendLine();

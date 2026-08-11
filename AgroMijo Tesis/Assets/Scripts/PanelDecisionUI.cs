@@ -2,33 +2,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-// Coloca este script en el panel de decisión (inicialmente activo en la jerarquía,
-// el propio script lo oculta en Awake()).
 public class PanelDecisionUI : MonoBehaviour
 {
     public static PanelDecisionUI Instancia { get; private set; }
 
     [Header("Estructura general")]
-    public GameObject panelPrincipal;       // Panel_Decision completo
+    public GameObject panelPrincipal;
     public TMP_Text textoTituloParcela;
 
     [Header("Submenú: opciones principales")]
-    [Tooltip("Objeto que agrupa los botones Plantar/Estudiar/Mejorar/Esperar")]
     public GameObject panelOpcionesPrincipales;
-    public Button botonPlantar; // se desactiva si la parcela ya tiene un cultivo creciendo
+    public Button botonPlantar;   // se desactiva si la parcela ya tiene cultivo creciendo
+    public Button botonEstudiar;  // se desactiva si la parcela ya fue estudiada
 
     [Header("Submenú: selección de cultivo")]
-    [Tooltip("El submenú completo de selección de cultivo (incluye el botón Volver)")]
     public GameObject panelSeleccionCultivo;
-
-    [Tooltip("OJO: este debe ser un contenedor EXCLUSIVO solo para los botones de cultivo generados. NO uses aquí Panel_Decision, Panel_Cultivos completo, ni el Canvas — si lo haces, Destroy() borrará de más.")]
-    public Transform contenedorBotonesCultivo;
-
-    public Button botonCultivoPrefab;
-
-    [Header("Costos de referencia (ajusta luego con datos reales)")]
-    public float costoEstudio = 30000f;
-    public float costoMejora = 80000f;
+    public Transform  contenedorBotonesCultivo; // contenedor EXCLUSIVO para botones generados
+    public Button     botonCultivoPrefab;
 
     private ParcelaUI parcelaActual;
 
@@ -38,13 +28,17 @@ public class PanelDecisionUI : MonoBehaviour
         panelPrincipal.SetActive(false);
     }
 
-    public void Abrir(ParcelaUI parcela)
+    public void Abrir(ParcelaUI parcelaUI)
     {
-        parcelaActual = parcela;
-        textoTituloParcela.text = parcela.parcelaAsociada.nombreParcela;
+        parcelaActual = parcelaUI;
+        Parcela p = parcelaUI.parcelaAsociada;
 
-        bool yaPlantada = parcela.parcelaAsociada.estado == EstadoParcela.Plantada;
-        botonPlantar.interactable = !yaPlantada;
+        textoTituloParcela.text = p.nombreParcela;
+
+        // Plantar solo si la parcela está vacía Y no hay ya una decisión de plantar pendiente
+        botonPlantar.interactable  = p.estado == EstadoParcela.Vacia;
+        // Estudiar solo si aún no fue estudiada (pagar dos veces no tiene sentido)
+        botonEstudiar.interactable = !p.estudiada;
 
         panelOpcionesPrincipales.SetActive(true);
         panelSeleccionCultivo.SetActive(false);
@@ -57,7 +51,7 @@ public class PanelDecisionUI : MonoBehaviour
         parcelaActual = null;
     }
 
-    // Conecta esto al botón "Plantar cultivo"
+    // ── Botón "Plantar cultivo" ───────────────────────────────────────────────
     public void OnClickPlantar()
     {
         GenerarBotonesDeCultivo();
@@ -65,7 +59,6 @@ public class PanelDecisionUI : MonoBehaviour
         panelSeleccionCultivo.SetActive(true);
     }
 
-    // Conecta esto al botón "Volver" dentro del submenú de selección de cultivo
     public void OnClickVolverDesdeCultivos()
     {
         panelSeleccionCultivo.SetActive(false);
@@ -75,42 +68,42 @@ public class PanelDecisionUI : MonoBehaviour
     private void GenerarBotonesDeCultivo()
     {
         foreach (Transform hijo in contenedorBotonesCultivo)
-        {
             Destroy(hijo.gameObject);
-        }
 
         foreach (CultivoData cultivo in GameManager.Instancia.cultivosDisponibles)
         {
             Button boton = Instantiate(botonCultivoPrefab, contenedorBotonesCultivo);
-            boton.GetComponentInChildren<TMP_Text>().text = $"{cultivo.nombreCultivo} (${cultivo.costoSemilla:N0})";
+            boton.GetComponentInChildren<TMP_Text>().text =
+                $"{cultivo.nombreCultivo}  (${cultivo.costoSemilla:N0})";
             boton.onClick.AddListener(() => ConfirmarPlantar(cultivo));
         }
     }
 
     private void ConfirmarPlantar(CultivoData cultivo)
     {
-        bool exito = GameManager.Instancia.IntentarPlantar(parcelaActual.parcelaAsociada, cultivo);
-        if (exito) FinalizarDecision();
+        // Solo guarda la decisión — el dinero se cobra al avanzar el ciclo
+        GameManager.Instancia.GuardarDecisionPlantar(parcelaActual.parcelaAsociada, cultivo);
+        FinalizarDecision();
     }
 
-    // Conecta esto al botón "Estudiar terreno"
+    // ── Botón "Estudiar terreno" ──────────────────────────────────────────────
     public void OnClickEstudiar()
     {
-        bool exito = GameManager.Instancia.IntentarEstudiarTerreno(parcelaActual.parcelaAsociada, costoEstudio);
-        if (exito) FinalizarDecision();
+        GameManager.Instancia.GuardarDecisionEstudiar(parcelaActual.parcelaAsociada);
+        FinalizarDecision();
     }
 
-    // Conecta esto al botón "Mejorar drenaje"
+    // ── Botón "Mejorar drenaje" ───────────────────────────────────────────────
     public void OnClickMejorar()
     {
-        bool exito = GameManager.Instancia.IntentarMejorarDrenaje(parcelaActual.parcelaAsociada, costoMejora);
-        if (exito) FinalizarDecision();
+        GameManager.Instancia.GuardarDecisionMejorar(parcelaActual.parcelaAsociada);
+        FinalizarDecision();
     }
 
-    // Conecta esto al botón "Esperar"
+    // ── Botón "Esperar" ───────────────────────────────────────────────────────
     public void OnClickEsperar()
     {
-        GameManager.Instancia.IntentarEsperar(parcelaActual.parcelaAsociada);
+        GameManager.Instancia.GuardarDecisionEsperar(parcelaActual.parcelaAsociada);
         FinalizarDecision();
     }
 
