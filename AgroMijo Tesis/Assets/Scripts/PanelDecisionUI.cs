@@ -9,11 +9,13 @@ public class PanelDecisionUI : MonoBehaviour
     [Header("Estructura general")]
     public GameObject panelPrincipal;
     public TMP_Text textoTituloParcela;
+    public TMP_Text textoInfoParcela;  // muestra el tipo de suelo si ya fue estudiada
 
     [Header("Submenú: opciones principales")]
     public GameObject panelOpcionesPrincipales;
     public Button botonPlantar;   // se desactiva si la parcela ya tiene cultivo creciendo
     public Button botonEstudiar;  // se desactiva si la parcela ya fue estudiada
+    public Button botonMejorar;   // se desactiva si la parcela ya tiene todas las mejoras
 
     [Header("Submenú: selección de cultivo")]
     public GameObject panelSeleccionCultivo;
@@ -34,11 +36,15 @@ public class PanelDecisionUI : MonoBehaviour
         Parcela p = parcelaUI.parcelaAsociada;
 
         textoTituloParcela.text = p.nombreParcela;
+        textoInfoParcela.text = p.estudiada
+            ? $"Suelo: {p.tipoSuelo}"
+            : "Suelo: desconocido  (estudia el terreno para revelar)";
 
         // Plantar solo si la parcela está vacía Y no hay ya una decisión de plantar pendiente
         botonPlantar.interactable  = p.estado == EstadoParcela.Vacia;
         // Estudiar solo si aún no fue estudiada (pagar dos veces no tiene sentido)
         botonEstudiar.interactable = !p.estudiada;
+        botonMejorar.interactable  = p.nivelMejora < 3;
 
         panelOpcionesPrincipales.SetActive(true);
         panelSeleccionCultivo.SetActive(false);

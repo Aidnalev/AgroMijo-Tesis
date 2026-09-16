@@ -6,7 +6,10 @@ public class ParcelaUI : MonoBehaviour
 {
     [Header("Referencias de UI (arrástralas en el Inspector)")]
     public TMP_Text textoNombre;
-    public TMP_Text textoCultivo;  // muestra estado del terreno o decisión pendiente
+    public TMP_Text textoCultivo;
+    public TMP_Text textoSuelo;   // muestra "Suelo: ?" hasta que se estudie
+    public TMP_Text textoAgua;    // muestra disponibilidad de agua actual
+    public TMP_Text textoMejoras; // muestra el nivel de mejoras actual
     public GameObject iconoCheck;
 
     [Tooltip("Índice de esta parcela en la lista de GameManager.parcelas (0 = primera)")]
@@ -32,37 +35,53 @@ public class ParcelaUI : MonoBehaviour
     {
         iconoCheck.SetActive(parcelaAsociada.decisionTomada);
 
-        // Primero mostramos la decisión pendiente si ya se tomó una
-        switch (parcelaAsociada.decisionPendiente.tipo)
+        // Suelo: oculto hasta que el jugador pague el estudio
+        textoSuelo.text = parcelaAsociada.estudiada
+            ? $"Suelo: {parcelaAsociada.tipoSuelo}"
+            : "Suelo: ?";
+
+        // Agua: valor actual con una barra visual simple
+        int barras = Mathf.RoundToInt(parcelaAsociada.disponibilidadAgua * 5);
+        string barraAgua = new string('|', barras).PadRight(5, '.');
+        textoAgua.text = $"Agua: [{barraAgua}] {parcelaAsociada.disponibilidadAgua * 100f:F0}%";
+
+        // Mejoras: nivel actual y qué tiene
+        string descMejora = parcelaAsociada.nivelMejora switch
         {
-            case TipoDecision.Plantar:
-                string nombreCultivo = parcelaAsociada.decisionPendiente.cultivoSeleccionado?.nombreCultivo ?? "?";
-                textoCultivo.text = $"► Plantar: {nombreCultivo}";
-                return;
+            0 => "Sin mejoras",
+            1 => "Vial",
+            2 => "Vial + Riego",
+            3 => "Vial + Riego + Fertiliz.",
+            _ => ""
+        };
+        textoMejoras.text = parcelaAsociada.nivelMejora < 3
+            ? $"Mejoras: {descMejora} ({parcelaAsociada.nivelMejora}/3)"
+            : $"Mejoras: {descMejora} (Max)";
 
-            case TipoDecision.Estudiar:
-                textoCultivo.text = "► Estudiar terreno";
-                return;
-
-            case TipoDecision.Mejorar:
-                textoCultivo.text = "► Mejorar drenaje";
-                return;
-
-            case TipoDecision.Esperar:
-                textoCultivo.text = "► Esperando";
-                return;
-        }
-
-        // Si no hay decisión pendiente, mostramos el estado real de la parcela
+        // Cultivo: siempre visible, independiente de la decisión pendiente
         if (parcelaAsociada.estado == EstadoParcela.Plantada)
         {
             int ciclosRestantes = parcelaAsociada.cultivoActual.duracionCiclos
                                 - (GameManager.Instancia.cicloActual - parcelaAsociada.cicloEnQueSePlanto);
-            textoCultivo.text = $"{parcelaAsociada.cultivoActual.nombreCultivo}\n{ciclosRestantes} ciclo(s) para cosechar";
+            textoCultivo.text = $"{parcelaAsociada.cultivoActual.nombreCultivo}  ({ciclosRestantes} ciclo(s))";
         }
         else
         {
             textoCultivo.text = "Vacía";
         }
+
+        // Decisión pendiente: se muestra junto al nombre de la parcela
+        string decisionTexto = parcelaAsociada.decisionPendiente.tipo switch
+        {
+            TipoDecision.Plantar  => $"Plantar: {parcelaAsociada.decisionPendiente.cultivoSeleccionado?.nombreCultivo ?? "?"}",
+            TipoDecision.Estudiar => "Estudiar terreno",
+            TipoDecision.Mejorar  => "Mejorando",
+            TipoDecision.Esperar  => "Esperar",
+            _                     => ""
+        };
+
+        textoNombre.text = string.IsNullOrEmpty(decisionTexto)
+            ? parcelaAsociada.nombreParcela
+            : $"{parcelaAsociada.nombreParcela}  [{decisionTexto}]";
     }
 }

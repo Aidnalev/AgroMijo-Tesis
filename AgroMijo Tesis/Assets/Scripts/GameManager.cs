@@ -57,6 +57,8 @@ public class GameManager : MonoBehaviour
 
     public void GuardarDecisionMejorar(Parcela parcela)
     {
+        if (parcela.nivelMejora >= 3) return; // ya tiene todas las mejoras
+
         // Se puede mejorar aunque haya un cultivo creciendo (una acción por ciclo)
         parcela.decisionPendiente.tipo              = TipoDecision.Mejorar;
         parcela.decisionPendiente.cultivoSeleccionado = null;
@@ -83,6 +85,7 @@ public class GameManager : MonoBehaviour
             presupuestoInicial = presupuestoAlIniciarCiclo
         };
 
+        AplicarVariacionAgua();                 // 0. varía el agua antes de procesar decisiones
         AplicarDecisionesPendientes(reporte);   // 1. cobra y ejecuta lo que el jugador decidió en parcelas
         AplicarResolucionesPendientes(reporte); // 2. cobra y resuelve eventos marcados por el jugador
         ResolverEventosGlobales(reporte);       // 3. eventos del entorno (uno por ciclo)
@@ -137,17 +140,30 @@ public class GameManager : MonoBehaviour
                     break;
 
                 case TipoDecision.Mejorar:
-                    if (presupuesto >= costoMejora)
+                    if (parcela.nivelMejora < 3 && presupuesto >= costoMejora)
                     {
                         presupuesto -= costoMejora;
                         reporte.gastoTotal += costoMejora;
+                        parcela.nivelMejora++;
+
+                        string nombreMejora = parcela.nivelMejora switch
+                        {
+                            1 => "Acceso vial",
+                            2 => "Sistema de riego",
+                            3 => "Fertilización",
+                            _ => "Mejora"
+                        };
+
+                        // Nivel 2: sube aguaBase permanentemente
+                        if (parcela.nivelMejora == 2)
+                            parcela.aguaBase = Mathf.Clamp(parcela.aguaBase + 0.25f, 0f, 1f);
+
                         reporte.detalleGastos.Add(new GastoRegistrado
                         {
-                            descripcion = $"Mejora de drenaje: {parcela.nombreParcela}",
+                            descripcion = $"{nombreMejora} (Niv. {parcela.nivelMejora}): {parcela.nombreParcela}",
                             monto       = costoMejora,
                             categoria   = CategoriaGasto.Mejora
                         });
-                        // lógica concreta de mejora se define cuando desarrollemos ese sistema
                     }
                     break;
 
@@ -218,16 +234,24 @@ public class GameManager : MonoBehaviour
                 if (activo.datos.cultivoAfectado == null || activo.datos.cultivoAfectado == cultivo)
                     modificadorEventos += activo.datos.modificadorPrecio;
 
-                // modificadorRendimientoGlobal: siempre aplica (clima, vía, etc.)
-                modificadorEventos += activo.datos.modificadorRendimientoGlobal;
+                // Acceso vial (Nivel 1): reduce a la mitad el impacto de eventos de infraestructura
+                float impactoVial = activo.datos.modificadorRendimientoGlobal;
+                if (activo.datos.categoria == CategoriaEvento.Infraestructura && parcela.TieneAccesoVial)
+                    impactoVial *= 0.5f;
+
+                modificadorEventos += impactoVial;
             }
 
             modificadorEventos = Mathf.Clamp(modificadorEventos, 0f, 2f);
 
+            // Fertilización (Nivel 3): +20% al rendimiento de esta parcela
+            float modificadorFertilizacion = parcela.TieneFertilizacion ? 1.2f : 1f;
+
             float resultado = cultivo.rendimientoBase
                             * modificadorSuelo
                             * modificadorAgua
-                            * modificadorEventos;
+                            * modificadorEventos
+                            * modificadorFertilizacion;
 
             presupuesto           += resultado;
             reporte.gananciaTotal += resultado;
@@ -271,6 +295,19 @@ public class GameManager : MonoBehaviour
 
             // Si no había presupuesto suficiente, se cancela la intención sin cobrar
             activo.resolucionPendiente = false;
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // AGUA
+    // ══════════════════════════════════════════════════════════════════════════
+
+    private void AplicarVariacionAgua()
+    {
+        foreach (Parcela parcela in parcelas)
+        {
+            float fluctuacion = Random.Range(-0.05f, 0.05f);
+            parcela.AplicarVariacionAgua(fluctuacion);
         }
     }
 

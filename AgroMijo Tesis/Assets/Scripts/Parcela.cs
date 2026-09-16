@@ -6,9 +6,6 @@ public enum EstadoParcela
     Plantada
 }
 
-// Una parcela es cada terreno de la UAF que el jugador gestiona.
-// No es un MonoBehaviour: es un dato puro que el GameManager administra,
-// y que tu vista aérea simplemente representa visualmente.
 [System.Serializable]
 public class Parcela
 {
@@ -16,24 +13,43 @@ public class Parcela
     public TipoSuelo tipoSuelo;
 
     [Range(0f, 1f)]
-    public float disponibilidadAgua = 0.5f; // RF-07
+    public float disponibilidadAgua = 0.5f; // valor actual, varía cada ciclo levemente
 
     [Range(0f, 1f)]
-    public float accesoVial = 0.5f; // RF-06
+    public float aguaBase = 0.5f;           // piso permanente; la mejora de riego lo sube
 
-    public bool estudiada = false; // RF-04: ¿el jugador ya pagó por conocer el suelo?
+    [Range(0f, 1f)]
+    public float accesoVial = 0.5f;
 
-    // true cuando el jugador ya decidió qué hacer en esta parcela durante el ciclo actual.
-    // La UI usa esto para mostrar el check. El GameManager lo reinicia al avanzar de ciclo.
+    public bool estudiada = false;
+
+    // ── Sistema de mejoras ─────────────────────────────────────────────────────
+    // Nivel 0: sin mejoras
+    // Nivel 1: Acceso vial      → reduce impacto de eventos de infraestructura
+    // Nivel 2: Sistema de riego → sube aguaBase permanentemente
+    // Nivel 3: Fertilización    → +20% al rendimiento de cada cosecha aquí
+    [Range(0, 3)]
+    public int nivelMejora = 0;
+
+    // Propiedades calculadas — la lógica lee estas, no el nivelMejora directamente
+    public bool TieneAccesoVial    => nivelMejora >= 1;
+    public bool TieneSistemaRiego  => nivelMejora >= 2;
+    public bool TieneFertilizacion => nivelMejora >= 3;
+
     public bool decisionTomada = false;
-
-    // Guarda qu00e9 decidi00f3 el jugador este ciclo, sin aplicarlo todav00eda.
-    // Se aplica al presionar "Avanzar ciclo" y se limpia despu00e9s.
     public DecisionPendiente decisionPendiente = new DecisionPendiente();
 
     public EstadoParcela estado = EstadoParcela.Vacia;
     public CultivoData cultivoActual;
     public int cicloEnQueSePlanto = -1;
+
+    // ── Variación de agua por ciclo ────────────────────────────────────────────
+    // Llamado desde GameManager al inicio de cada ciclo.
+    // fluctuacion: valor entre -0.05 y 0.05 generado por el GameManager.
+    public void AplicarVariacionAgua(float fluctuacion)
+    {
+        disponibilidadAgua = Mathf.Clamp(aguaBase + fluctuacion, 0.1f, 1f);
+    }
 
     public bool ListaParaCosecha(int cicloActual)
     {
@@ -43,15 +59,15 @@ public class Parcela
 
     public void Plantar(CultivoData cultivo, int cicloActual)
     {
-        cultivoActual = cultivo;
+        cultivoActual      = cultivo;
         cicloEnQueSePlanto = cicloActual;
-        estado = EstadoParcela.Plantada;
+        estado             = EstadoParcela.Plantada;
     }
 
     public void Cosechar()
     {
-        cultivoActual = null;
+        cultivoActual      = null;
         cicloEnQueSePlanto = -1;
-        estado = EstadoParcela.Vacia;
+        estado             = EstadoParcela.Vacia;
     }
 }
