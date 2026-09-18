@@ -24,7 +24,16 @@ public class ReportePanelUI : MonoBehaviour
         sb.AppendLine($"Presupuesto inicial: ${reporte.presupuestoInicial:N0}");
         sb.AppendLine($"Presupuesto final: ${reporte.presupuestoFinal:N0}");
         sb.AppendLine($"Ganancias: ${reporte.gananciaTotal:N0}");
-        sb.AppendLine($"Gastos: ${reporte.gastoTotal:N0}");
+        sb.AppendLine($"Gastos:    ${reporte.gastoTotal:N0}");
+
+        // Jornales
+        sb.AppendLine();
+        sb.AppendLine($"Jornales necesarios: {reporte.jornalesNecesarios}");
+        sb.AppendLine($"  Familiares: {reporte.jornalesFamiliaresUsados}");
+        if (reporte.jornalesContratados > 0)
+            sb.AppendLine($"  Contratados: {reporte.jornalesContratados}");
+        if (reporte.modificadorJornales < 1f)
+            sb.AppendLine($"  Rendimiento por jornales: {reporte.modificadorJornales * 100f:F0}%");
 
         if (reporte.detalleGastos.Count > 0)
         {

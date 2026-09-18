@@ -28,6 +28,14 @@ public class CultivoData : ScriptableObject
     [Tooltip("Ganancia base por cosecha, antes de aplicar modificadores de suelo y agua")]
     public float rendimientoBase = 200000f;
 
+    [Header("Jornales necesarios")]
+    [Tooltip("Jornales para sembrar este cultivo")]
+    public int jornalesParaPlantar = 4;
+    [Tooltip("Jornales de mantenimiento por ciclo mientras crece")]
+    public int jornalesMantenimientoPorCiclo = 6;
+    [Tooltip("Jornales para cosechar cuando esté listo")]
+    public int jornalesParaCosechar = 10;
+
     [Header("Modificadores por tipo de suelo")]
     [Tooltip("1 = neutro, mayor a 1 = favorable, menor a 1 = desfavorable")]
     public float modificadorArcilloso = 1f;

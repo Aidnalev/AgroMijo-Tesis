@@ -10,16 +10,18 @@ public class GameManager : MonoBehaviour
     public List<EventoGlobalData> eventosPosibles;
     public List<Parcela> parcelas = new List<Parcela>();
 
-    [Header("Costos de acciones por ciclo (ajustar con datos reales de la Provincia Comunera)")]
-    public float costoEstudio = 30000f;
-    public float costoMejora  = 80000f;
+    [Header("Costos de acciones")]
+    public float costoEstudio           = 30000f;
+    public float costoMejora            = 80000f;
+    public float costoJornalContratado  = 45000f;
+
+    [Header("Jornales familiares por ciclo")]
+    [Tooltip("Jornales gratuitos que aporta la familia cada ciclo")]
+    public int jornalesFamiliares = 20;
 
     [Header("Estado del juego")]
-    public int   cicloActual  = 0;
-    public float presupuesto  = 1000000f;
-
-    // Se guarda al final de cada ciclo (después de cosechas y eventos),
-    // para usarlo como "presupuesto inicial" del reporte del ciclo siguiente.
+    public int   cicloActual = 0;
+    public float presupuesto = 1000000f;
     [HideInInspector] public float presupuestoAlIniciarCiclo = 1000000f;
 
     public List<ReporteCiclo>       historialCiclos            = new List<ReporteCiclo>();
@@ -32,72 +34,124 @@ public class GameManager : MonoBehaviour
     }
 
     // ══════════════════════════════════════════════════════════════════════════
-    // GUARDAR DECISIONES
-    // Estos métodos solo registran la intención del jugador.
-    // No descuentan dinero ni modifican el estado de la parcela todavía.
-    // Todo se aplica en AplicarDecisionesPendientes() al avanzar el ciclo.
+    // GUARDAR DECISIONES (staged: no aplican hasta AvanzarCiclo)
     // ══════════════════════════════════════════════════════════════════════════
 
     public void GuardarDecisionPlantar(Parcela parcela, CultivoData cultivo)
     {
-        if (parcela.estado == EstadoParcela.Plantada) return; // ya hay algo creciendo
-
-        parcela.decisionPendiente.tipo              = TipoDecision.Plantar;
+        if (parcela.estado == EstadoParcela.Plantada) return;
+        parcela.decisionPendiente.tipo               = TipoDecision.Plantar;
         parcela.decisionPendiente.cultivoSeleccionado = cultivo;
-        parcela.decisionTomada                      = true;
+        parcela.decisionTomada                       = true;
     }
 
     public void GuardarDecisionEstudiar(Parcela parcela)
     {
-        // Se puede estudiar aunque haya un cultivo creciendo (una acción por ciclo)
-        parcela.decisionPendiente.tipo              = TipoDecision.Estudiar;
+        parcela.decisionPendiente.tipo               = TipoDecision.Estudiar;
         parcela.decisionPendiente.cultivoSeleccionado = null;
-        parcela.decisionTomada                      = true;
+        parcela.decisionTomada                       = true;
     }
 
     public void GuardarDecisionMejorar(Parcela parcela)
     {
-        if (parcela.nivelMejora >= 3) return; // ya tiene todas las mejoras
-
-        // Se puede mejorar aunque haya un cultivo creciendo (una acción por ciclo)
-        parcela.decisionPendiente.tipo              = TipoDecision.Mejorar;
+        if (parcela.nivelMejora >= 3) return;
+        parcela.decisionPendiente.tipo               = TipoDecision.Mejorar;
         parcela.decisionPendiente.cultivoSeleccionado = null;
-        parcela.decisionTomada                      = true;
+        parcela.decisionTomada                       = true;
     }
 
     public void GuardarDecisionEsperar(Parcela parcela)
     {
-        parcela.decisionPendiente.tipo              = TipoDecision.Esperar;
+        parcela.decisionPendiente.tipo               = TipoDecision.Esperar;
         parcela.decisionPendiente.cultivoSeleccionado = null;
-        parcela.decisionTomada                      = true;
+        parcela.decisionTomada                       = true;
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // JORNALES
+    // ══════════════════════════════════════════════════════════════════════════
+
+    // Calcula cuántos jornales se necesitan este ciclo según las decisiones
+    // pendientes y el estado actual de los cultivos.
+    public int CalcularJornalesNecesarios()
+    {
+        int total = 0;
+        foreach (Parcela parcela in parcelas)
+        {
+            // Plantar
+            if (parcela.decisionPendiente.tipo == TipoDecision.Plantar
+                && parcela.decisionPendiente.cultivoSeleccionado != null)
+            {
+                total += parcela.decisionPendiente.cultivoSeleccionado.jornalesParaPlantar;
+            }
+
+            if (parcela.estado == EstadoParcela.Plantada && parcela.cultivoActual != null)
+            {
+                // Cosechar (si ya está listo) o mantener (si aún está creciendo)
+                if (parcela.ListaParaCosecha(cicloActual))
+                    total += parcela.cultivoActual.jornalesParaCosechar;
+                else
+                    total += parcela.cultivoActual.jornalesMantenimientoPorCiclo;
+            }
+        }
+        return total;
     }
 
     // ══════════════════════════════════════════════════════════════════════════
     // AVANZAR CICLO
-    // Orden: decisiones → eventos → cosechas → cierre del ciclo
+    // Orden: agua → decisiones → resoluciones → eventos → cosechas → cierre
     // ══════════════════════════════════════════════════════════════════════════
 
-    public ReporteCiclo AvanzarCiclo()
+    public ReporteCiclo AvanzarCiclo(int jornalesContratados = 0)
     {
+        int   jornalesNecesarios  = CalcularJornalesNecesarios();
+        int   jornalesDisponibles = jornalesFamiliares + jornalesContratados;
+        float modJornales         = jornalesNecesarios > 0
+            ? Mathf.Clamp01((float)jornalesDisponibles / jornalesNecesarios)
+            : 1f;
+
         ReporteCiclo reporte = new ReporteCiclo
         {
-            numeroCiclo      = cicloActual,
-            presupuestoInicial = presupuestoAlIniciarCiclo
+            numeroCiclo             = cicloActual,
+            presupuestoInicial      = presupuestoAlIniciarCiclo,
+            jornalesNecesarios      = jornalesNecesarios,
+            jornalesFamiliaresUsados = Mathf.Min(jornalesFamiliares, jornalesNecesarios),
+            jornalesContratados     = jornalesContratados,
+            modificadorJornales     = modJornales
         };
 
-        AplicarVariacionAgua();                 // 0. varía el agua antes de procesar decisiones
-        AplicarDecisionesPendientes(reporte);   // 1. cobra y ejecuta lo que el jugador decidió en parcelas
-        AplicarResolucionesPendientes(reporte); // 2. cobra y resuelve eventos marcados por el jugador
-        ResolverEventosGlobales(reporte);       // 3. eventos del entorno (uno por ciclo)
-        ResolverCosechas(reporte);              // 4. cosecha lo que ya maduró
+        // Cobrar jornales contratados
+        if (jornalesContratados > 0)
+        {
+            float costoJornales = jornalesContratados * costoJornalContratado;
+            presupuesto          -= costoJornales;
+            reporte.gastoTotal   += costoJornales;
+            reporte.detalleGastos.Add(new GastoRegistrado
+            {
+                descripcion = $"Jornales contratados ({jornalesContratados})",
+                monto       = costoJornales,
+                categoria   = CategoriaGasto.Jornal
+            });
+        }
 
-        reporte.presupuestoFinal = presupuesto;
+        AplicarVariacionAgua();
+        AplicarDecisionesPendientes(reporte);
+        AplicarResolucionesPendientes(reporte);
+        ResolverEventosGlobales(reporte);
+        ResolverCosechas(reporte, modJornales);
+
+        reporte.presupuestoFinal   = presupuesto;
         historialCiclos.Add(reporte);
         cicloActual++;
-
-        presupuestoAlIniciarCiclo = presupuesto; // base para el reporte del ciclo siguiente
+        presupuestoAlIniciarCiclo = presupuesto;
 
         return reporte;
+    }
+
+    private void AplicarVariacionAgua()
+    {
+        foreach (Parcela parcela in parcelas)
+            parcela.AplicarVariacionAgua(Random.Range(-0.05f, 0.05f));
     }
 
     private void AplicarDecisionesPendientes(ReporteCiclo reporte)
@@ -112,7 +166,7 @@ public class GameManager : MonoBehaviour
                         && parcela.estado == EstadoParcela.Vacia
                         && presupuesto >= cultivo.costoSemilla)
                     {
-                        presupuesto -= cultivo.costoSemilla;
+                        presupuesto        -= cultivo.costoSemilla;
                         reporte.gastoTotal += cultivo.costoSemilla;
                         reporte.detalleGastos.Add(new GastoRegistrado
                         {
@@ -127,7 +181,7 @@ public class GameManager : MonoBehaviour
                 case TipoDecision.Estudiar:
                     if (!parcela.estudiada && presupuesto >= costoEstudio)
                     {
-                        presupuesto -= costoEstudio;
+                        presupuesto        -= costoEstudio;
                         reporte.gastoTotal += costoEstudio;
                         reporte.detalleGastos.Add(new GastoRegistrado
                         {
@@ -142,7 +196,7 @@ public class GameManager : MonoBehaviour
                 case TipoDecision.Mejorar:
                     if (parcela.nivelMejora < 3 && presupuesto >= costoMejora)
                     {
-                        presupuesto -= costoMejora;
+                        presupuesto        -= costoMejora;
                         reporte.gastoTotal += costoMejora;
                         parcela.nivelMejora++;
 
@@ -150,36 +204,54 @@ public class GameManager : MonoBehaviour
                         {
                             1 => "Acceso vial",
                             2 => "Sistema de riego",
-                            3 => "Fertilización",
+                            3 => "Fertilizacion",
                             _ => "Mejora"
                         };
 
-                        // Nivel 2: sube aguaBase permanentemente
                         if (parcela.nivelMejora == 2)
                             parcela.aguaBase = Mathf.Clamp(parcela.aguaBase + 0.25f, 0f, 1f);
 
                         reporte.detalleGastos.Add(new GastoRegistrado
                         {
-                            descripcion = $"{nombreMejora} (Niv. {parcela.nivelMejora}): {parcela.nombreParcela}",
+                            descripcion = $"{nombreMejora} (Niv.{parcela.nivelMejora}): {parcela.nombreParcela}",
                             monto       = costoMejora,
                             categoria   = CategoriaGasto.Mejora
                         });
                     }
                     break;
-
-                // TipoDecision.Esperar y Ninguna: no hacen nada, no cobran nada
             }
 
-            // Limpiar para el ciclo siguiente
-            parcela.decisionPendiente.tipo              = TipoDecision.Ninguna;
+            parcela.decisionPendiente.tipo               = TipoDecision.Ninguna;
             parcela.decisionPendiente.cultivoSeleccionado = null;
-            parcela.decisionTomada                      = false;
+            parcela.decisionTomada                       = false;
+        }
+    }
+
+    private void AplicarResolucionesPendientes(ReporteCiclo reporte)
+    {
+        foreach (EventoGlobalActivo activo in eventosActivosPersistentes)
+        {
+            if (!activo.resolucionPendiente || activo.resuelto) continue;
+
+            if (presupuesto >= activo.datos.costoResolucion)
+            {
+                presupuesto        -= activo.datos.costoResolucion;
+                reporte.gastoTotal += activo.datos.costoResolucion;
+                reporte.detalleGastos.Add(new GastoRegistrado
+                {
+                    descripcion = $"Resolver evento: {activo.datos.nombreEvento}",
+                    monto       = activo.datos.costoResolucion,
+                    categoria   = CategoriaGasto.ResolucionEvento
+                });
+                activo.resuelto = true;
+            }
+
+            activo.resolucionPendiente = false;
         }
     }
 
     private void ResolverEventosGlobales(ReporteCiclo reporte)
     {
-        // Avanzar eventos persistentes ya activos
         foreach (EventoGlobalActivo activo in eventosActivosPersistentes)
         {
             if (activo.resuelto) continue;
@@ -193,65 +265,55 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                reporte.eventosOcurridos.Add($"[Continúa] {activo.datos.nombreEvento}");
+                reporte.eventosOcurridos.Add($"[Continua] {activo.datos.nombreEvento}");
             }
         }
 
-        // Evaluar si ocurre algún evento nuevo este ciclo
         foreach (EventoGlobalData evento in eventosPosibles)
         {
             if (Random.value > evento.probabilidadPorCiclo) continue;
-
             EventoGlobalActivo nuevo = new EventoGlobalActivo
             {
-                datos            = evento,
+                datos             = evento,
                 cicloEnQueOcurrio = cicloActual
             };
-
-            if (evento.esPersistente)
-                eventosActivosPersistentes.Add(nuevo);
-
+            if (evento.esPersistente) eventosActivosPersistentes.Add(nuevo);
             reporte.eventosOcurridos.Add($"[Nuevo] {evento.nombreEvento}: {evento.descripcionAlOcurrir}");
         }
     }
 
-    private void ResolverCosechas(ReporteCiclo reporte)
+    private void ResolverCosechas(ReporteCiclo reporte, float modificadorJornales)
     {
         foreach (Parcela parcela in parcelas)
         {
             if (!parcela.ListaParaCosecha(cicloActual)) continue;
 
-            CultivoData cultivo          = parcela.cultivoActual;
-            float modificadorSuelo       = cultivo.ObtenerModificadorPorSuelo(parcela.tipoSuelo);
-            float modificadorAgua        = Mathf.Lerp(0.5f, 1f, parcela.disponibilidadAgua);
-            float modificadorEventos     = 1f;
+            CultivoData cultivo      = parcela.cultivoActual;
+            float modSuelo           = cultivo.ObtenerModificadorPorSuelo(parcela.tipoSuelo);
+            float modAgua            = Mathf.Lerp(0.5f, 1f, parcela.disponibilidadAgua);
+            float modFertilizacion   = parcela.TieneFertilizacion ? 1.2f : 1f;
+            float modEventos         = 1f;
 
             foreach (EventoGlobalActivo activo in eventosActivosPersistentes)
             {
                 if (activo.resuelto) continue;
-
-                // modificadorPrecio: aplica si el evento es de este cultivo o global (null)
                 if (activo.datos.cultivoAfectado == null || activo.datos.cultivoAfectado == cultivo)
-                    modificadorEventos += activo.datos.modificadorPrecio;
+                    modEventos += activo.datos.modificadorPrecio;
 
-                // Acceso vial (Nivel 1): reduce a la mitad el impacto de eventos de infraestructura
                 float impactoVial = activo.datos.modificadorRendimientoGlobal;
                 if (activo.datos.categoria == CategoriaEvento.Infraestructura && parcela.TieneAccesoVial)
                     impactoVial *= 0.5f;
 
-                modificadorEventos += impactoVial;
+                modEventos += impactoVial;
             }
-
-            modificadorEventos = Mathf.Clamp(modificadorEventos, 0f, 2f);
-
-            // Fertilización (Nivel 3): +20% al rendimiento de esta parcela
-            float modificadorFertilizacion = parcela.TieneFertilizacion ? 1.2f : 1f;
+            modEventos = Mathf.Clamp(modEventos, 0f, 2f);
 
             float resultado = cultivo.rendimientoBase
-                            * modificadorSuelo
-                            * modificadorAgua
-                            * modificadorEventos
-                            * modificadorFertilizacion;
+                            * modSuelo
+                            * modAgua
+                            * modEventos
+                            * modFertilizacion
+                            * modificadorJornales;
 
             presupuesto           += resultado;
             reporte.gananciaTotal += resultado;
@@ -264,51 +326,12 @@ public class GameManager : MonoBehaviour
 
     // ══════════════════════════════════════════════════════════════════════════
     // EVENTOS: RESOLUCIÓN STAGED
-    // Toggle: marca o desmarca la intención de resolver. El dinero se cobra
-    // en AplicarResolucionesPendientes() al avanzar el ciclo.
     // ══════════════════════════════════════════════════════════════════════════
 
     public void ToggleResolucionEvento(EventoGlobalActivo activo)
     {
         if (!activo.datos.esResolvible) return;
         activo.resolucionPendiente = !activo.resolucionPendiente;
-    }
-
-    private void AplicarResolucionesPendientes(ReporteCiclo reporte)
-    {
-        foreach (EventoGlobalActivo activo in eventosActivosPersistentes)
-        {
-            if (!activo.resolucionPendiente || activo.resuelto) continue;
-
-            if (presupuesto >= activo.datos.costoResolucion)
-            {
-                presupuesto -= activo.datos.costoResolucion;
-                reporte.gastoTotal += activo.datos.costoResolucion;
-                reporte.detalleGastos.Add(new GastoRegistrado
-                {
-                    descripcion = $"Resolver evento: {activo.datos.nombreEvento}",
-                    monto       = activo.datos.costoResolucion,
-                    categoria   = CategoriaGasto.ResolucionEvento
-                });
-                activo.resuelto = true;
-            }
-
-            // Si no había presupuesto suficiente, se cancela la intención sin cobrar
-            activo.resolucionPendiente = false;
-        }
-    }
-
-    // ══════════════════════════════════════════════════════════════════════════
-    // AGUA
-    // ══════════════════════════════════════════════════════════════════════════
-
-    private void AplicarVariacionAgua()
-    {
-        foreach (Parcela parcela in parcelas)
-        {
-            float fluctuacion = Random.Range(-0.05f, 0.05f);
-            parcela.AplicarVariacionAgua(fluctuacion);
-        }
     }
 
     // ══════════════════════════════════════════════════════════════════════════

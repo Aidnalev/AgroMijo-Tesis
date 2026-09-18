@@ -4,7 +4,8 @@ public enum CategoriaGasto
     Semilla,
     Estudio,
     Mejora,
-    ResolucionEvento
+    ResolucionEvento,
+    Jornal
 }
 
 // Un gasto individual ocurrido en el ciclo.

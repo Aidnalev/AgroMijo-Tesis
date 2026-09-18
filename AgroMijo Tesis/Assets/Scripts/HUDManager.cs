@@ -1,51 +1,73 @@
 using UnityEngine;
 using TMPro;
 
-// Coloca este script en el panel superior (HUD).
 public class HUDManager : MonoBehaviour
 {
+    public static HUDManager Instancia { get; private set; }
+
     [Header("Referencias de UI")]
-    public TMP_Text textoCiclo;
-    public TMP_Text textoPresupuesto;
+    public TMP_Text    textoCiclo;
+    public TMP_Text    textoPresupuesto;
+    public TMP_Text    textoJornales;   // muestra "Jornales: X / Y" en tiempo real
     public ParcelaUI[] todasLasParcelasUI;
+
+    private void Awake()
+    {
+        Instancia = this;
+    }
 
     private void Start()
     {
         ActualizarHUD();
     }
 
-    // Conecta esto al botón "Avanzar ciclo"
+    // Conecta al botón "Avanzar ciclo"
+    // Flujo: cerrar panel → revisar decisiones → revisar jornales → ejecutar
     public void OnClickAvanzarCiclo()
     {
-        PanelDecisionUI.Instancia.Cerrar(); // por si quedó un menú de parcela abierto
+        PanelDecisionUI.Instancia.Cerrar();
 
-        if (GameManager.Instancia.TodasLasParcelasTienenDecision())
-        {
-            EjecutarAvanceCiclo();
-        }
+        if (!GameManager.Instancia.TodasLasParcelasTienenDecision())
+            PanelAdvertenciaUI.Instancia.Mostrar(VerificarJornales);
         else
-        {
-            PanelAdvertenciaUI.Instancia.Mostrar(EjecutarAvanceCiclo);
-        }
+            VerificarJornales();
     }
 
-    private void EjecutarAvanceCiclo()
+    private void VerificarJornales()
     {
-        ReporteCiclo reporte = GameManager.Instancia.AvanzarCiclo();
+        int necesarios = GameManager.Instancia.CalcularJornalesNecesarios();
+        int deficit    = necesarios - GameManager.Instancia.jornalesFamiliares;
+
+        if (deficit > 0)
+            PanelJornalesUI.Instancia.Mostrar(deficit, EjecutarAvanceCiclo);
+        else
+            EjecutarAvanceCiclo(0);
+    }
+
+    private void EjecutarAvanceCiclo(int jornalesContratados)
+    {
+        ReporteCiclo reporte = GameManager.Instancia.AvanzarCiclo(jornalesContratados);
 
         ActualizarHUD();
 
         foreach (ParcelaUI parcelaUI in todasLasParcelasUI)
-        {
             parcelaUI.ActualizarVisual();
-        }
 
         ReportePanelUI.Instancia.Mostrar(reporte);
     }
 
-    private void ActualizarHUD()
+    public void ActualizarHUD()
     {
-        textoCiclo.text = $"Ciclo {GameManager.Instancia.cicloActual}";
+        textoCiclo.text       = $"Ciclo {GameManager.Instancia.cicloActual}";
         textoPresupuesto.text = $"${GameManager.Instancia.presupuesto:N0}";
+
+        int comprometidos = GameManager.Instancia.CalcularJornalesNecesarios();
+        int disponibles   = GameManager.Instancia.jornalesFamiliares;
+        textoJornales.text  = $"Jornales: {comprometidos} / {disponibles}";
+
+        // Rojo si hay déficit, blanco si alcanza
+        textoJornales.color = comprometidos > disponibles
+            ? new UnityEngine.Color(1f, 0.35f, 0.35f)
+            : UnityEngine.Color.white;
     }
 }

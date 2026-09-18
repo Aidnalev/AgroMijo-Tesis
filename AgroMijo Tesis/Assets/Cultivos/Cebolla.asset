@@ -16,6 +16,9 @@ MonoBehaviour:
   duracionCiclos: 5
   costoSemilla: 10000
   rendimientoBase: 20000
+  jornalesParaPlantar: 6
+  jornalesMantenimientoPorCiclo: 4
+  jornalesParaCosechar: 10
   modificadorArcilloso: 1
   modificadorArenoso: 1
   modificadorFranco: 1

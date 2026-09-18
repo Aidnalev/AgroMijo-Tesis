@@ -116,6 +116,7 @@ public class PanelDecisionUI : MonoBehaviour
     private void FinalizarDecision()
     {
         parcelaActual.ActualizarVisual();
+        HUDManager.Instancia.ActualizarHUD(); // actualiza jornales comprometidos en tiempo real
         Cerrar();
     }
 }
