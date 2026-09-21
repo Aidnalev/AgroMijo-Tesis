@@ -31,6 +31,10 @@ public class GameManager : MonoBehaviour
     {
         if (Instancia != null && Instancia != this) { Destroy(gameObject); return; }
         Instancia = this;
+
+        // En Awake para que esté listo antes de que cualquier Start() lo lea
+        foreach (Parcela parcela in parcelas)
+            parcela.InicializarAgua();
     }
 
     // ══════════════════════════════════════════════════════════════════════════

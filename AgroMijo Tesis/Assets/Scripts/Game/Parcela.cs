@@ -13,10 +13,12 @@ public class Parcela
     public TipoSuelo tipoSuelo;
 
     [Range(0f, 1f)]
-    public float disponibilidadAgua = 0.5f; // valor actual, varía cada ciclo levemente
+    public float aguaBase = 0.5f; // único valor configurable en Inspector; la mejora de riego lo sube
 
-    [Range(0f, 1f)]
-    public float aguaBase = 0.5f;           // piso permanente; la mejora de riego lo sube
+    // Valor runtime — no aparece en el Inspector porque se calcula cada ciclo.
+    // Se inicializa igual a aguaBase al arrancar el juego.
+    [System.NonSerialized]
+    public float disponibilidadAgua;
 
     [Range(0f, 1f)]
     public float accesoVial = 0.5f;
@@ -46,6 +48,12 @@ public class Parcela
     // ── Variación de agua por ciclo ────────────────────────────────────────────
     // Llamado desde GameManager al inicio de cada ciclo.
     // fluctuacion: valor entre -0.05 y 0.05 generado por el GameManager.
+    // Llamado una vez al inicio del juego para sincronizar el valor runtime con el base
+    public void InicializarAgua()
+    {
+        disponibilidadAgua = aguaBase;
+    }
+
     public void AplicarVariacionAgua(float fluctuacion)
     {
         disponibilidadAgua = Mathf.Clamp(aguaBase + fluctuacion, 0.1f, 1f);
