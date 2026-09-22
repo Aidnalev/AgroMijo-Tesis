@@ -35,6 +35,17 @@ public class GameManager : MonoBehaviour
         // En Awake para que esté listo antes de que cualquier Start() lo lea
         foreach (Parcela parcela in parcelas)
             parcela.InicializarAgua();
+
+        CargarSiExiste();
+    }
+
+    private void CargarSiExiste()
+    {
+        string profileId = ProfileManager.Instance?.CurrentProfile?.id;
+        if (string.IsNullOrEmpty(profileId)) return;
+
+        GameSaveData data = SaveManager.Cargar(profileId);
+        if (data != null) AplicarEstadoGuardado(data);
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -148,6 +159,11 @@ public class GameManager : MonoBehaviour
         historialCiclos.Add(reporte);
         cicloActual++;
         presupuestoAlIniciarCiclo = presupuesto;
+
+        // Autosave: guarda después de cada ciclo vinculado al perfil activo
+        string profileId = ProfileManager.Instance?.CurrentProfile?.id;
+        if (!string.IsNullOrEmpty(profileId))
+            SaveManager.Guardar(CrearEstadoGuardado());
 
         return reporte;
     }
@@ -336,6 +352,105 @@ public class GameManager : MonoBehaviour
     {
         if (!activo.datos.esResolvible) return;
         activo.resolucionPendiente = !activo.resolucionPendiente;
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // GUARDADO Y CARGADO
+    // ══════════════════════════════════════════════════════════════════════════
+
+    public GameSaveData CrearEstadoGuardado()
+    {
+        string profileId = ProfileManager.Instance?.CurrentProfile?.id ?? "sin_perfil";
+
+        List<ParcelaSaveData> parcelasSave = new List<ParcelaSaveData>();
+        foreach (Parcela p in parcelas)
+        {
+            parcelasSave.Add(new ParcelaSaveData
+            {
+                nombreParcela       = p.nombreParcela,
+                tipoSuelo           = (int)p.tipoSuelo,
+                aguaBase            = p.aguaBase,
+                disponibilidadAgua  = p.disponibilidadAgua,
+                accesoVial          = p.accesoVial,
+                estudiada           = p.estudiada,
+                nivelMejora         = p.nivelMejora,
+                estado              = (int)p.estado,
+                cultivoActualNombre = p.cultivoActual?.nombreCultivo,
+                cicloEnQueSePlanto  = p.cicloEnQueSePlanto
+            });
+        }
+
+        List<EventoActivoSaveData> eventosSave = new List<EventoActivoSaveData>();
+        foreach (EventoGlobalActivo e in eventosActivosPersistentes)
+        {
+            eventosSave.Add(new EventoActivoSaveData
+            {
+                eventoNombre        = e.datos.nombreEvento,
+                cicloEnQueOcurrio   = e.cicloEnQueOcurrio,
+                resuelto            = e.resuelto,
+                ciclosActivo        = e.ciclosActivo,
+                resolucionPendiente = e.resolucionPendiente
+            });
+        }
+
+        return new GameSaveData
+        {
+            profileId                = profileId,
+            fechaGuardado            = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+            cicloActual              = cicloActual,
+            presupuesto              = presupuesto,
+            presupuestoAlIniciarCiclo = presupuestoAlIniciarCiclo,
+            parcelas                 = parcelasSave,
+            eventosActivos           = eventosSave,
+            historialCiclos          = new List<ReporteCiclo>(historialCiclos)
+        };
+    }
+
+    public void AplicarEstadoGuardado(GameSaveData data)
+    {
+        cicloActual               = data.cicloActual;
+        presupuesto               = data.presupuesto;
+        presupuestoAlIniciarCiclo = data.presupuestoAlIniciarCiclo;
+        historialCiclos           = data.historialCiclos ?? new List<ReporteCiclo>();
+
+        // Restaurar parcelas por índice
+        for (int i = 0; i < parcelas.Count && i < data.parcelas.Count; i++)
+        {
+            ParcelaSaveData ps = data.parcelas[i];
+            Parcela p          = parcelas[i];
+
+            p.tipoSuelo          = (TipoSuelo)ps.tipoSuelo;
+            p.aguaBase           = ps.aguaBase;
+            p.disponibilidadAgua = ps.disponibilidadAgua;
+            p.accesoVial         = ps.accesoVial;
+            p.estudiada          = ps.estudiada;
+            p.nivelMejora        = ps.nivelMejora;
+            p.estado             = (EstadoParcela)ps.estado;
+            p.cicloEnQueSePlanto = ps.cicloEnQueSePlanto;
+
+            // Buscar el ScriptableObject del cultivo por nombre
+            p.cultivoActual = string.IsNullOrEmpty(ps.cultivoActualNombre)
+                ? null
+                : cultivosDisponibles.Find(c => c.nombreCultivo == ps.cultivoActualNombre);
+        }
+
+        // Restaurar eventos activos por nombre
+        eventosActivosPersistentes.Clear();
+        foreach (EventoActivoSaveData es in data.eventosActivos)
+        {
+            EventoGlobalData eventoData = eventosPosibles
+                .Find(e => e.nombreEvento == es.eventoNombre);
+            if (eventoData == null) continue;
+
+            eventosActivosPersistentes.Add(new EventoGlobalActivo
+            {
+                datos               = eventoData,
+                cicloEnQueOcurrio   = es.cicloEnQueOcurrio,
+                resuelto            = es.resuelto,
+                ciclosActivo        = es.ciclosActivo,
+                resolucionPendiente = es.resolucionPendiente
+            });
+        }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
