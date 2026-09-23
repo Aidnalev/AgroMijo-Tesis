@@ -19,6 +19,12 @@ public class GameManager : MonoBehaviour
     [Tooltip("Jornales gratuitos que aporta la familia cada ciclo")]
     public int jornalesFamiliares = 20;
 
+    [Header("Condiciones de fin de partida")]
+    [Tooltip("La partida termina al completar este número de ciclos")]
+    public int ciclosMaximos = 12;
+    [Tooltip("Si el presupuesto cae a este valor o menos, la partida termina por quiebra")]
+    public float presupuestoMinimoQuiebra = 0f;
+
     [Header("Estado del juego")]
     public int   cicloActual = 0;
     public float presupuesto = 1000000f;
@@ -159,6 +165,8 @@ public class GameManager : MonoBehaviour
         historialCiclos.Add(reporte);
         cicloActual++;
         presupuestoAlIniciarCiclo = presupuesto;
+
+        VerificarFinDeCiclo(reporte);
 
         // Autosave: guarda después de cada ciclo vinculado al perfil activo
         string profileId = ProfileManager.Instance?.CurrentProfile?.id;
@@ -352,6 +360,53 @@ public class GameManager : MonoBehaviour
     {
         if (!activo.datos.esResolvible) return;
         activo.resolucionPendiente = !activo.resolucionPendiente;
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // FIN DE PARTIDA
+    // ══════════════════════════════════════════════════════════════════════════
+
+    private void VerificarFinDeCiclo(ReporteCiclo reporte)
+    {
+        if (cicloActual >= ciclosMaximos)
+        {
+            reporte.esUltimoCiclo = true;
+            reporte.razonFin      = "Completaste todos los ciclos de la partida.";
+        }
+        else if (presupuesto <= presupuestoMinimoQuiebra)
+        {
+            reporte.esUltimoCiclo = true;
+            reporte.razonFin      = "Te quedaste sin presupuesto.";
+        }
+    }
+
+    public GameOverData CrearRegistroFinal(string razon)
+    {
+        float gananciaTotal = 0f;
+        float gastoTotal    = 0f;
+        foreach (ReporteCiclo r in historialCiclos)
+        {
+            gananciaTotal += r.gananciaTotal;
+            gastoTotal    += r.gastoTotal;
+        }
+
+        float presupuestoInicio = historialCiclos.Count > 0
+            ? historialCiclos[0].presupuestoInicial
+            : presupuesto;
+
+        return new GameOverData
+        {
+            profileId          = ProfileManager.Instance?.CurrentProfile?.id ?? "",
+            profileAlias       = ProfileManager.Instance?.CurrentProfile?.alias ?? "",
+            fechaPartida       = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm"),
+            ciclosJugados      = cicloActual,
+            razonFin           = razon,
+            presupuestoInicial = presupuestoInicio,
+            presupuestoFinal   = presupuesto,
+            gananciaAcumulada  = gananciaTotal,
+            gastoAcumulado     = gastoTotal,
+            historialCiclos    = new System.Collections.Generic.List<ReporteCiclo>(historialCiclos)
+        };
     }
 
     // ══════════════════════════════════════════════════════════════════════════

@@ -48,10 +48,31 @@ public class PauseMenuUI : MonoBehaviour
     }
 
     // Conecta al botón "Salir al menú"
-    // El progreso ya está guardado (autosave después de cada ciclo),
-    // así que solo hace falta cambiar de escena.
+    // El progreso ya está guardado (autosave después de cada ciclo)
     public void OnClickSalirAlMenu()
     {
         SceneLoader.Instance.LoadMainMenu();
+    }
+
+    // Conecta al botón "Terminar Partida"
+    // Pide confirmación, guarda el registro final y muestra la pantalla de fin
+    public void OnClickTerminarPartida()
+    {
+        PanelAdvertenciaUI.Instancia.Mostrar(
+            alConfirmar: () =>
+            {
+                string razon   = "Partida terminada manualmente.";
+                GameOverData r = GameManager.Instancia.CrearRegistroFinal(razon);
+                RegistroPartidasManager.GuardarRegistro(r);
+
+                string profileId = ProfileManager.Instance?.CurrentProfile?.id;
+                if (!string.IsNullOrEmpty(profileId))
+                    SaveManager.Borrar(profileId);
+
+                Reanudar(); // cierra el menú de pausa
+                PantallaFinPartidaUI.Instancia.Mostrar(r);
+            },
+            mensaje: "Terminar la partida ahora guardara el registro pero no podras continuar desde este punto. Continuar?"
+        );
     }
 }

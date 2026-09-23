@@ -11,14 +11,17 @@ public class ReportePanelUI : MonoBehaviour
     public GameObject panelPrincipal;
     public TMP_Text textoResumen;
 
+    private System.Action alCerrar;
+
     private void Awake()
     {
         Instancia = this;
         panelPrincipal.SetActive(false);
     }
 
-    public void Mostrar(ReporteCiclo reporte)
+    public void Mostrar(ReporteCiclo reporte, System.Action onCerrar = null)
     {
+        alCerrar = onCerrar;
         StringBuilder sb = new StringBuilder();
         sb.AppendLine($"Resultado del ciclo {reporte.numeroCiclo}");
         sb.AppendLine($"Presupuesto inicial: ${reporte.presupuestoInicial:N0}");
@@ -65,5 +68,8 @@ public class ReportePanelUI : MonoBehaviour
     public void Cerrar()
     {
         panelPrincipal.SetActive(false);
+        System.Action callback = alCerrar;
+        alCerrar = null;    // limpiar antes de invocar
+        callback?.Invoke();
     }
 }

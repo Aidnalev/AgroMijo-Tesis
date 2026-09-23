@@ -15,6 +15,10 @@ public class ReporteCiclo
     public int   jornalesContratados;
     public float modificadorJornales; // 1 = pleno rendimiento, <1 = penalización
 
+    // Fin de partida — el HUD lo usa para mostrar la pantalla final
+    public bool   esUltimoCiclo = false;
+    public string razonFin      = "";
+
     public List<GastoRegistrado> detalleGastos     = new List<GastoRegistrado>();
     public List<string>          eventosOcurridos  = new List<string>();
     public List<string>          cosechasRealizadas = new List<string>();

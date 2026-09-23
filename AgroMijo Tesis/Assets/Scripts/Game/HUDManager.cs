@@ -53,7 +53,24 @@ public class HUDManager : MonoBehaviour
         foreach (ParcelaUI parcelaUI in todasLasParcelasUI)
             parcelaUI.ActualizarVisual();
 
-        ReportePanelUI.Instancia.Mostrar(reporte);
+        if (reporte.esUltimoCiclo)
+            ReportePanelUI.Instancia.Mostrar(reporte, onCerrar: MostrarPantallaFin);
+        else
+            ReportePanelUI.Instancia.Mostrar(reporte);
+    }
+
+    private void MostrarPantallaFin()
+    {
+        GameOverData registro = GameManager.Instancia.CrearRegistroFinal(
+            GameManager.Instancia.historialCiclos[^1].razonFin);
+
+        RegistroPartidasManager.GuardarRegistro(registro);
+
+        string profileId = ProfileManager.Instance?.CurrentProfile?.id;
+        if (!string.IsNullOrEmpty(profileId))
+            SaveManager.Borrar(profileId);
+
+        PantallaFinPartidaUI.Instancia.Mostrar(registro);
     }
 
     public void ActualizarHUD()

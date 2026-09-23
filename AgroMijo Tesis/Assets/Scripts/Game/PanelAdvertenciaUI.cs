@@ -20,10 +20,11 @@ public class PanelAdvertenciaUI : MonoBehaviour
         panelPrincipal.SetActive(false);
     }
 
-    public void Mostrar(Action alConfirmar)
+    public void Mostrar(Action alConfirmar,
+        string mensaje = "Hay parcelas sin decision este ciclo. Avanzar de todas formas?")
     {
-        accionSiConfirma = alConfirmar;
-        textoMensaje.text = "Hay parcelas sin decisión este ciclo. ¿Avanzar de todas formas?";
+        accionSiConfirma  = alConfirmar;
+        textoMensaje.text = mensaje;
         panelPrincipal.SetActive(true);
     }
 
