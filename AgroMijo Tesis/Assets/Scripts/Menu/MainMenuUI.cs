@@ -24,7 +24,7 @@ public class MainMenuUI : MonoBehaviour
 
     // "Nueva Partida" — siempre visible
     // Sin perfil → va a selección de perfiles
-    // Con perfil → borra guardado si existe y empieza desde cero
+    // Con perfil → guarda registro de la partida anterior si existe, luego empieza desde cero
     public void NuevaPartida()
     {
         if (ProfileManager.Instance.CurrentProfile == null)
@@ -33,8 +33,47 @@ public class MainMenuUI : MonoBehaviour
             return;
         }
 
-        SaveManager.Borrar(ProfileManager.Instance.CurrentProfile.id);
+        string profileId = ProfileManager.Instance.CurrentProfile.id;
+
+        if (SaveManager.ExisteGuardado(profileId))
+        {
+            GameSaveData saveData = SaveManager.Cargar(profileId);
+            if (saveData != null)
+                RegistroPartidasManager.GuardarRegistro(CrearRegistroDesdeSave(saveData));
+
+            SaveManager.Borrar(profileId);
+        }
+
         sceneLoader.LoadGame();
+    }
+
+    private GameOverData CrearRegistroDesdeSave(GameSaveData save)
+    {
+        float gananciaTotal = 0f;
+        float gastoTotal    = 0f;
+        foreach (ReporteCiclo r in save.historialCiclos)
+        {
+            gananciaTotal += r.gananciaTotal;
+            gastoTotal    += r.gastoTotal;
+        }
+
+        float presupuestoInicio = save.historialCiclos.Count > 0
+            ? save.historialCiclos[0].presupuestoInicial
+            : save.presupuesto;
+
+        return new GameOverData
+        {
+            profileId          = save.profileId,
+            profileAlias       = ProfileManager.Instance.CurrentProfile.alias,
+            fechaPartida       = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm"),
+            ciclosJugados      = save.cicloActual,
+            razonFin           = "Partida abandonada al iniciar una nueva.",
+            presupuestoInicial = presupuestoInicio,
+            presupuestoFinal   = save.presupuesto,
+            gananciaAcumulada  = gananciaTotal,
+            gastoAcumulado     = gastoTotal,
+            historialCiclos    = save.historialCiclos
+        };
     }
 
     // "Continuar" — solo visible si hay guardado activo

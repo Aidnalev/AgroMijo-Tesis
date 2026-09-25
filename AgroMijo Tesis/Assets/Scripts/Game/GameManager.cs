@@ -19,11 +19,15 @@ public class GameManager : MonoBehaviour
     [Tooltip("Jornales gratuitos que aporta la familia cada ciclo")]
     public int jornalesFamiliares = 20;
 
+    [Header("Pool de parcelas")]
+    [Tooltip("Todos los ScriptableObjects de parcela posibles (apunta a 12 assets).")]
+    public List<ParcelaTemplateSO> parcelasPool = new List<ParcelaTemplateSO>();
+    [Tooltip("Cuántas parcelas se seleccionan del pool al iniciar cada partida")]
+    public int cantidadParcelasASeleccionar = 6;
+
     [Header("Condiciones de fin de partida")]
     [Tooltip("La partida termina al completar este número de ciclos")]
     public int ciclosMaximos = 12;
-    [Tooltip("Si el presupuesto cae a este valor o menos, la partida termina por quiebra")]
-    public float presupuestoMinimoQuiebra = 0f;
 
     [Header("Estado del juego")]
     public int   cicloActual = 0;
@@ -38,6 +42,9 @@ public class GameManager : MonoBehaviour
         if (Instancia != null && Instancia != this) { Destroy(gameObject); return; }
         Instancia = this;
 
+        // Sincronizar presupuestoAlIniciarCiclo con el valor configurado en Inspector
+        presupuestoAlIniciarCiclo = presupuesto;
+
         // En Awake para que esté listo antes de que cualquier Start() lo lea
         foreach (Parcela parcela in parcelas)
             parcela.InicializarAgua();
@@ -48,10 +55,57 @@ public class GameManager : MonoBehaviour
     private void CargarSiExiste()
     {
         string profileId = ProfileManager.Instance?.CurrentProfile?.id;
-        if (string.IsNullOrEmpty(profileId)) return;
 
-        GameSaveData data = SaveManager.Cargar(profileId);
-        if (data != null) AplicarEstadoGuardado(data);
+        if (!string.IsNullOrEmpty(profileId))
+        {
+            GameSaveData data = SaveManager.Cargar(profileId);
+            if (data != null)
+            {
+                AplicarEstadoGuardado(data);
+                return;
+            }
+        }
+
+        // Sin save: seleccionar parcelas del pool si está configurado
+        if (parcelasPool.Count > 0)
+            InicializarParcelasDesdePool();
+    }
+
+    private void InicializarParcelasDesdePool()
+    {
+        // Mezclar el pool (Fisher-Yates)
+        List<ParcelaTemplateSO> mezcladas = new List<ParcelaTemplateSO>(parcelasPool);
+        for (int i = mezcladas.Count - 1; i > 0; i--)
+        {
+            int j = Random.Range(0, i + 1);
+            ParcelaTemplateSO tmp = mezcladas[i];
+            mezcladas[i]         = mezcladas[j];
+            mezcladas[j]         = tmp;
+        }
+
+        int cantidad = Mathf.Min(cantidadParcelasASeleccionar, mezcladas.Count);
+        parcelas.Clear();
+
+        for (int i = 0; i < cantidad; i++)
+        {
+            ParcelaTemplateSO template = mezcladas[i];
+
+            // Crear instancia de runtime a partir de la plantilla
+            Parcela nueva = new Parcela
+            {
+                nombreParcela     = template.nombreParcela,
+                tipoSuelo         = template.tipoSuelo,
+                aguaBase          = template.aguaBase,
+                accesoVial        = template.accesoVial,
+                estudiada         = false,
+                nivelMejora       = 0,
+                estado            = EstadoParcela.Vacia,
+                decisionTomada    = false,
+                decisionPendiente = new DecisionPendiente()
+            };
+            nueva.InicializarAgua();
+            parcelas.Add(nueva);
+        }
     }
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -373,11 +427,18 @@ public class GameManager : MonoBehaviour
             reporte.esUltimoCiclo = true;
             reporte.razonFin      = "Completaste todos los ciclos de la partida.";
         }
-        else if (presupuesto <= presupuestoMinimoQuiebra)
+        else if (presupuesto <= 0f && !HayCultivosCreciendo())
         {
             reporte.esUltimoCiclo = true;
-            reporte.razonFin      = "Te quedaste sin presupuesto.";
+            reporte.razonFin      = "Sin presupuesto y sin cosechas pendientes. La UAF no puede continuar.";
         }
+    }
+
+    private bool HayCultivosCreciendo()
+    {
+        foreach (Parcela p in parcelas)
+            if (p.estado == EstadoParcela.Plantada) return true;
+        return false;
     }
 
     public GameOverData CrearRegistroFinal(string razon)
@@ -468,25 +529,50 @@ public class GameManager : MonoBehaviour
         presupuestoAlIniciarCiclo = data.presupuestoAlIniciarCiclo;
         historialCiclos           = data.historialCiclos ?? new List<ReporteCiclo>();
 
-        // Restaurar parcelas por índice
-        for (int i = 0; i < parcelas.Count && i < data.parcelas.Count; i++)
+        // Restaurar parcelas — si la lista está vacía (sistema de pool), se crean desde el save
+        if (parcelas.Count == 0)
         {
-            ParcelaSaveData ps = data.parcelas[i];
-            Parcela p          = parcelas[i];
+            foreach (ParcelaSaveData ps in data.parcelas)
+            {
+                Parcela nueva = new Parcela
+                {
+                    nombreParcela     = ps.nombreParcela,
+                    tipoSuelo         = (TipoSuelo)ps.tipoSuelo,
+                    aguaBase          = ps.aguaBase,
+                    disponibilidadAgua = ps.disponibilidadAgua,
+                    accesoVial        = ps.accesoVial,
+                    estudiada         = ps.estudiada,
+                    nivelMejora       = ps.nivelMejora,
+                    estado            = (EstadoParcela)ps.estado,
+                    cicloEnQueSePlanto = ps.cicloEnQueSePlanto,
+                    decisionPendiente = new DecisionPendiente()
+                };
+                nueva.cultivoActual = string.IsNullOrEmpty(ps.cultivoActualNombre)
+                    ? null
+                    : cultivosDisponibles.Find(c => c.nombreCultivo == ps.cultivoActualNombre);
+                parcelas.Add(nueva);
+            }
+        }
+        else
+        {
+            // Lista ya poblada (sistema legado): modificar en sitio por índice
+            for (int i = 0; i < parcelas.Count && i < data.parcelas.Count; i++)
+            {
+                ParcelaSaveData ps = data.parcelas[i];
+                Parcela p          = parcelas[i];
 
-            p.tipoSuelo          = (TipoSuelo)ps.tipoSuelo;
-            p.aguaBase           = ps.aguaBase;
-            p.disponibilidadAgua = ps.disponibilidadAgua;
-            p.accesoVial         = ps.accesoVial;
-            p.estudiada          = ps.estudiada;
-            p.nivelMejora        = ps.nivelMejora;
-            p.estado             = (EstadoParcela)ps.estado;
-            p.cicloEnQueSePlanto = ps.cicloEnQueSePlanto;
-
-            // Buscar el ScriptableObject del cultivo por nombre
-            p.cultivoActual = string.IsNullOrEmpty(ps.cultivoActualNombre)
-                ? null
-                : cultivosDisponibles.Find(c => c.nombreCultivo == ps.cultivoActualNombre);
+                p.tipoSuelo          = (TipoSuelo)ps.tipoSuelo;
+                p.aguaBase           = ps.aguaBase;
+                p.disponibilidadAgua = ps.disponibilidadAgua;
+                p.accesoVial         = ps.accesoVial;
+                p.estudiada          = ps.estudiada;
+                p.nivelMejora        = ps.nivelMejora;
+                p.estado             = (EstadoParcela)ps.estado;
+                p.cicloEnQueSePlanto = ps.cicloEnQueSePlanto;
+                p.cultivoActual      = string.IsNullOrEmpty(ps.cultivoActualNombre)
+                    ? null
+                    : cultivosDisponibles.Find(c => c.nombreCultivo == ps.cultivoActualNombre);
+            }
         }
 
         // Restaurar eventos activos por nombre

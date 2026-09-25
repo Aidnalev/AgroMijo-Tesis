@@ -32,6 +32,13 @@ public class PauseMenuUI : MonoBehaviour
     private void Pausar()
     {
         pausado = true;
+
+        // Cerrar paneles que puedan estar abiertos
+        PanelDecisionUI.Instancia.Cerrar();
+        PanelHistorialUI.Instancia.Cerrar();
+        PanelCatalogoCultivosUI.Instancia.Cerrar();
+        PanelEventosUI.Instancia.Cerrar();
+
         panelPrincipal.SetActive(true);
     }
 

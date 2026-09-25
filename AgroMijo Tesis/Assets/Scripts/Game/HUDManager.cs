@@ -25,7 +25,11 @@ public class HUDManager : MonoBehaviour
     // Flujo: cerrar panel → revisar decisiones → revisar jornales → ejecutar
     public void OnClickAvanzarCiclo()
     {
+        // Cerrar cualquier panel que esté abierto antes de avanzar
         PanelDecisionUI.Instancia.Cerrar();
+        PanelHistorialUI.Instancia.Cerrar();
+        PanelCatalogoCultivosUI.Instancia.Cerrar();
+        PanelEventosUI.Instancia.Cerrar();
 
         if (!GameManager.Instancia.TodasLasParcelasTienenDecision())
             PanelAdvertenciaUI.Instancia.Mostrar(VerificarJornales);
