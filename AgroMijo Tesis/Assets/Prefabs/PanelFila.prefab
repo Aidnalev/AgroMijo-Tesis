@@ -62,14 +62,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 539160735, guid: f8f9a17b53d73024eb9c9add2045ce22, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -94,8 +94,6 @@ MonoBehaviour:
   textoEncabezado: {fileID: 9126918647451464092}
   textoResumen: {fileID: 5210525552058937800}
   botonDetalle: {fileID: 7003405223173408738}
-  panelDetalle: {fileID: 0}
-  textoDetalle: {fileID: 0}
 --- !u!1 &2784775946846049399
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,7 +130,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 25}
+  m_AnchoredPosition: {x: 0, y: 50}
   m_SizeDelta: {x: 130, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2169128690815338645
@@ -284,8 +282,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Ciclo: N'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0082b47764fa3d14894e3a77bfb12a55, type: 2}
+  m_sharedMaterial: {fileID: -4491862178053823163, guid: 0082b47764fa3d14894e3a77bfb12a55, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -421,8 +419,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Detalles
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0082b47764fa3d14894e3a77bfb12a55, type: 2}
+  m_sharedMaterial: {fileID: -4491862178053823163, guid: 0082b47764fa3d14894e3a77bfb12a55, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -558,8 +556,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Ciclo: N'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0082b47764fa3d14894e3a77bfb12a55, type: 2}
+  m_sharedMaterial: {fileID: -4491862178053823163, guid: 0082b47764fa3d14894e3a77bfb12a55, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
