@@ -60,6 +60,7 @@ public class PanelDecisionUI : MonoBehaviour
     // ── Botón "Plantar cultivo" ───────────────────────────────────────────────
     public void OnClickPlantar()
     {
+        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.PlantarClickeado);
         GenerarBotonesDeCultivo();
         panelOpcionesPrincipales.SetActive(false);
         panelSeleccionCultivo.SetActive(true);
@@ -87,8 +88,8 @@ public class PanelDecisionUI : MonoBehaviour
 
     private void ConfirmarPlantar(CultivoData cultivo)
     {
-        // Solo guarda la decisión — el dinero se cobra al avanzar el ciclo
         GameManager.Instancia.GuardarDecisionPlantar(parcelaActual.parcelaAsociada, cultivo);
+        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.CultivoSeleccionado);
         FinalizarDecision();
     }
 

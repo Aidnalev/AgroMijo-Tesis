@@ -28,6 +28,7 @@ public class ParcelaUI : MonoBehaviour
 
     private void AlHacerClic()
     {
+        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.ParcelaClickeada);
         PanelDecisionUI.Instancia.Abrir(this);
     }
 

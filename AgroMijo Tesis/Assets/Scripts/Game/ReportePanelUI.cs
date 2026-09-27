@@ -68,8 +68,9 @@ public class ReportePanelUI : MonoBehaviour
     public void Cerrar()
     {
         panelPrincipal.SetActive(false);
+        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.ReporteCerrado);
         System.Action callback = alCerrar;
-        alCerrar = null;    // limpiar antes de invocar
+        alCerrar = null;
         callback?.Invoke();
     }
 }

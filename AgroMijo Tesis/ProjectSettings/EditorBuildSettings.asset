@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AgroMijoGame.unity
     guid: f107d7f483c68ba41a5faa2736ff567c
+  - enabled: 1
+    path: Assets/Scenes/TutorialGame.unity
+    guid: ac0efcfcb4ca4a34da63464815942696
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

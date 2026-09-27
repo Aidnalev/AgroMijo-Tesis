@@ -25,6 +25,8 @@ public class HUDManager : MonoBehaviour
     // Flujo: cerrar panel → revisar decisiones → revisar jornales → ejecutar
     public void OnClickAvanzarCiclo()
     {
+        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.CicloAvanzado);
+
         // Cerrar cualquier panel que esté abierto antes de avanzar
         PanelDecisionUI.Instancia.Cerrar();
         PanelHistorialUI.Instancia.Cerrar();
