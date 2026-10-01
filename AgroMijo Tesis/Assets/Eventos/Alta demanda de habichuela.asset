@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69ba0ca2eabf4214889f7b51d051c931, type: 3}
+  m_Name: Alta demanda de habichuela
+  m_EditorClassIdentifier: Assembly-CSharp::EventoGlobalData
+  nombreEvento: Alta demanda de habichuela
+  descripcionAlOcurrir: Un aumento temporal en la demanda local de habichuela incrementa
+    su precio de venta.
+  categoria: 0
+  probabilidadPorCiclo: 0.1
+  esPersistente: 1
+  ciclosHastaAutoResolver: 1
+  esResolvible: 0
+  costoResolucion: 0
+  descripcionResolucion: 
+  cultivoAfectado: {fileID: 11400000, guid: b85db056bbb1c074491ed7d5b792b563, type: 2}
+  modificadorPrecio: 0.2
+  modificadorRendimientoGlobal: 0

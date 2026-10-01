@@ -88,9 +88,9 @@ public class HUDManager : MonoBehaviour
         int disponibles   = GameManager.Instancia.jornalesFamiliares;
         textoJornales.text  = $"Jornales: {comprometidos} / {disponibles}";
 
-        // Rojo si hay déficit, blanco si alcanza
+        // Rojo si hay deficit, verde si alcanza
         textoJornales.color = comprometidos > disponibles
-            ? new UnityEngine.Color(1f, 0.35f, 0.35f)
-            : UnityEngine.Color.white;
+            ? new UnityEngine.Color(0.9f, 0.2f, 0.2f)   // rojo
+            : new UnityEngine.Color(0.1f, 0.7f, 0.1f);  // verde
     }
 }

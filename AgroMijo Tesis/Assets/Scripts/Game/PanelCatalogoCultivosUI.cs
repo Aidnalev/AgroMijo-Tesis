@@ -26,11 +26,13 @@ public class PanelCatalogoCultivosUI : MonoBehaviour
     {
         if (!generado) GenerarCatalogo();
         panelPrincipal.SetActive(true);
+        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.CatalogoAbierto);
     }
 
     public void Cerrar()
     {
         panelPrincipal.SetActive(false);
+        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.CatalogoCerrado);
     }
 
     private void GenerarCatalogo()
@@ -57,7 +59,8 @@ public class PanelCatalogoCultivosUI : MonoBehaviour
                 $"Arcilloso: {FormatearMod(cultivo.modificadorArcilloso)}  |  " +
                 $"Arenoso: {FormatearMod(cultivo.modificadorArenoso)}  |  " +
                 $"Franco: {FormatearMod(cultivo.modificadorFranco)}  |  " +
-                $"Limoso: {FormatearMod(cultivo.modificadorLimoso)}";
+                $"FrancoArcilloso: {FormatearMod(cultivo.modificadorFrancoArcilloso)}  |  " +
+                $"FrancoArenoso: {FormatearMod(cultivo.modificadorFrancoArenoso)}";
         }
 
         generado = true;

@@ -1,9 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Coloca este script en un GameObject vacío en la escena del tutorial.
-// En la escena normal NO existe, así que Instancia es null
-// y las llamadas .NotificarAccion() no hacen nada.
 public class TutorialManager : MonoBehaviour
 {
     public static TutorialManager Instancia { get; private set; }
@@ -14,8 +11,13 @@ public class TutorialManager : MonoBehaviour
         [TextArea(2, 5)]
         public string mensaje;
 
-        [Tooltip("Elemento a destacar con el spotlight. Null = overlay completo.")]
+        [Header("Objetivo UI")]
+        [Tooltip("Elemento UI a destacar. Dejar vacío si el objetivo está en el mundo.")]
         public RectTransform objetivo;
+
+        [Header("Objetivo 3D")]
+        [Tooltip("Elemento 3D del mundo a destacar. Usar solo si no hay objetivo UI.")]
+        public Transform objetivoMundo;
 
         public TutorialCondicion condicion;
     }
@@ -45,15 +47,22 @@ public class TutorialManager : MonoBehaviour
         }
 
         TutorialStep paso = pasos[pasoActual];
+
         bool esManual = paso.condicion == TutorialCondicion.Manual;
-        TutorialOverlayUI.Instancia.MostrarPaso(paso.mensaje, paso.objetivo, esManual);
+
+        TutorialOverlayUI.Instancia.MostrarPaso(
+            paso.mensaje,
+            paso.objetivo,
+            paso.objetivoMundo,
+            esManual
+        );
     }
 
-    // Llamado desde los scripts del juego cuando ocurre una acción.
-    // Si la condición del paso actual coincide, avanza automáticamente.
     public void NotificarAccion(TutorialCondicion condicion)
     {
-        if (pasoActual < 0 || pasoActual >= pasos.Count) return;
+        if (pasoActual < 0 || pasoActual >= pasos.Count)
+            return;
+
         if (pasos[pasoActual].condicion == condicion)
             AvanzarPaso();
     }
@@ -61,6 +70,22 @@ public class TutorialManager : MonoBehaviour
     private void TerminarTutorial()
     {
         TutorialOverlayUI.Instancia.Ocultar();
+        LimpiarDatosTutorial();
         SceneLoader.Instance.LoadMainMenu();
+    }
+
+    public void SaltarTutorial()
+    {
+        TutorialOverlayUI.Instancia.Ocultar();
+        LimpiarDatosTutorial();
+        SceneLoader.Instance.LoadMainMenu();
+    }
+
+    private void LimpiarDatosTutorial()
+    {
+        string profileId = ProfileManager.Instance?.CurrentProfile?.id;
+
+        if (!string.IsNullOrEmpty(profileId))
+            SaveManager.Borrar(profileId);
     }
 }

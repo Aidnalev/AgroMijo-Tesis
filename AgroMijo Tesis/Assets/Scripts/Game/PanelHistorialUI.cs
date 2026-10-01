@@ -22,6 +22,7 @@ public class PanelHistorialUI : MonoBehaviour
     {
         Refrescar();
         panelPrincipal.SetActive(true);
+        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.HistorialAbierto);
     }
 
     public void Cerrar()

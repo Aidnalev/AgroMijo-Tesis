@@ -1,0 +1,6 @@
+@AgroMijo.API_HostAddress = http://localhost:5145
+
+GET {{AgroMijo.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

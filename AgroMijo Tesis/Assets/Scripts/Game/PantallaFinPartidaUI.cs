@@ -102,19 +102,6 @@ public class PantallaFinPartidaUI : MonoBehaviour
         panelPrincipal.SetActive(true);
     }
 
-    // Conecta al botón "Exportar datos"
-    public void OnClickExportar()
-    {
-        string profileId = ProfileManager.Instance?.CurrentProfile?.id;
-        if (string.IsNullOrEmpty(profileId)) return;
-
-        string ruta = ExportManager.ExportarCSV(profileId);
-
-        PanelNotificacionUI.Instancia.Mostrar(ruta != null
-            ? "Exportacion completada.\n\nArchivo guardado en:\n" + ruta
-            : "No hay partidas para exportar aun.");
-    }
-
     // Conecta al botón "Volver al menú"
     public void OnClickVolverAlMenu()
     {

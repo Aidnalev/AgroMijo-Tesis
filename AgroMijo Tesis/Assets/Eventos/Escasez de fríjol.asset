@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69ba0ca2eabf4214889f7b51d051c931, type: 3}
+  m_Name: "Escasez de fr\xEDjol"
+  m_EditorClassIdentifier: Assembly-CSharp::EventoGlobalData
+  nombreEvento: "Escasez de fr\xEDjol"
+  descripcionAlOcurrir: "Una disminuci\xF3n en la producci\xF3n de fr\xEDjol de la
+    vereda ha reducido la oferta disponible en el mercado."
+  categoria: 0
+  probabilidadPorCiclo: 0.1
+  esPersistente: 1
+  ciclosHastaAutoResolver: 2
+  esResolvible: 0
+  costoResolucion: 0
+  descripcionResolucion: 
+  cultivoAfectado: {fileID: 11400000, guid: bdc7cee20d69c96418fdf5d90e15ef95, type: 2}
+  modificadorPrecio: 0.25
+  modificadorRendimientoGlobal: 0

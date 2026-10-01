@@ -21,11 +21,13 @@ public class PanelEventosUI : MonoBehaviour
     {
         RefrescarLista();
         panelPrincipal.SetActive(true);
+        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.EventoAbierto);
     }
 
     public void Cerrar()
     {
         panelPrincipal.SetActive(false);
+        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.EventoCerrado);
     }
 
     private void RefrescarLista()
@@ -38,7 +40,9 @@ public class PanelEventosUI : MonoBehaviour
 
         foreach (EventoGlobalActivo activo in activos)
         {
-            if (activo.resuelto) continue;
+            if (!EventoDebeMostrarse(activo))
+                continue;
+
             hayAlguno = true;
 
             FilaEventoUI fila = Instantiate(filaEventoPrefab, contenedorFilasEvento);
@@ -71,7 +75,9 @@ public class PanelEventosUI : MonoBehaviour
     private void OnClickToggle(EventoGlobalActivo activo, FilaEventoUI fila)
     {
         GameManager.Instancia.ToggleResolucionEvento(activo);
-        ActualizarTextoBoton(fila, activo); // refresca solo este botón, sin reconstruir toda la lista
+        ActualizarTextoBoton(fila, activo);
+        if (activo.resolucionPendiente)
+            TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.EventoResuelto);
     }
 
     private void ActualizarTextoBoton(FilaEventoUI fila, EventoGlobalActivo activo)
@@ -79,5 +85,26 @@ public class PanelEventosUI : MonoBehaviour
         fila.botonResolver.GetComponentInChildren<TMP_Text>().text = activo.resolucionPendiente
             ? $"[Pendiente] Cancelar"
             : $"Resolver (${activo.datos.costoResolucion:N0})";
+    }
+    private bool EventoDebeMostrarse(EventoGlobalActivo activo)
+    {
+        // Si todavía está activo, siempre se muestra.
+        if (!activo.resuelto)
+            return true;
+
+        // Si se resolvió automáticamente, no se muestra.
+        if (!activo.resueltoPorJugador)
+            return false;
+
+        // Si no tiene efecto posterior, no hay nada que mostrar.
+        if (activo.datos.momentoEfecto != MomentoEfectoEvento.AlResolver)
+            return false;
+
+        // 0 = duración infinita.
+        if (activo.datos.ciclosEfectoDespuesDeResolver == 0)
+            return true;
+
+        // Mientras todavía tenga ciclos de efecto.
+        return activo.ciclosEfectoPosterior < activo.datos.ciclosEfectoDespuesDeResolver;
     }
 }

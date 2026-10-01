@@ -32,6 +32,9 @@ public class PanelDecisionUI : MonoBehaviour
 
     public void Abrir(ParcelaUI parcelaUI)
     {
+        if (parcelaActual != null && parcelaActual != parcelaUI)
+            parcelaActual.Cerrar();
+
         parcelaActual = parcelaUI;
         Parcela p = parcelaUI.parcelaAsociada;
 
@@ -53,6 +56,7 @@ public class PanelDecisionUI : MonoBehaviour
 
     public void Cerrar()
     {
+        parcelaActual?.Cerrar(); // cierra el panel de info de la parcela también
         panelPrincipal.SetActive(false);
         parcelaActual = null;
     }
@@ -97,6 +101,7 @@ public class PanelDecisionUI : MonoBehaviour
     public void OnClickEstudiar()
     {
         GameManager.Instancia.GuardarDecisionEstudiar(parcelaActual.parcelaAsociada);
+        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.EstudiarClickeado);
         FinalizarDecision();
     }
 
@@ -104,6 +109,7 @@ public class PanelDecisionUI : MonoBehaviour
     public void OnClickMejorar()
     {
         GameManager.Instancia.GuardarDecisionMejorar(parcelaActual.parcelaAsociada);
+        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.MejorarClickeado);
         FinalizarDecision();
     }
 
@@ -111,6 +117,7 @@ public class PanelDecisionUI : MonoBehaviour
     public void OnClickEsperar()
     {
         GameManager.Instancia.GuardarDecisionEsperar(parcelaActual.parcelaAsociada);
+        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.EsperarClickeado);
         FinalizarDecision();
     }
 

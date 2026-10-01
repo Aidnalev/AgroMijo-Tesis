@@ -4,10 +4,11 @@ using UnityEngine;
 // los datos reales de la Provincia Comunera (pendiente RF-20 en la matriz).
 public enum TipoSuelo
 {
-    Arcilloso,
     Arenoso,
     Franco,
-    Limoso
+    Arcilloso,
+    FrancoArcilloso,
+    FrancoArenoso
 }
 
 // Representa un cultivo seleccionable. Crea uno por cada uno de tus 4 cultivos
@@ -41,7 +42,8 @@ public class CultivoData : ScriptableObject
     public float modificadorArcilloso = 1f;
     public float modificadorArenoso = 1f;
     public float modificadorFranco = 1f;
-    public float modificadorLimoso = 1f;
+    public float modificadorFrancoArcilloso = 1f;
+    public float modificadorFrancoArenoso = 1f;
 
     public float ObtenerModificadorPorSuelo(TipoSuelo tipo)
     {
@@ -50,7 +52,8 @@ public class CultivoData : ScriptableObject
             case TipoSuelo.Arcilloso: return modificadorArcilloso;
             case TipoSuelo.Arenoso: return modificadorArenoso;
             case TipoSuelo.Franco: return modificadorFranco;
-            case TipoSuelo.Limoso: return modificadorLimoso;
+            case TipoSuelo.FrancoArcilloso: return modificadorFrancoArcilloso;
+            case TipoSuelo.FrancoArenoso: return modificadorFrancoArenoso;
             default: return 1f;
         }
     }

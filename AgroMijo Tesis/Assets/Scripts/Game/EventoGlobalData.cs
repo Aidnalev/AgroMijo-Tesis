@@ -1,5 +1,9 @@
 using UnityEngine;
-
+public enum MomentoEfectoEvento
+{
+    MientrasActivo,
+    AlResolver
+}
 public enum CategoriaEvento
 {
     Mercado,         // alza/baja de precios de un cultivo específico
@@ -24,6 +28,12 @@ public class EventoGlobalData : ScriptableObject
     public bool esPersistente = false;
     [Tooltip("Ciclos hasta que se resuelve solo. 0 = nunca se resuelve solo.")]
     public int ciclosHastaAutoResolver = 0;
+
+    [Header("Efecto del evento")]
+    public MomentoEfectoEvento momentoEfecto = MomentoEfectoEvento.MientrasActivo;
+
+    [Tooltip("Ciclos durante los cuales se mantiene el efecto después de resolverlo mediante inversión.")]
+    public int ciclosEfectoDespuesDeResolver = 0;
 
     [Header("Resolución opcional por inversión")]
     public bool esResolvible = false;

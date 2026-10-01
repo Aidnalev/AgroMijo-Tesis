@@ -26,6 +26,11 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
+    public void LoadTutorial()
+    {
+        SceneManager.LoadScene("TutorialGame");
+    }
+
     public void QuitGame()
     {
         Application.Quit();

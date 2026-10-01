@@ -222,10 +222,13 @@ public class GameManager : MonoBehaviour
 
         VerificarFinDeCiclo(reporte);
 
-        // Autosave: guarda después de cada ciclo vinculado al perfil activo
-        string profileId = ProfileManager.Instance?.CurrentProfile?.id;
-        if (!string.IsNullOrEmpty(profileId))
-            SaveManager.Guardar(CrearEstadoGuardado());
+        // Autosave: solo en partida real, no en tutorial
+        if (TutorialManager.Instancia == null)
+        {
+            string profileId = ProfileManager.Instance?.CurrentProfile?.id;
+            if (!string.IsNullOrEmpty(profileId))
+                SaveManager.Guardar(CrearEstadoGuardado());
+        }
 
         return reporte;
     }
@@ -326,6 +329,12 @@ public class GameManager : MonoBehaviour
                     categoria   = CategoriaGasto.ResolucionEvento
                 });
                 activo.resuelto = true;
+                activo.resueltoPorJugador = true;
+                activo.ciclosEfectoPosterior = 0;
+
+                reporte.eventosOcurridos.Add(
+                    $"[Resuelto por inversión] {activo.datos.nombreEvento}"
+                );
             }
 
             activo.resolucionPendiente = false;
@@ -343,7 +352,11 @@ public class GameManager : MonoBehaviour
                 && activo.ciclosActivo >= activo.datos.ciclosHastaAutoResolver)
             {
                 activo.resuelto = true;
-                reporte.eventosOcurridos.Add($"[Resuelto] {activo.datos.nombreEvento}");
+                activo.resueltoPorJugador = false;
+
+                reporte.eventosOcurridos.Add(
+                    $"[Resuelto automáticamente] {activo.datos.nombreEvento}"
+                );
             }
             else
             {
@@ -368,26 +381,67 @@ public class GameManager : MonoBehaviour
     {
         foreach (Parcela parcela in parcelas)
         {
-            if (!parcela.ListaParaCosecha(cicloActual)) continue;
+            if (!parcela.ListaParaCosecha(cicloActual))
+                continue;
 
-            CultivoData cultivo      = parcela.cultivoActual;
-            float modSuelo           = cultivo.ObtenerModificadorPorSuelo(parcela.tipoSuelo);
-            float modAgua            = Mathf.Lerp(0.5f, 1f, parcela.disponibilidadAgua);
-            float modFertilizacion   = parcela.TieneFertilizacion ? 1.2f : 1f;
-            float modEventos         = 1f;
+            CultivoData cultivo = parcela.cultivoActual;
+
+            float modSuelo = cultivo.ObtenerModificadorPorSuelo(parcela.tipoSuelo);
+            float modAgua = Mathf.Lerp(0.5f, 1f, parcela.disponibilidadAgua);
+            float modFertilizacion = parcela.TieneFertilizacion ? 1.2f : 1f;
+
+            float modEventos = 1f;
 
             foreach (EventoGlobalActivo activo in eventosActivosPersistentes)
             {
-                if (activo.resuelto) continue;
-                if (activo.datos.cultivoAfectado == null || activo.datos.cultivoAfectado == cultivo)
-                    modEventos += activo.datos.modificadorPrecio;
+                bool efectoAplicable = false;
 
-                float impactoVial = activo.datos.modificadorRendimientoGlobal;
-                if (activo.datos.categoria == CategoriaEvento.Infraestructura && parcela.TieneAccesoVial)
-                    impactoVial *= 0.5f;
+                // Evento que afecta mientras está activo
+                if (activo.datos.momentoEfecto == MomentoEfectoEvento.MientrasActivo)
+                {
+                    efectoAplicable = !activo.resuelto;
+                }
 
-                modEventos += impactoVial;
+                // Evento que da un beneficio después de que
+                // el jugador invierte para resolverlo
+                else if (activo.datos.momentoEfecto == MomentoEfectoEvento.AlResolver)
+                {
+                    efectoAplicable =
+                        activo.resueltoPorJugador &&
+                        (
+                            activo.datos.ciclosEfectoDespuesDeResolver == 0 ||
+                            activo.ciclosEfectoPosterior < activo.datos.ciclosEfectoDespuesDeResolver
+                        );
+                }
+
+                if (!efectoAplicable)
+                    continue;
+
+                // Si tiene cultivo específico, solo afecta ese cultivo.
+                if (activo.datos.cultivoAfectado != null &&
+                    activo.datos.cultivoAfectado != cultivo)
+                {
+                    continue;
+                }
+
+                // Modificador de precio
+                modEventos += activo.datos.modificadorPrecio;
+
+                // Modificador de rendimiento
+                float impactoRendimiento =
+                    activo.datos.modificadorRendimientoGlobal;
+
+                // Las mejoras de acceso vial reducen el impacto
+                // de los eventos de infraestructura.
+                if (activo.datos.categoria == CategoriaEvento.Infraestructura &&
+                    parcela.TieneAccesoVial)
+                {
+                    impactoRendimiento *= 0.5f;
+                }
+
+                modEventos += impactoRendimiento;
             }
+
             modEventos = Mathf.Clamp(modEventos, 0f, 2f);
 
             float resultado = cultivo.rendimientoBase
@@ -397,10 +451,12 @@ public class GameManager : MonoBehaviour
                             * modFertilizacion
                             * modificadorJornales;
 
-            presupuesto           += resultado;
+            presupuesto += resultado;
             reporte.gananciaTotal += resultado;
+
             reporte.cosechasRealizadas.Add(
-                $"{cultivo.nombreCultivo} en {parcela.nombreParcela}: ${resultado:N0}");
+                $"{parcela.nombreParcela}: {cultivo.nombreCultivo} : ${resultado:N0}"
+            );
 
             parcela.Cosechar();
         }
@@ -422,6 +478,8 @@ public class GameManager : MonoBehaviour
 
     private void VerificarFinDeCiclo(ReporteCiclo reporte)
     {
+        if (TutorialManager.Instancia != null) return; // tutorial no tiene fin de partida
+
         if (cicloActual >= ciclosMaximos)
         {
             reporte.esUltimoCiclo = true;

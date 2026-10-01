@@ -34,6 +34,7 @@ public class FilaHistorialUI : MonoBehaviour
     private void VerDetalle()
     {
         PanelHistorialUI.Instancia.Cerrar();
+        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.DetalleHistorialVisto);
         ReportePanelUI.Instancia.Mostrar(reporteAsociado);
     }
 }

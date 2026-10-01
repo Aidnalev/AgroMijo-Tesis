@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuUI : MonoBehaviour
@@ -95,6 +96,13 @@ public class MainMenuUI : MonoBehaviour
         botonContinuar.gameObject.SetActive(hayPerfil && hayGuardado);
     }
 
+    // Carga la escena del tutorial directamente desde el MainMenu
+    // para evitar dependencia del SceneLoader singleton
+    public void LoadTutorial()
+    {
+        SceneManager.LoadScene("TutorialGame");
+    }
+
     public void OpenProfiles()
     {
         mainMenuPanel.SetActive(false);
@@ -106,5 +114,9 @@ public class MainMenuUI : MonoBehaviour
         profilesPanel.SetActive(false);
         mainMenuPanel.SetActive(true);
         RefrescarBotones();
+    }
+    public void SalirDelJuego()
+    {
+        Application.Quit();
     }
 }

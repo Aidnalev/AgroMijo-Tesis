@@ -1,0 +1,190 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|c:\\github\\agromijo tesis\\agromijo api\\agromijo.api\\models\\gamereport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|solutionrelative:models\\gamereport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|c:\\github\\agromijo tesis\\agromijo api\\agromijo.api\\controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|solutionrelative:controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|c:\\github\\agromijo tesis\\agromijo api\\agromijo.api\\models\\playerprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|solutionrelative:models\\playerprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|c:\\github\\agromijo tesis\\agromijo api\\agromijo.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|c:\\github\\agromijo tesis\\agromijo api\\agromijo.api\\controllers\\profilescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|solutionrelative:controllers\\profilescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|c:\\github\\agromijo tesis\\agromijo api\\agromijo.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|c:\\github\\agromijo tesis\\agromijo api\\agromijo.api\\controllers\\mongotestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|solutionrelative:controllers\\mongotestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|c:\\github\\agromijo tesis\\agromijo api\\agromijo.api\\data\\mongodbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|solutionrelative:data\\mongodbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|c:\\github\\agromijo tesis\\agromijo api\\agromijo.api\\data\\mongodbsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|solutionrelative:data\\mongodbsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|c:\\github\\agromijo tesis\\agromijo api\\agromijo.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5ADC24DD-353D-41AC-AFAC-B6A7C5EDB0BD}|AgroMijo.API.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ReportsController.cs",
+              "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Controllers\\ReportsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ReportsController.cs",
+              "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Controllers\\ReportsController.cs",
+              "RelativeToolTip": "Controllers\\ReportsController.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAgwDAAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-01T06:59:23.963Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GameReport.cs",
+              "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Models\\GameReport.cs",
+              "RelativeDocumentMoniker": "Models\\GameReport.cs",
+              "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Models\\GameReport.cs",
+              "RelativeToolTip": "Models\\GameReport.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-01T06:58:44.312Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Properties\\launchSettings.json",
+              "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-10-01T05:46:10.217Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ProfilesController.cs",
+              "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Controllers\\ProfilesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ProfilesController.cs",
+              "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Controllers\\ProfilesController.cs",
+              "RelativeToolTip": "Controllers\\ProfilesController.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAowC0AAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-01T05:43:53.597Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PlayerProfile.cs",
+              "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Models\\PlayerProfile.cs",
+              "RelativeDocumentMoniker": "Models\\PlayerProfile.cs",
+              "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Models\\PlayerProfile.cs",
+              "RelativeToolTip": "Models\\PlayerProfile.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAxwAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-01T05:43:23.419Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MongoTestController.cs",
+              "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Controllers\\MongoTestController.cs",
+              "RelativeDocumentMoniker": "Controllers\\MongoTestController.cs",
+              "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Controllers\\MongoTestController.cs",
+              "RelativeToolTip": "Controllers\\MongoTestController.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAgwCkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-01T05:37:32.966Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "MongoDbService.cs",
+              "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Data\\MongoDbService.cs",
+              "RelativeDocumentMoniker": "Data\\MongoDbService.cs",
+              "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Data\\MongoDbService.cs",
+              "RelativeToolTip": "Data\\MongoDbService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-01T05:33:57.112Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-01T05:31:43.921Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MongoDbSettings.cs",
+              "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Data\\MongoDbSettings.cs",
+              "RelativeDocumentMoniker": "Data\\MongoDbSettings.cs",
+              "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Data\\MongoDbSettings.cs",
+              "RelativeToolTip": "Data\\MongoDbSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-01T05:31:17.939Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-10-01T05:30:31.951Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

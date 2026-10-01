@@ -7,18 +7,30 @@ using System.Collections.Generic;
 [Serializable]
 public class GameOverData
 {
+    // Identificador único de este reporte/partida
+    public string reportId;
+
+    // Identificación del perfil
     public string profileId;
     public string profileAlias;
-    public string fechaPartida;       // "2026-04-15 14:32"
-    public int    ciclosJugados;
-    public string razonFin;           // "Ciclos completados" / "Quiebra" / "Manual"
 
-    public float presupuestoInicial;  // al empezar la partida (ciclo 0)
+    // Información de la partida
+    public string fechaPartida;
+    public int ciclosJugados;
+    public string razonFin;
+
+    // Estado de sincronización con el servidor
+    public bool sincronizado = false;
+
+    // Resumen económico
+    public float presupuestoInicial;
     public float presupuestoFinal;
     public float gananciaAcumulada;
     public float gastoAcumulado;
 
-    public List<ReporteCiclo> historialCiclos = new List<ReporteCiclo>();
+    // Detalle de cada ciclo
+    public List<ReporteCiclo> historialCiclos =
+        new List<ReporteCiclo>();
 }
 
 // Contenedor de todos los registros de un perfil (para serializar con JsonUtility)

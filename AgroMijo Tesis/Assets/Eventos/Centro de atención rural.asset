@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69ba0ca2eabf4214889f7b51d051c931, type: 3}
+  m_Name: "Centro de atenci\xF3n rural"
+  m_EditorClassIdentifier: Assembly-CSharp::EventoGlobalData
+  nombreEvento: "Centro de atenci\xF3n rural"
+  descripcionAlOcurrir: "La comunidad propone invertir en mejorar la atenci\xF3n
+    b\xE1sica de salud de la vereda."
+  categoria: 2
+  probabilidadPorCiclo: 0.05
+  esPersistente: 1
+  ciclosHastaAutoResolver: 3
+  momentoEfecto: 1
+  ciclosEfectoDespuesDeResolver: 0
+  esResolvible: 1
+  costoResolucion: 2000000
+  descripcionResolucion: "La inversi\xF3n contribuye a mejorar la disponibilidad
+    de atenci\xF3n b\xE1sica para la comunidad."
+  cultivoAfectado: {fileID: 0}
+  modificadorPrecio: 0
+  modificadorRendimientoGlobal: 0.1

@@ -1,52 +1,61 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
+// Ya no es un Button. Es un panel informativo que se abre y cierra
+// junto con el PanelDecisionUI cuando el jugador clickea el cubo en el mundo.
 public class ParcelaUI : MonoBehaviour
 {
-    [Header("Referencias de UI (arrástralas en el Inspector)")]
+    [Header("Referencias de UI")]
     public TMP_Text textoNombre;
     public TMP_Text textoCultivo;
-    public TMP_Text textoSuelo;   // muestra "Suelo: ?" hasta que se estudie
-    public TMP_Text textoAgua;    // muestra disponibilidad de agua actual
-    public TMP_Text textoMejoras; // muestra el nivel de mejoras actual
+    public TMP_Text textoSuelo;
+    public TMP_Text textoAgua;
+    public TMP_Text textoMejoras;
     public GameObject iconoCheck;
 
-    [Tooltip("Índice de esta parcela en la lista de GameManager.parcelas (0 = primera)")]
+    [Tooltip("Índice en GameManager.parcelas (0 = primera)")]
     public int indiceParcela = 0;
+
+    [Tooltip("Cubo del mundo 3D correspondiente (opcional)")]
+    public ParcelaMundo parcelaMundo;
 
     [HideInInspector] public Parcela parcelaAsociada;
 
-    private void Start()
-    {
-        parcelaAsociada    = GameManager.Instancia.parcelas[indiceParcela];
-        textoNombre.text   = parcelaAsociada.nombreParcela;
-        ActualizarVisual();
+    // Inicialización lazy: se inicializa la primera vez que se abre
+    private bool inicializado = false;
 
-        GetComponent<Button>().onClick.AddListener(AlHacerClic);
+    // El panel empieza INACTIVO en el editor — ParcelaMundo lo activa al hacer clic
+    public void Abrir()
+    {
+        if (!inicializado)
+        {
+            parcelaAsociada  = GameManager.Instancia.parcelas[indiceParcela];
+            inicializado     = true;
+        }
+        gameObject.SetActive(true);
+        textoNombre.text = parcelaAsociada.nombreParcela;
+        ActualizarVisual();
     }
 
-    private void AlHacerClic()
+    public void Cerrar()
     {
-        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.ParcelaClickeada);
-        PanelDecisionUI.Instancia.Abrir(this);
+        gameObject.SetActive(false);
     }
 
     public void ActualizarVisual()
     {
+        if (parcelaAsociada == null) return; // aún no inicializado
+
         iconoCheck.SetActive(parcelaAsociada.decisionTomada);
 
-        // Suelo: oculto hasta que el jugador pague el estudio
         textoSuelo.text = parcelaAsociada.estudiada
             ? $"Suelo: {parcelaAsociada.tipoSuelo}"
             : "Suelo: ?";
 
-        // Agua: valor actual con una barra visual simple
         int barras = Mathf.RoundToInt(parcelaAsociada.disponibilidadAgua * 5);
         string barraAgua = new string('|', barras).PadRight(5, '.');
         textoAgua.text = $"Agua: [{barraAgua}] {parcelaAsociada.disponibilidadAgua * 100f:F0}%";
 
-        // Mejoras: nivel actual y qué tiene
         string descMejora = parcelaAsociada.nivelMejora switch
         {
             0 => "Sin mejoras",
@@ -59,7 +68,6 @@ public class ParcelaUI : MonoBehaviour
             ? $"Mejoras: {descMejora} ({parcelaAsociada.nivelMejora}/3)"
             : $"Mejoras: {descMejora} (Max)";
 
-        // Cultivo: siempre visible, independiente de la decisión pendiente
         if (parcelaAsociada.estado == EstadoParcela.Plantada)
         {
             int ciclosRestantes = parcelaAsociada.cultivoActual.duracionCiclos
@@ -68,10 +76,9 @@ public class ParcelaUI : MonoBehaviour
         }
         else
         {
-            textoCultivo.text = "Vacía";
+            textoCultivo.text = "Vacia";
         }
 
-        // Decisión pendiente: se muestra junto al nombre de la parcela
         string decisionTexto = parcelaAsociada.decisionPendiente.tipo switch
         {
             TipoDecision.Plantar  => $"Plantar: {parcelaAsociada.decisionPendiente.cultivoSeleccionado?.nombreCultivo ?? "?"}",
@@ -84,5 +91,7 @@ public class ParcelaUI : MonoBehaviour
         textoNombre.text = string.IsNullOrEmpty(decisionTexto)
             ? parcelaAsociada.nombreParcela
             : $"{parcelaAsociada.nombreParcela}  [{decisionTexto}]";
+
+        parcelaMundo?.ActualizarVisual3D();
     }
 }

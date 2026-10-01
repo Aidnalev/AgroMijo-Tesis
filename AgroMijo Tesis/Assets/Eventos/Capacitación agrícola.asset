@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69ba0ca2eabf4214889f7b51d051c931, type: 3}
+  m_Name: "Capacitaci\xF3n agr\xEDcola"
+  m_EditorClassIdentifier: Assembly-CSharp::EventoGlobalData
+  nombreEvento: "Capacitaci\xF3n agr\xEDcola"
+  descripcionAlOcurrir: "Se ofrece un programa de capacitaci\xF3n para los productores
+    de la vereda sobre manejo de cultivos y recursos."
+  categoria: 2
+  probabilidadPorCiclo: 0.08
+  esPersistente: 1
+  ciclosHastaAutoResolver: 3
+  momentoEfecto: 1
+  ciclosEfectoDespuesDeResolver: 0
+  esResolvible: 1
+  costoResolucion: 1000000
+  descripcionResolucion: "La inversi\xF3n permite acceder a capacitaci\xF3n y asesor\xEDa
+    para mejorar el manejo de los cultivos."
+  cultivoAfectado: {fileID: 0}
+  modificadorPrecio: 0
+  modificadorRendimientoGlobal: 0.05

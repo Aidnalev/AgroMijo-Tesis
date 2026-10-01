@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69ba0ca2eabf4214889f7b51d051c931, type: 3}
+  m_Name: Deslizamiento de tierra
+  m_EditorClassIdentifier: Assembly-CSharp::EventoGlobalData
+  nombreEvento: Deslizamiento de tierra
+  descripcionAlOcurrir: Las lluvias provocaron un deslizamiento que afecta temporalmente
+    el acceso a algunas parcelas.
+  categoria: 3
+  probabilidadPorCiclo: 0.05
+  esPersistente: 1
+  ciclosHastaAutoResolver: 2
+  esResolvible: 1
+  costoResolucion: 1500000
+  descripcionResolucion: "Se puede financiar la remoci\xF3n de material y la recuperaci\xF3n
+    temporal del acceso."
+  cultivoAfectado: {fileID: 0}
+  modificadorPrecio: -0.15
+  modificadorRendimientoGlobal: 0

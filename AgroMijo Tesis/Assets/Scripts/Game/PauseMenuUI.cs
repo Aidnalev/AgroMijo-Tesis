@@ -31,9 +31,15 @@ public class PauseMenuUI : MonoBehaviour
 
     private void Pausar()
     {
+        // En el tutorial, ESC solo salta el tutorial — no abre el menú de pausa
+        if (TutorialManager.Instancia != null)
+        {
+            TutorialManager.Instancia.SaltarTutorial();
+            return;
+        }
+
         pausado = true;
 
-        // Cerrar paneles que puedan estar abiertos
         PanelDecisionUI.Instancia.Cerrar();
         PanelHistorialUI.Instancia.Cerrar();
         PanelCatalogoCultivosUI.Instancia.Cerrar();

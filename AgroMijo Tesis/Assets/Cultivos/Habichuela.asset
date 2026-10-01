@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c418899012c204ebbf8affa3b0a77a, type: 3}
+  m_Name: Habichuela
+  m_EditorClassIdentifier: Assembly-CSharp::CultivoData
+  nombreCultivo: Habichuela
+  duracionCiclos: 4
+  costoSemilla: 1050000
+  rendimientoBase: 22000000
+  jornalesParaPlantar: 9
+  jornalesMantenimientoPorCiclo: 22
+  jornalesParaCosechar: 32
+  modificadorArcilloso: 0.5
+  modificadorArenoso: 1
+  modificadorFranco: 1
+  modificadorFrancoArcilloso: 0.8
+  modificadorFrancoArenoso: 1.3
