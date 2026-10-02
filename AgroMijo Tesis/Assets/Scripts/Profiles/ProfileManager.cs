@@ -9,8 +9,6 @@ public class ProfileManager : MonoBehaviour
 {
     public static ProfileManager Instance { get; private set; }
 
-    private const string API_URL = "https://localhost:7240";
-
     private string savePath;
 
     public ProfileData profileData;
@@ -104,7 +102,7 @@ public class ProfileManager : MonoBehaviour
         string id,
         Action<bool, string> onComplete)
     {
-        string url = API_URL + "/api/profiles/" + id;
+        string url = $"{ApiConfig.API_URL}/api/profiles/{id}";
 
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
@@ -177,7 +175,7 @@ public class ProfileManager : MonoBehaviour
 
     private IEnumerator SyncProfile(PlayerProfile profile)
     {
-        string url = API_URL + "/api/profiles";
+        string url = $"{ApiConfig.API_URL}/api/profiles";
 
         ProfileRequest profileRequest =
             new ProfileRequest(profile.id, profile.alias);

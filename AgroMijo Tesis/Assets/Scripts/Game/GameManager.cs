@@ -4,6 +4,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instancia { get; private set; }
+    [Header("Escenario personalizado")]
 
     [Header("Configuración inicial")]
     public List<CultivoData> cultivosDisponibles;
@@ -39,13 +40,19 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instancia != null && Instancia != this) { Destroy(gameObject); return; }
+        if (Instancia != null && Instancia != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instancia = this;
 
-        // Sincronizar presupuestoAlIniciarCiclo con el valor configurado en Inspector
+        if (PartidaConfig.UsarEscenarioPersonalizado)
+            AplicarEscenarioPersonalizado();
+
         presupuestoAlIniciarCiclo = presupuesto;
 
-        // En Awake para que esté listo antes de que cualquier Start() lo lea
         foreach (Parcela parcela in parcelas)
             parcela.InicializarAgua();
 
@@ -661,5 +668,99 @@ public class GameManager : MonoBehaviour
         foreach (Parcela parcela in parcelas)
             if (!parcela.decisionTomada) return false;
         return true;
+    }
+    private void AplicarEscenarioPersonalizado()
+    {
+        EscenarioConfig config = EscenarioLoader.Cargar();
+
+        if (config == null)
+        {
+            Debug.LogWarning(
+                "No se pudo cargar el escenario personalizado. " +
+                "Se utilizará la configuración del Inspector."
+            );
+
+            PartidaConfig.UsarEscenarioPersonalizado = false;
+            return;
+        }
+
+        // Dinero inicial
+        presupuesto = config.dineroInicial;
+
+        // Costo del jornal
+        costoJornalContratado = config.costoJornal;
+
+        // Cultivos
+        if (config.cultivos != null && config.cultivos.Length > 0)
+        {
+            List<CultivoData> cultivosConfigurados =
+                new List<CultivoData>();
+
+            foreach (string nombre in config.cultivos)
+            {
+                CultivoData cultivo =
+                    cultivosDisponibles.Find(
+                        c => c != null &&
+                             c.nombreCultivo == nombre
+                    );
+
+                if (cultivo != null)
+                {
+                    cultivosConfigurados.Add(cultivo);
+                }
+                else
+                {
+                    Debug.LogWarning(
+                        $"El cultivo '{nombre}' indicado en " +
+                        $"escenario.json no está en cultivosDisponibles."
+                    );
+                }
+            }
+
+            if (cultivosConfigurados.Count > 0)
+                cultivosDisponibles = cultivosConfigurados;
+        }
+
+        // Parcelas
+        if (config.parcelas != null && config.parcelas.Length > 0)
+        {
+            List<ParcelaTemplateSO> parcelasConfiguradas =
+                new List<ParcelaTemplateSO>();
+
+            foreach (string nombre in config.parcelas)
+            {
+                ParcelaTemplateSO parcela =
+                    parcelasPool.Find(
+                        p => p != null &&
+                             p.name == nombre
+                    );
+
+                if (parcela != null)
+                {
+                    parcelasConfiguradas.Add(parcela);
+                }
+                else
+                {
+                    Debug.LogWarning(
+                        $"La parcela '{nombre}' indicada en " +
+                        $"escenario.json no está en parcelasPool."
+                    );
+                }
+            }
+
+            if (parcelasConfiguradas.Count > 0)
+            {
+                parcelasPool = parcelasConfiguradas;
+                cantidadParcelasASeleccionar =
+                    parcelasConfiguradas.Count;
+            }
+        }
+
+        Debug.Log(
+            $"Escenario aplicado: " +
+            $"{cultivosDisponibles.Count} cultivos, " +
+            $"{parcelasPool.Count} parcelas, " +
+            $"${presupuesto:N0} iniciales."
+        );
     }
 }

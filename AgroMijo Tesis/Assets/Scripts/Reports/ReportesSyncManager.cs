@@ -7,9 +7,6 @@ public class ReportesSyncManager : MonoBehaviour
 {
     public static ReportesSyncManager Instance { get; private set; }
 
-    private const string API_URL =
-        "https://localhost:7240";
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -82,8 +79,7 @@ public class ReportesSyncManager : MonoBehaviour
         GameOverData data
     )
     {
-        string url =
-            API_URL + "/api/reports";
+        string url = $"{ApiConfig.API_URL}/api/reports";
 
         GameReportRequest requestData =
             new GameReportRequest(data);

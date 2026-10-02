@@ -1,0 +1,14 @@
+{
+    "dineroInicial": 2000000,
+    "costoJornal": 60000,
+    "cultivos": [
+        "Ahuyama",
+        "Frijol"
+    ],
+    "parcelas": [
+        "Parcela 1",
+        "Parcela 5",
+        "Parcela 9",
+        "Parcela 10"
+    ]
+}

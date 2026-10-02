@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\github\\agromijo tesis\\agromijo tesis\\assets\\scripts\\menu\\mainmenuui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\menu\\mainmenuui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\github\\agromijo tesis\\agromijo tesis\\assets\\scripts\\variadores\\partidaconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\variadores\\partidaconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\github\\agromijo tesis\\agromijo tesis\\assets\\scripts\\game\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\game\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\github\\agromijo tesis\\agromijo tesis\\assets\\scripts\\game\\pantallafinpartidaui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\game\\pantallafinpartidaui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -46,11 +58,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "PartidaConfig.cs",
+              "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Variadores\\PartidaConfig.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Variadores\\PartidaConfig.cs",
+              "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Variadores\\PartidaConfig.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Variadores\\PartidaConfig.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-02T06:24:02.248Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GameManager.cs",
+              "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Game\\GameManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Game\\GameManager.cs",
+              "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Game\\GameManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Game\\GameManager.cs",
+              "ViewState": "AgIAAJACAAAAAAAAAAAuwKoCAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-02T06:21:58.652Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainMenuUI.cs",
+              "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Menu\\MainMenuUI.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Menu\\MainMenuUI.cs",
+              "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Menu\\MainMenuUI.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Menu\\MainMenuUI.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-02T06:19:30.831Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "ReportesSyncManager.cs",
               "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Reports\\ReportesSyncManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Reports\\ReportesSyncManager.cs",
@@ -58,12 +109,11 @@
               "RelativeToolTip": "Assets\\Scripts\\Reports\\ReportesSyncManager.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-01T07:03:03.517Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-10-01T07:03:03.517Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "CreateProfileUI.cs",
               "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Profiles\\CreateProfileUI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Profiles\\CreateProfileUI.cs",
@@ -75,7 +125,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "PlayerProfile.cs",
               "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Profiles\\PlayerProfile.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Profiles\\PlayerProfile.cs",
@@ -87,7 +137,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "ProfileManager.cs",
               "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Profiles\\ProfileManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Profiles\\ProfileManager.cs",
@@ -99,7 +149,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "GameOverData.cs",
               "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Game\\GameOverData.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Game\\GameOverData.cs",
@@ -111,7 +161,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "PantallaFinPartidaUI.cs",
               "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Game\\PantallaFinPartidaUI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Game\\PantallaFinPartidaUI.cs",
@@ -124,7 +174,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "RegistroPartidasManager.cs",
               "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Game\\RegistroPartidasManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Game\\RegistroPartidasManager.cs",
@@ -136,7 +186,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "ReporteCiclo.cs",
               "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Game\\ReporteCiclo.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Game\\ReporteCiclo.cs",
@@ -148,7 +198,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "LoadProfileUI.cs",
               "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Profiles\\LoadProfileUI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Profiles\\LoadProfileUI.cs",

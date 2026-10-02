@@ -7,6 +7,7 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject profilesPanel;
     [SerializeField] private SceneLoader sceneLoader;
+    [SerializeField] private Toggle escenarioPersonalizadoToggle;
 
     [Header("Botones")]
     [SerializeField] private Button botonContinuar; // visible solo si hay guardado activo
@@ -34,13 +35,20 @@ public class MainMenuUI : MonoBehaviour
             return;
         }
 
+        // Guardamos la configuración elegida en el menú
+        PartidaConfig.UsarEscenarioPersonalizado =
+            escenarioPersonalizadoToggle.isOn;
+
         string profileId = ProfileManager.Instance.CurrentProfile.id;
 
         if (SaveManager.ExisteGuardado(profileId))
         {
             GameSaveData saveData = SaveManager.Cargar(profileId);
+
             if (saveData != null)
-                RegistroPartidasManager.GuardarRegistro(CrearRegistroDesdeSave(saveData));
+                RegistroPartidasManager.GuardarRegistro(
+                    CrearRegistroDesdeSave(saveData)
+                );
 
             SaveManager.Borrar(profileId);
         }

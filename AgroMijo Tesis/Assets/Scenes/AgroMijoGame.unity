@@ -13453,6 +13453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a1260b811f33aa46880b371fbe9cbd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  usarEscenarioPersonalizado: 0
   cultivosDisponibles:
   - {fileID: 11400000, guid: dec7e87d750d3274590aeee9aba7fd65, type: 2}
   - {fileID: 11400000, guid: bdc7cee20d69c96418fdf5d90e15ef95, type: 2}
