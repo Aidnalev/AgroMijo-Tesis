@@ -1,0 +1,210 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f4f3;
+    color: #222;
+}
+
+.container {
+    width: min(900px, 90%);
+    margin: 40px auto;
+}
+
+header {
+    margin-bottom: 30px;
+}
+
+    header h1 {
+        margin-bottom: 5px;
+    }
+
+    header p {
+        margin-top: 0;
+        color: #666;
+    }
+
+.search-section,
+.results-section {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.search-group {
+    margin-top: 20px;
+}
+
+    .search-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+.search-row {
+    display: flex;
+    gap: 10px;
+}
+
+    .search-row input {
+        flex: 1;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    background: #3f6b50;
+    color: white;
+}
+
+    button:hover {
+        background: #31543e;
+    }
+
+.message {
+    margin-top: 15px;
+    min-height: 20px;
+}
+
+.report-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 18px;
+    margin-top: 15px;
+}
+
+    .report-card h3 {
+        margin-top: 0;
+    }
+
+.report-data {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 20px;
+}
+
+    .report-data strong {
+        display: block;
+    }
+
+.hidden {
+    display: none;
+}
+
+.error {
+    color: #b42318;
+}
+
+.success {
+    color: #26734d;
+}
+.periods-section {
+    margin-top: 25px;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+
+    .periods-section h4 {
+        margin-bottom: 15px;
+    }
+
+.period-card {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+    .period-card summary {
+        padding: 14px;
+        cursor: pointer;
+        font-weight: bold;
+        background: #f7f8f7;
+    }
+
+        .period-card summary:hover {
+            background: #eef1ee;
+        }
+
+.period-content {
+    padding: 18px;
+}
+
+.period-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 20px;
+    margin-bottom: 20px;
+}
+
+.period-detail {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+    .period-detail ul {
+        margin-bottom: 0;
+    }
+
+    .period-detail li {
+        margin-bottom: 5px;
+    }
+
+.jornales {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+    .jornales p {
+        margin: 5px 0;
+    }
+.date-row {
+    display: flex;
+    gap: 20px;
+}
+
+    .date-row > div {
+        flex: 1;
+    }
+
+    .date-row label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    .date-row input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+
+.search-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.secondary-button {
+    background: #777;
+}
+
+    .secondary-button:hover {
+        background: #666;
+    }

@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 112}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 45095
+  controlID: 237
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 112}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 45127
+  controlID: 301
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 56}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 45128
+  controlID: 270
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -249,19 +249,16 @@ MonoBehaviour:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs:
-      - m_Data: -119008
+      - m_Data: 50996
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
-      - m_Data: -75290
-      - m_Data: -73996
-      - m_Data: 81464
-      - m_Data: 81534
-      - m_Data: 81660
+      - m_Data: -7766
+      - m_Data: -1366
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: ReportSyncManager
-        m_OriginalName: ReportSyncManager
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
@@ -269,10 +266,10 @@ MonoBehaviour:
           width: 0
           height: 0
         m_UserData:
-          m_Data: -119008
+          m_Data: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_TrimLeadingAndTrailingWhitespace: 0
         m_ClientGUIView: {fileID: 5}
@@ -933,9 +930,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 858.6907, y: 594.1124, z: 390.73297}
+    m_Target: {x: 1145.5492, y: 705.406, z: 0}
     speed: 2
-    m_Value: {x: 858.6907, y: 594.1124, z: 390.73297}
+    m_Value: {x: 1145.5492, y: 705.406, z: 0}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -986,9 +983,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 1.1277903
+    m_Target: 759.93256
     speed: 2
-    m_Value: 1.1277903
+    m_Value: 759.93256
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1098,7 +1095,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Reports
+    - Assets/Scenes
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1108,29 +1105,29 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/Reports
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\GitHub\AgroMijo Tesis\AgroMijo Tesis
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 89.20001}
+    scrollPos: {x: 0, y: 79}
     m_SelectedIDs:
-    - m_Data: 95616
+    - m_Data: 50968
     m_LastClickedID:
-      m_Data: 95616
+      m_Data: 50968
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 50926
-    - m_Data: 50928
-    - m_Data: 50930
-    - m_Data: 50932
-    - m_Data: 50934
-    - m_Data: 50936
-    - m_Data: 50938
-    - m_Data: 50940
-    - m_Data: 50942
+    - m_Data: 50836
+    - m_Data: 50838
+    - m_Data: 50840
+    - m_Data: 50842
+    - m_Data: 50844
+    - m_Data: 50846
+    - m_Data: 50848
+    - m_Data: 50850
+    - m_Data: 50852
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1165,15 +1162,15 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 50926
-    - m_Data: 50928
-    - m_Data: 50930
-    - m_Data: 50932
-    - m_Data: 50934
-    - m_Data: 50936
-    - m_Data: 50938
-    - m_Data: 50940
-    - m_Data: 50942
+    - m_Data: 50836
+    - m_Data: 50838
+    - m_Data: 50840
+    - m_Data: 50842
+    - m_Data: 50844
+    - m_Data: 50846
+    - m_Data: 50848
+    - m_Data: 50850
+    - m_Data: 50852
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1203,10 +1200,10 @@ MonoBehaviour:
       m_ResourceFile: 
   m_ListAreaState:
     m_SelectedInstanceIDs:
-    - m_Data: -119008
+    - m_Data: 50996
     m_LastClickedEntityId:
-      m_Data: -119008
-    m_HadKeyboardFocusLastEvent: 1
+      m_Data: 50996
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: []
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1300,7 +1297,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 112}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 45096
+  controlID: 238
   draggingID: 0
 --- !u!114 &13
 MonoBehaviour:
@@ -1321,8 +1318,8 @@ MonoBehaviour:
     y: 0
     width: 446.40002
     height: 412.8
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 76}
+  m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}

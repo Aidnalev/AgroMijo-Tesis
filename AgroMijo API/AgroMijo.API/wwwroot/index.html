@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Consulta de reportes - AgroMijo</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <header>
+            <h1>AgroMijo</h1>
+            <p>Consulta de reportes de partidas</p>
+        </header>
+
+        <section class="search-section">
+
+            <h2>Consultar reportes</h2>
+
+            <div class="search-group">
+                <label for="profileId">
+                    ID del perfil
+                </label>
+
+                <div class="search-row">
+                    <input type="text"
+                           id="profileId"
+                           placeholder="Ej. RF-A3F2"
+                           maxlength="7">
+                </div>
+            </div>
+
+            <div class="search-group">
+
+                <label>
+                    Rango de fechas
+                </label>
+
+                <div class="date-row">
+
+                    <div>
+                        <label for="dateFrom">
+                            Desde
+                        </label>
+
+                        <input type="date"
+                               id="dateFrom">
+                    </div>
+
+                    <div>
+                        <label for="dateTo">
+                            Hasta
+                        </label>
+
+                        <input type="date"
+                               id="dateTo">
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="search-buttons">
+
+                <button id="searchButton">
+                    Buscar
+                </button>
+
+                <button id="clearButton"
+                        class="secondary-button">
+                    Limpiar
+                </button>
+
+            </div>
+
+            <div id="message" class="message"></div>
+
+        </section>
+
+        <section id="resultsSection"
+                 class="results-section hidden">
+
+            <h2>Reportes encontrados</h2>
+
+            <div id="reportsContainer"></div>
+
+        </section>
+
+    </main>
+
+    <script src="js/app.js"></script>
+
+</body>
+</html>
