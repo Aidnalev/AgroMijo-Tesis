@@ -32,13 +32,15 @@ public class EventoGlobalData : ScriptableObject
     [Header("Efecto del evento")]
     public MomentoEfectoEvento momentoEfecto = MomentoEfectoEvento.MientrasActivo;
 
+    [TextArea]
+    public string descripcionEfecto;
+
     [Tooltip("Ciclos durante los cuales se mantiene el efecto después de resolverlo mediante inversión.")]
     public int ciclosEfectoDespuesDeResolver = 0;
 
     [Header("Resolución opcional por inversión")]
     public bool esResolvible = false;
     public float costoResolucion = 0f;
-    [TextArea] public string descripcionResolucion;
 
     [Header("Efectos sobre la cosecha")]
     [Tooltip("Cultivo específico afectado. Dejar vacío = afecta todos.")]

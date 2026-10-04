@@ -19,10 +19,12 @@ MonoBehaviour:
   probabilidadPorCiclo: 0.12
   esPersistente: 1
   ciclosHastaAutoResolver: 2
+  momentoEfecto: 0
+  descripcionEfecto: Disminuye en 10% el precio de venta y el rendimiento de los
+    cultivos.
+  ciclosEfectoDespuesDeResolver: 0
   esResolvible: 1
   costoResolucion: 1000000
-  descripcionResolucion: "Se puede invertir en la adecuaci\xF3n temporal del camino
-    para recuperar el acceso a las parcelas."
   cultivoAfectado: {fileID: 0}
   modificadorPrecio: -0.1
-  modificadorRendimientoGlobal: 0
+  modificadorRendimientoGlobal: -0.1

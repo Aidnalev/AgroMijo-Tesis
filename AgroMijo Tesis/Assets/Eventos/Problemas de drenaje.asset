@@ -19,10 +19,11 @@ MonoBehaviour:
   probabilidadPorCiclo: 0.07
   esPersistente: 1
   ciclosHastaAutoResolver: 2
+  momentoEfecto: 0
+  descripcionEfecto: Reduce en 20% el rendimiento de los cultivos.
+  ciclosEfectoDespuesDeResolver: 0
   esResolvible: 1
   costoResolucion: 900000
-  descripcionResolucion: "Se pueden realizar trabajos de adecuaci\xF3n y drenaje
-    para reducir la acumulaci\xF3n de agua."
   cultivoAfectado: {fileID: 0}
   modificadorPrecio: 0
   modificadorRendimientoGlobal: -0.2

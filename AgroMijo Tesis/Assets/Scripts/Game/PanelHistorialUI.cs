@@ -40,7 +40,7 @@ public class PanelHistorialUI : MonoBehaviour
         if (historial.Count == 0)
         {
             FilaHistorialUI fila = Instantiate(filaPrefab, contenedorFilas);
-            fila.textoEncabezado.text = "Sin ciclos completados aun.";
+            fila.textoEncabezado.text = "Sin periodos completados aun.";
             fila.textoResumen.text    = "";
             fila.botonDetalle.gameObject.SetActive(false);
             return;

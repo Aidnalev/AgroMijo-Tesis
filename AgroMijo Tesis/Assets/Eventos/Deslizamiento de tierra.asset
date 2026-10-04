@@ -19,10 +19,11 @@ MonoBehaviour:
   probabilidadPorCiclo: 0.05
   esPersistente: 1
   ciclosHastaAutoResolver: 2
+  momentoEfecto: 0
+  descripcionEfecto: Reduce en 15% el precio de venta de los cultivos.
+  ciclosEfectoDespuesDeResolver: 0
   esResolvible: 1
   costoResolucion: 1500000
-  descripcionResolucion: "Se puede financiar la remoci\xF3n de material y la recuperaci\xF3n
-    temporal del acceso."
   cultivoAfectado: {fileID: 0}
   modificadorPrecio: -0.15
   modificadorRendimientoGlobal: 0

@@ -16,15 +16,14 @@ MonoBehaviour:
   descripcionAlOcurrir: "La comunidad propone invertir en mejorar la atenci\xF3n
     b\xE1sica de salud de la vereda."
   categoria: 2
-  probabilidadPorCiclo: 0.05
+  probabilidadPorCiclo: 0.08
   esPersistente: 1
   ciclosHastaAutoResolver: 3
   momentoEfecto: 1
+  descripcionEfecto: Aumenta en 10% el rendimiento de los cultivos permanentemente.
   ciclosEfectoDespuesDeResolver: 0
   esResolvible: 1
   costoResolucion: 2000000
-  descripcionResolucion: "La inversi\xF3n contribuye a mejorar la disponibilidad
-    de atenci\xF3n b\xE1sica para la comunidad."
   cultivoAfectado: {fileID: 0}
   modificadorPrecio: 0
   modificadorRendimientoGlobal: 0.1

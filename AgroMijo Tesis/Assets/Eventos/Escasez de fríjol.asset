@@ -19,9 +19,11 @@ MonoBehaviour:
   probabilidadPorCiclo: 0.1
   esPersistente: 1
   ciclosHastaAutoResolver: 2
+  momentoEfecto: 0
+  descripcionEfecto: Aumenta en 25% el precio de venta del Frijol.
+  ciclosEfectoDespuesDeResolver: 0
   esResolvible: 0
   costoResolucion: 0
-  descripcionResolucion: 
   cultivoAfectado: {fileID: 11400000, guid: bdc7cee20d69c96418fdf5d90e15ef95, type: 2}
   modificadorPrecio: 0.25
   modificadorRendimientoGlobal: 0

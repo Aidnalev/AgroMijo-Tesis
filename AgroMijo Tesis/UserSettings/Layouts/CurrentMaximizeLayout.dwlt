@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 112}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 15491
+  controlID: 33227
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -97,7 +97,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 1
+    m_EnableMouseInput: 0
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 112}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 15412
+  controlID: 33315
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 56}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 15413
+  controlID: 33316
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -247,27 +247,75 @@ MonoBehaviour:
     m_DynamicPanelBehavior: 0
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 39}
+      scrollPos: {x: 0, y: 0}
       m_SelectedIDs:
-      - m_Data: 69056
+      - m_Data: 110010
+      - m_Data: 109208
+      - m_Data: 108736
+      - m_Data: 108882
+      - m_Data: 109684
+      - m_Data: 108778
+      - m_Data: 109498
+      - m_Data: 109336
+      - m_Data: 109648
       m_LastClickedID:
-        m_Data: 69056
+        m_Data: 109648
       m_ExpandedIDs:
-      - m_Data: -29970
-      - m_Data: -29956
-      - m_Data: -27450
-      - m_Data: -24816
-      - m_Data: -24520
-      - m_Data: -24148
-      - m_Data: -23982
-      - m_Data: -21686
-      - m_Data: -7766
+      - m_Data: -74146
+      - m_Data: -73706
+      - m_Data: -73582
+      - m_Data: -73434
+      - m_Data: -73354
+      - m_Data: -60970
+      - m_Data: -60530
+      - m_Data: -60418
+      - m_Data: -60282
+      - m_Data: -60208
+      - m_Data: -56714
+      - m_Data: -56668
+      - m_Data: -56622
+      - m_Data: -49604
+      - m_Data: -49164
+      - m_Data: -49040
+      - m_Data: -48892
+      - m_Data: -48812
+      - m_Data: -45774
+      - m_Data: -45334
+      - m_Data: -45222
+      - m_Data: -45086
+      - m_Data: -45012
+      - m_Data: -19976
+      - m_Data: -19954
+      - m_Data: -19886
+      - m_Data: -19862
+      - m_Data: -15766
       - m_Data: -1366
-      - m_Data: -12
-      - m_Data: 69062
-      - m_Data: 69256
-      - m_Data: 69452
-      - m_Data: 69472
+      - m_Data: 52292
+      - m_Data: 52518
+      - m_Data: 52730
+      - m_Data: 53094
+      - m_Data: 75142
+      - m_Data: 75480
+      - m_Data: 75874
+      - m_Data: 76120
+      - m_Data: 82372
+      - m_Data: 82446
+      - m_Data: 82784
+      - m_Data: 83178
+      - m_Data: 83224
+      - m_Data: 83424
+      - m_Data: 92982
+      - m_Data: 93010
+      - m_Data: 93090
+      - m_Data: 93322
+      - m_Data: 93628
+      - m_Data: 93844
+      - m_Data: 93862
+      - m_Data: 93926
+      - m_Data: 108842
+      - m_Data: 108870
+      - m_Data: 109182
+      - m_Data: 109786
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -943,9 +991,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 1214.3584, y: 403.9593, z: 0}
+    m_Target: {x: 1058.033, y: 932.16693, z: 0}
     speed: 2
-    m_Value: {x: 1214.3584, y: 403.9593, z: 0}
+    m_Value: {x: 1058.033, y: 932.16693, z: 0}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -996,9 +1044,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 375.982
+    m_Target: 143.46008
     speed: 2
-    m_Value: 375.982
+    m_Value: 143.46008
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1108,7 +1156,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Menu
+    - Assets/Eventos
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1118,29 +1166,29 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/Menu
+  - Assets/Eventos
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\GitHub\AgroMijo Tesis\AgroMijo Tesis
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 121.20001}
+    scrollPos: {x: 0, y: 79}
     m_SelectedIDs:
-    - m_Data: 50972
+    - m_Data: 49950
     m_LastClickedID:
-      m_Data: 50972
+      m_Data: 49950
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 50836
-    - m_Data: 50838
-    - m_Data: 50840
-    - m_Data: 50842
-    - m_Data: 50844
-    - m_Data: 50846
-    - m_Data: 50848
-    - m_Data: 50850
-    - m_Data: 50852
+    - m_Data: 49838
+    - m_Data: 49840
+    - m_Data: 49842
+    - m_Data: 49844
+    - m_Data: 49846
+    - m_Data: 49848
+    - m_Data: 49850
+    - m_Data: 49852
+    - m_Data: 49854
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1175,15 +1223,15 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 50836
-    - m_Data: 50838
-    - m_Data: 50840
-    - m_Data: 50842
-    - m_Data: 50844
-    - m_Data: 50846
-    - m_Data: 50848
-    - m_Data: 50850
-    - m_Data: 50852
+    - m_Data: 49838
+    - m_Data: 49840
+    - m_Data: 49842
+    - m_Data: 49844
+    - m_Data: 49846
+    - m_Data: 49848
+    - m_Data: 49850
+    - m_Data: 49852
+    - m_Data: 49854
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1213,10 +1261,18 @@ MonoBehaviour:
       m_ResourceFile: 
   m_ListAreaState:
     m_SelectedInstanceIDs:
-    - m_Data: 69056
+    - m_Data: 110010
+    - m_Data: 109208
+    - m_Data: 108736
+    - m_Data: 108882
+    - m_Data: 109684
+    - m_Data: 108778
+    - m_Data: 109498
+    - m_Data: 109336
+    - m_Data: 109648
     m_LastClickedEntityId:
-      m_Data: 69056
-    m_HadKeyboardFocusLastEvent: 1
+      m_Data: 110010
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: []
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1310,7 +1366,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 112}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 15492
+  controlID: 33228
   draggingID: 0
 --- !u!114 &13
 MonoBehaviour:
@@ -1322,7 +1378,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
+  m_Name: InspectorWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:

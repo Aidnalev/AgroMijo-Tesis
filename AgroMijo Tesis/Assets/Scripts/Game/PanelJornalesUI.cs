@@ -42,7 +42,7 @@ public class PanelJornalesUI : MonoBehaviour
         sliderJornales.wholeNumbers = true;
         sliderJornales.value = 0;
 
-        textoDescripcion.text = $"Te faltan {deficit} jornal(es) este ciclo.\n" +
+        textoDescripcion.text = $"Te faltan {deficit} jornal(es) este periodo.\n" +
                                 $"Los jornales familiares ({GameManager.Instancia.jornalesFamiliares}) " +
                                 $"no alcanzan.\n¿Cuántos quieres contratar?";
 

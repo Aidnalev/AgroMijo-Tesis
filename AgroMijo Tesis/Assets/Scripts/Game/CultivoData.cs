@@ -19,8 +19,8 @@ public class CultivoData : ScriptableObject
     [Header("Identificación")]
     public string nombreCultivo = "Nombre del cultivo";
 
-    [Header("Ciclo de crecimiento")]
-    [Tooltip("Cuántos ciclos (meses) tarda en estar listo para cosechar")]
+    [Header("Periodo de crecimiento")]
+    [Tooltip("Cuántos Periodos (meses) tarda en estar listo para cosechar")]
     public int duracionCiclos = 3;
 
     [Header("Economía")]

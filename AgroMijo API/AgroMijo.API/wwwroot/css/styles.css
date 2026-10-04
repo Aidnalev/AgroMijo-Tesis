@@ -2,6 +2,7 @@
     box-sizing: border-box;
 }
 
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -9,26 +10,38 @@ body {
     color: #222;
 }
 
+
 .container {
-    width: min(900px, 90%);
+    width: min(1000px, 92%);
     margin: 40px auto;
 }
 
-header {
+
+/* =========================================================
+   ENCABEZADO
+========================================================= */
+
+.main-header {
     margin-bottom: 30px;
 }
 
-    header h1 {
-        margin-bottom: 5px;
+    .main-header h1 {
+        margin: 0 0 6px;
     }
 
-    header p {
-        margin-top: 0;
+    .main-header p {
+        margin: 0;
         color: #666;
     }
 
+
+/* =========================================================
+   SECCIONES
+========================================================= */
+
 .search-section,
-.results-section {
+.results-section,
+.detail-section {
     background: white;
     padding: 25px;
     border-radius: 10px;
@@ -36,156 +49,48 @@ header {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
+
+/* =========================================================
+   BÚSQUEDA
+========================================================= */
+
 .search-group {
     margin-top: 20px;
 }
 
-    .search-group label {
+    .search-group > label {
         display: block;
         margin-bottom: 8px;
         font-weight: bold;
     }
 
-.search-row {
-    display: flex;
-    gap: 10px;
-}
 
-    .search-row input {
-        flex: 1;
+    .search-group input {
+        width: 100%;
         padding: 12px;
         border: 1px solid #ccc;
         border-radius: 6px;
         font-size: 16px;
     }
 
-button {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-    background: #3f6b50;
-    color: white;
-}
 
-    button:hover {
-        background: #31543e;
-    }
-
-.message {
-    margin-top: 15px;
-    min-height: 20px;
-}
-
-.report-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 18px;
-    margin-top: 15px;
-}
-
-    .report-card h3 {
-        margin-top: 0;
-    }
-
-.report-data {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px 20px;
-}
-
-    .report-data strong {
-        display: block;
-    }
-
-.hidden {
-    display: none;
-}
-
-.error {
-    color: #b42318;
-}
-
-.success {
-    color: #26734d;
-}
-.periods-section {
-    margin-top: 25px;
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
-}
-
-    .periods-section h4 {
-        margin-bottom: 15px;
-    }
-
-.period-card {
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    margin-top: 10px;
-    overflow: hidden;
-}
-
-    .period-card summary {
-        padding: 14px;
-        cursor: pointer;
-        font-weight: bold;
-        background: #f7f8f7;
-    }
-
-        .period-card summary:hover {
-            background: #eef1ee;
-        }
-
-.period-content {
-    padding: 18px;
-}
-
-.period-summary {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px 20px;
-    margin-bottom: 20px;
-}
-
-.period-detail {
-    border-top: 1px solid #eee;
-    padding-top: 15px;
-    margin-top: 15px;
-}
-
-    .period-detail ul {
-        margin-bottom: 0;
-    }
-
-    .period-detail li {
-        margin-bottom: 5px;
-    }
-
-.jornales {
-    border-top: 1px solid #eee;
-    padding-top: 15px;
-    margin-top: 15px;
-}
-
-    .jornales p {
-        margin: 5px 0;
-    }
 .date-row {
     display: flex;
     gap: 20px;
 }
 
+
     .date-row > div {
         flex: 1;
     }
 
+
     .date-row label {
         display: block;
         margin-bottom: 8px;
-        font-weight: bold;
+        font-weight: normal;
     }
+
 
     .date-row input {
         width: 100%;
@@ -195,16 +100,406 @@ button {
         font-size: 16px;
     }
 
+
 .search-buttons {
     display: flex;
     gap: 10px;
     margin-top: 20px;
 }
 
+
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    background: #3f6b50;
+    color: white;
+}
+
+
+    button:hover {
+        background: #31543e;
+    }
+
+
 .secondary-button {
     background: #777;
 }
 
+
     .secondary-button:hover {
         background: #666;
     }
+
+
+/* =========================================================
+   MENSAJES
+========================================================= */
+
+.message {
+    margin-top: 15px;
+    min-height: 20px;
+}
+
+
+.error {
+    color: #b42318;
+}
+
+
+.success {
+    color: #26734d;
+}
+
+
+/* =========================================================
+   RESULTADOS
+========================================================= */
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+    .results-header h2 {
+        margin-top: 0;
+        margin-bottom: 5px;
+    }
+
+
+.results-summary {
+    margin: 0;
+    color: #666;
+}
+
+
+/* =========================================================
+   TARJETA DE REPORTE
+========================================================= */
+
+.report-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+
+    .report-card h3 {
+        margin-top: 0;
+        margin-bottom: 5px;
+    }
+
+
+.report-id {
+    color: #777;
+    font-size: 14px;
+}
+
+
+.report-profile {
+    margin-top: 15px;
+    margin-bottom: 18px;
+}
+
+
+    .report-profile strong {
+        display: block;
+    }
+
+
+.report-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+
+.metric {
+    background: #f5f7f5;
+    border-radius: 7px;
+    padding: 13px;
+}
+
+
+.metric-label {
+    display: block;
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+
+.metric-value {
+    font-size: 19px;
+    font-weight: bold;
+}
+
+
+.report-financial {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 20px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+
+.report-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+
+.detail-button {
+    background: #3f6b50;
+}
+
+
+/* =========================================================
+   PAGINACIÓN
+========================================================= */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 25px;
+}
+
+
+    .pagination button {
+        padding: 8px 12px;
+        min-width: 40px;
+    }
+
+
+        .pagination button.active {
+            background: #263c2d;
+        }
+
+
+        .pagination button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+
+.pagination-info {
+    margin: 0 8px;
+    color: #666;
+}
+
+
+/* =========================================================
+   DETALLE
+========================================================= */
+
+.back-button {
+    background: #777;
+    margin-bottom: 25px;
+}
+
+
+    .back-button:hover {
+        background: #666;
+    }
+
+
+.detail-header {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+
+    .detail-header h2 {
+        margin-top: 0;
+    }
+
+
+.detail-profile {
+    color: #666;
+}
+
+
+.detail-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+
+.detail-financial {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+
+.financial-card {
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    padding: 15px;
+}
+
+
+    .financial-card strong {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+
+.detail-section-title {
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+
+/* =========================================================
+   CICLOS
+========================================================= */
+
+.period-card {
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    margin-top: 12px;
+    overflow: hidden;
+}
+
+
+    .period-card summary {
+        padding: 15px;
+        cursor: pointer;
+        font-weight: bold;
+        background: #f7f8f7;
+    }
+
+
+        .period-card summary:hover {
+            background: #eef1ee;
+        }
+
+
+.period-content {
+    padding: 18px;
+}
+
+
+.period-summary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 20px;
+}
+
+
+.period-detail {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+
+    .period-detail ul {
+        margin-bottom: 0;
+    }
+
+
+    .period-detail li {
+        margin-bottom: 5px;
+    }
+
+
+.jornales {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+
+    .jornales p {
+        margin: 5px 0;
+    }
+
+
+/* =========================================================
+   DECISIONES
+========================================================= */
+
+.decisions-list {
+    margin-bottom: 0;
+}
+
+
+.decisions-unavailable {
+    color: #777;
+    font-style: italic;
+}
+
+
+/* =========================================================
+   UTILIDADES
+========================================================= */
+
+.hidden {
+    display: none;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 750px) {
+
+    .report-metrics,
+    .detail-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .date-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .container {
+        width: 94%;
+        margin: 20px auto;
+    }
+
+    .search-section,
+    .results-section,
+    .detail-section {
+        padding: 18px;
+    }
+
+    .report-metrics,
+    .detail-summary,
+    .report-financial,
+    .detail-financial,
+    .period-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .report-actions {
+        justify-content: stretch;
+    }
+
+        .report-actions button {
+            width: 100%;
+        }
+}

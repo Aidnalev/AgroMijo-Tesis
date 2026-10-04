@@ -18,10 +18,12 @@ MonoBehaviour:
   categoria: 0
   probabilidadPorCiclo: 0.1
   esPersistente: 1
-  ciclosHastaAutoResolver: 1
+  ciclosHastaAutoResolver: 2
+  momentoEfecto: 0
+  descripcionEfecto: Aumenta en 20% el precio de venta de la habichuela.
+  ciclosEfectoDespuesDeResolver: 0
   esResolvible: 0
   costoResolucion: 0
-  descripcionResolucion: 
   cultivoAfectado: {fileID: 11400000, guid: b85db056bbb1c074491ed7d5b792b563, type: 2}
   modificadorPrecio: 0.2
   modificadorRendimientoGlobal: 0

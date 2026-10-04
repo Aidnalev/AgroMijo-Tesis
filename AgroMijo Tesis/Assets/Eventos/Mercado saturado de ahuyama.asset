@@ -19,9 +19,11 @@ MonoBehaviour:
   probabilidadPorCiclo: 0.12
   esPersistente: 1
   ciclosHastaAutoResolver: 2
+  momentoEfecto: 0
+  descripcionEfecto: Reduce en 20% el precio de venta de la Ahuyama.
+  ciclosEfectoDespuesDeResolver: 0
   esResolvible: 0
   costoResolucion: 0
-  descripcionResolucion: 
   cultivoAfectado: {fileID: 11400000, guid: 26d2d6e628792e3418810f6580b27ffe, type: 2}
   modificadorPrecio: -0.2
   modificadorRendimientoGlobal: 0

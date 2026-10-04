@@ -21,7 +21,7 @@ public class PanelAdvertenciaUI : MonoBehaviour
     }
 
     public void Mostrar(Action alConfirmar,
-        string mensaje = "Hay parcelas sin decision este ciclo. Avanzar de todas formas?")
+        string mensaje = "Hay parcelas sin decision este periodo. ¿Avanzar de todas formas?")
     {
         accionSiConfirma  = alConfirmar;
         textoMensaje.text = mensaje;

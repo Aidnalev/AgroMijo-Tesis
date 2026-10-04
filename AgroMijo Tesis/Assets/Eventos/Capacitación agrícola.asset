@@ -20,11 +20,10 @@ MonoBehaviour:
   esPersistente: 1
   ciclosHastaAutoResolver: 3
   momentoEfecto: 1
+  descripcionEfecto: Aumenta en 5% el rendimiento de los cultivos permanentemente.
   ciclosEfectoDespuesDeResolver: 0
   esResolvible: 1
   costoResolucion: 1000000
-  descripcionResolucion: "La inversi\xF3n permite acceder a capacitaci\xF3n y asesor\xEDa
-    para mejorar el manejo de los cultivos."
   cultivoAfectado: {fileID: 0}
   modificadorPrecio: 0
   modificadorRendimientoGlobal: 0.05

@@ -46,16 +46,43 @@ public class PanelEventosUI : MonoBehaviour
             hayAlguno = true;
 
             FilaEventoUI fila = Instantiate(filaEventoPrefab, contenedorFilasEvento);
-            fila.textoNombre.text      = activo.datos.nombreEvento;
-            fila.textoDescripcion.text = activo.datos.descripcionAlOcurrir;
 
-            if (activo.datos.esResolvible)
+            fila.textoNombre.text = activo.datos.nombreEvento;
+
+            // Descripción principal
+            string descripcion = activo.datos.descripcionAlOcurrir;
+
+            // Mostrar el efecto
+            if (!string.IsNullOrWhiteSpace(activo.datos.descripcionEfecto))
+            {
+                descripcion += "\n\nEfecto: " + activo.datos.descripcionEfecto;
+
+                if (activo.datos.momentoEfecto == MomentoEfectoEvento.MientrasActivo)
+                {
+                    descripcion += "\nEste efecto se encuentra activo.";
+                }
+                else if (!activo.resuelto)
+                {
+                    descripcion += "\nEste efecto se aplicará al resolver el evento.";
+                }
+                else
+                {
+                    descripcion += "\nEste efecto fue aplicado al resolver el evento.";
+                }
+            }
+
+            fila.textoDescripcion.text = descripcion;
+
+            // Solo permitir resolver si todavía no ha sido resuelto
+            if (activo.datos.esResolvible && !activo.resuelto)
             {
                 fila.botonResolver.gameObject.SetActive(true);
                 ActualizarTextoBoton(fila, activo);
 
                 EventoGlobalActivo capturado = activo;
-                fila.botonResolver.onClick.AddListener(() => OnClickToggle(capturado, fila));
+                fila.botonResolver.onClick.AddListener(
+                    () => OnClickToggle(capturado, fila)
+                );
             }
             else
             {
@@ -65,8 +92,12 @@ public class PanelEventosUI : MonoBehaviour
 
         if (!hayAlguno)
         {
-            FilaEventoUI fila = Instantiate(filaEventoPrefab, contenedorFilasEvento);
-            fila.textoNombre.text      = "Sin eventos activos";
+            FilaEventoUI fila = Instantiate(
+                filaEventoPrefab,
+                contenedorFilasEvento
+            );
+
+            fila.textoNombre.text = "Sin eventos activos";
             fila.textoDescripcion.text = "";
             fila.botonResolver.gameObject.SetActive(false);
         }
@@ -84,7 +115,7 @@ public class PanelEventosUI : MonoBehaviour
     {
         fila.botonResolver.GetComponentInChildren<TMP_Text>().text = activo.resolucionPendiente
             ? $"[Pendiente] Cancelar"
-            : $"Resolver (${activo.datos.costoResolucion:N0})";
+            : $"Invertir (${activo.datos.costoResolucion:N0})";
     }
     private bool EventoDebeMostrarse(EventoGlobalActivo activo)
     {

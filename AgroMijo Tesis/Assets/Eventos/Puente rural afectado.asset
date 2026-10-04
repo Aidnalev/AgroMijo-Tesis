@@ -19,10 +19,11 @@ MonoBehaviour:
   probabilidadPorCiclo: 0.06
   esPersistente: 1
   ciclosHastaAutoResolver: 3
+  momentoEfecto: 0
+  descripcionEfecto: Reduce en 15% el precio de venta de los cultivos.
+  ciclosEfectoDespuesDeResolver: 0
   esResolvible: 1
   costoResolucion: 1500000
-  descripcionResolucion: "Se puede contribuir a la reparaci\xF3n provisional del
-    puente para restablecer el acceso."
   cultivoAfectado: {fileID: 0}
   modificadorPrecio: -0.15
   modificadorRendimientoGlobal: 0

@@ -23,7 +23,7 @@ public class ReportePanelUI : MonoBehaviour
     {
         alCerrar = onCerrar;
         StringBuilder sb = new StringBuilder();
-        sb.AppendLine($"Resultado del ciclo {reporte.numeroCiclo}");
+        sb.AppendLine($"Resultado del periodo {reporte.numeroCiclo}");
         sb.AppendLine($"Presupuesto inicial: ${reporte.presupuestoInicial:N0}");
         sb.AppendLine($"Presupuesto final: ${reporte.presupuestoFinal:N0}");
         sb.AppendLine($"Ganancias: ${reporte.gananciaTotal:N0}");

@@ -81,7 +81,7 @@ public class HUDManager : MonoBehaviour
 
     public void ActualizarHUD()
     {
-        textoCiclo.text       = $"Ciclo {GameManager.Instancia.cicloActual}";
+        textoCiclo.text       = $"Periodo {GameManager.Instancia.cicloActual}";
         textoPresupuesto.text = $"${GameManager.Instancia.presupuesto:N0}";
 
         int comprometidos = GameManager.Instancia.CalcularJornalesNecesarios();

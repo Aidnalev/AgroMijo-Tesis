@@ -20,7 +20,7 @@ public class FilaHistorialUI : MonoBehaviour
     {
         reporteAsociado = reporte;
 
-        textoEncabezado.text = $"Ciclo {reporte.numeroCiclo + 1}";
+        textoEncabezado.text = $"Periodo {reporte.numeroCiclo + 1}";
 
         textoResumen.text =
             $"Inicio: ${reporte.presupuestoInicial:N0}  ->  " +

@@ -19,9 +19,11 @@ MonoBehaviour:
   probabilidadPorCiclo: 0.15
   esPersistente: 1
   ciclosHastaAutoResolver: 2
+  momentoEfecto: 0
+  descripcionEfecto: Reduce en 20% el precio de venta del maiz.
+  ciclosEfectoDespuesDeResolver: 0
   esResolvible: 0
   costoResolucion: 0
-  descripcionResolucion: 
   cultivoAfectado: {fileID: 11400000, guid: dec7e87d750d3274590aeee9aba7fd65, type: 2}
   modificadorPrecio: -0.2
   modificadorRendimientoGlobal: 0

@@ -46,12 +46,12 @@ public class PanelCatalogoCultivosUI : MonoBehaviour
             fila.textoEconomia.text =
                 $"Semilla: ${cultivo.costoSemilla:N0}  |  " +
                 $"Rendimiento base: ${cultivo.rendimientoBase:N0}  |  " +
-                $"Duracion: {cultivo.duracionCiclos} ciclo(s)";
+                $"Duracion: {cultivo.duracionCiclos} periodo(s)";
 
             fila.textoJornales.text =
                 $"Jornales — " +
                 $"Plantar: {cultivo.jornalesParaPlantar}  |  " +
-                $"Mantenimiento: {cultivo.jornalesMantenimientoPorCiclo}/ciclo  |  " +
+                $"Mantenimiento: {cultivo.jornalesMantenimientoPorCiclo}/periodo  |  " +
                 $"Cosecha: {cultivo.jornalesParaCosechar}";
 
             fila.textoSuelos.text =
@@ -71,7 +71,7 @@ public class PanelCatalogoCultivosUI : MonoBehaviour
     private string FormatearMod(float mod)
     {
         float porcentaje = (mod - 1f) * 100f;
-        if (Mathf.Abs(porcentaje) < 0.5f) return "neutro";
+        if (Mathf.Abs(porcentaje) < 0.5f) return "Neutro";
         return porcentaje > 0
             ? $"+{porcentaje:F0}%"
             : $"{porcentaje:F0}%";

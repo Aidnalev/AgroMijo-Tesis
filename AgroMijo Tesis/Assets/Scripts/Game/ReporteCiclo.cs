@@ -22,4 +22,5 @@ public class ReporteCiclo
     public List<GastoRegistrado> detalleGastos     = new List<GastoRegistrado>();
     public List<string>          eventosOcurridos  = new List<string>();
     public List<string>          cosechasRealizadas = new List<string>();
+    public List<string> decisionesTomadas = new List<string>();
 }

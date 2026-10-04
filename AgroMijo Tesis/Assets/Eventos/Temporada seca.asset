@@ -19,9 +19,11 @@ MonoBehaviour:
   probabilidadPorCiclo: 0.12
   esPersistente: 1
   ciclosHastaAutoResolver: 2
+  momentoEfecto: 0
+  descripcionEfecto: Reduce en 20% el rendimiento de los cultivos.
+  ciclosEfectoDespuesDeResolver: 0
   esResolvible: 0
   costoResolucion: 0
-  descripcionResolucion: 
   cultivoAfectado: {fileID: 0}
   modificadorPrecio: 0
   modificadorRendimientoGlobal: -0.2

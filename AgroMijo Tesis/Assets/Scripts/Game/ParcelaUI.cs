@@ -72,7 +72,7 @@ public class ParcelaUI : MonoBehaviour
         {
             int ciclosRestantes = parcelaAsociada.cultivoActual.duracionCiclos
                                 - (GameManager.Instancia.cicloActual - parcelaAsociada.cicloEnQueSePlanto);
-            textoCultivo.text = $"{parcelaAsociada.cultivoActual.nombreCultivo}  ({ciclosRestantes} ciclo(s))";
+            textoCultivo.text = $"{parcelaAsociada.cultivoActual.nombreCultivo}  ({ciclosRestantes} periodo(s))";
         }
         else
         {

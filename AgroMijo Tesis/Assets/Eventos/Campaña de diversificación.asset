@@ -20,11 +20,10 @@ MonoBehaviour:
   esPersistente: 1
   ciclosHastaAutoResolver: 2
   momentoEfecto: 1
+  descripcionEfecto: Aumenta en 5% el precio de venta de los cultivos durante 4 ciclos.
   ciclosEfectoDespuesDeResolver: 4
   esResolvible: 1
   costoResolucion: 600000
-  descripcionResolucion: "Se puede apoyar la campa\xF1a comunitaria para promover
-    la diversificaci\xF3n de cultivos."
   cultivoAfectado: {fileID: 0}
   modificadorPrecio: 0.05
   modificadorRendimientoGlobal: 0

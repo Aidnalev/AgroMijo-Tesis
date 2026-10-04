@@ -217,6 +217,9 @@ public class GameManager : MonoBehaviour
         }
 
         AplicarVariacionAgua();
+
+        RegistrarDecisionesTomadas(reporte);
+
         AplicarDecisionesPendientes(reporte);
         AplicarResolucionesPendientes(reporte);
         ResolverEventosGlobales(reporte);
@@ -239,7 +242,55 @@ public class GameManager : MonoBehaviour
 
         return reporte;
     }
+    private void RegistrarDecisionesTomadas(ReporteCiclo reporte)
+    {
+        foreach (Parcela parcela in parcelas)
+        {
+            TipoDecision decision = parcela.decisionPendiente.tipo;
 
+            if (decision == TipoDecision.Ninguna)
+                continue;
+
+            string descripcion;
+
+            switch (decision)
+            {
+                case TipoDecision.Plantar:
+                    if (parcela.decisionPendiente.cultivoSeleccionado != null)
+                    {
+                        descripcion =
+                            $"Plantar {parcela.decisionPendiente.cultivoSeleccionado.nombreCultivo} " +
+                            $"en {parcela.nombreParcela}";
+                    }
+                    else
+                    {
+                        descripcion =
+                            $"Plantar en {parcela.nombreParcela}";
+                    }
+                    break;
+
+                case TipoDecision.Estudiar:
+                    descripcion =
+                        $"Estudiar {parcela.nombreParcela}";
+                    break;
+
+                case TipoDecision.Mejorar:
+                    descripcion =
+                        $"Mejorar {parcela.nombreParcela}";
+                    break;
+
+                case TipoDecision.Esperar:
+                    descripcion =
+                        $"Esperar en {parcela.nombreParcela}";
+                    break;
+
+                default:
+                    continue;
+            }
+
+            reporte.decisionesTomadas.Add(descripcion);
+        }
+    }
     private void AplicarVariacionAgua()
     {
         foreach (Parcela parcela in parcelas)
@@ -490,7 +541,7 @@ public class GameManager : MonoBehaviour
         if (cicloActual >= ciclosMaximos)
         {
             reporte.esUltimoCiclo = true;
-            reporte.razonFin      = "Completaste todos los ciclos de la partida.";
+            reporte.razonFin      = "Completaste todos los periodos de la partida.";
         }
         else if (presupuesto <= 0f && !HayCultivosCreciendo())
         {

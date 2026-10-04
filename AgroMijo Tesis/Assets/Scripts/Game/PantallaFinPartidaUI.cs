@@ -34,7 +34,7 @@ public class PantallaFinPartidaUI : MonoBehaviour
         StringBuilder sb = new StringBuilder();
         sb.AppendLine($"Perfil: {datos.profileAlias}");
         sb.AppendLine($"Fecha:  {datos.fechaPartida}");
-        sb.AppendLine($"Ciclos jugados: {datos.ciclosJugados}");
+        sb.AppendLine($"Periodos jugados: {datos.ciclosJugados}");
         sb.AppendLine();
         sb.AppendLine($"Presupuesto inicial: ${datos.presupuestoInicial:N0}");
         sb.AppendLine($"Presupuesto final:   ${datos.presupuestoFinal:N0}");
@@ -45,9 +45,9 @@ public class PantallaFinPartidaUI : MonoBehaviour
 
         textoResumen.text = sb.ToString();
 
-        // ── Resumen por ciclo ─────────────────────────────────────────────
+        // ── Resumen por periodo ─────────────────────────────────────────────
         StringBuilder sbCiclos = new StringBuilder();
-        sbCiclos.AppendLine("RESUMEN POR CICLO");
+        sbCiclos.AppendLine("RESUMEN POR PERIODO");
         sbCiclos.AppendLine(new string('-', 60));
 
         foreach (ReporteCiclo ciclo in datos.historialCiclos)
@@ -57,7 +57,7 @@ public class PantallaFinPartidaUI : MonoBehaviour
             string estadoCiclo = ciclo.esUltimoCiclo ? " [FIN]" : "";
 
             sbCiclos.AppendLine(
-                $"Ciclo {ciclo.numeroCiclo + 1}{estadoCiclo}");
+                $"Periodo {ciclo.numeroCiclo + 1}{estadoCiclo}");
             sbCiclos.AppendLine(
                 $"  Presupuesto: ${ciclo.presupuestoInicial:N0} -> ${ciclo.presupuestoFinal:N0}  " +
                 $"({signoCiclo}${System.Math.Abs(difCiclo):N0})");

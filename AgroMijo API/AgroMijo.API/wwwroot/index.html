@@ -13,27 +13,33 @@
 
     <main class="container">
 
-        <header>
+        <header class="main-header">
             <h1>AgroMijo</h1>
-            <p>Consulta de reportes de partidas</p>
+            <p>Consulta y análisis de reportes de partidas</p>
         </header>
+
+
+        <!-- =========================================================
+             BÚSQUEDA
+        ========================================================== -->
 
         <section class="search-section">
 
             <h2>Consultar reportes</h2>
 
             <div class="search-group">
+
                 <label for="profileId">
                     ID del perfil
                 </label>
 
-                <div class="search-row">
-                    <input type="text"
-                           id="profileId"
-                           placeholder="Ej. RF-A3F2"
-                           maxlength="7">
-                </div>
+                <input type="text"
+                       id="profileId"
+                       placeholder="Ej. RF-A3F2"
+                       maxlength="7">
+
             </div>
+
 
             <div class="search-group">
 
@@ -65,6 +71,7 @@
 
             </div>
 
+
             <div class="search-buttons">
 
                 <button id="searchButton">
@@ -78,20 +85,61 @@
 
             </div>
 
+
             <div id="message" class="message"></div>
 
         </section>
 
+
+        <!-- =========================================================
+             LISTA DE REPORTES
+        ========================================================== -->
+
         <section id="resultsSection"
                  class="results-section hidden">
 
-            <h2>Reportes encontrados</h2>
+            <div class="results-header">
+
+                <div>
+                    <h2>Partidas encontradas</h2>
+
+                    <p id="resultsSummary"
+                       class="results-summary"></p>
+                </div>
+
+            </div>
+
 
             <div id="reportsContainer"></div>
+
+
+            <!-- Paginación -->
+
+            <div id="pagination"
+                 class="pagination"></div>
+
+        </section>
+
+
+        <!-- =========================================================
+             DETALLE DEL REPORTE
+        ========================================================== -->
+
+        <section id="detailSection"
+                 class="detail-section hidden">
+
+            <button id="backButton"
+                    class="back-button">
+                ← Volver a los reportes
+            </button>
+
+
+            <div id="reportDetail"></div>
 
         </section>
 
     </main>
+
 
     <script src="js/app.js"></script>
 

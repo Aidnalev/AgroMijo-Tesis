@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 69ba0ca2eabf4214889f7b51d051c931, type: 3}
-  m_Name: Presencia de plaga
+  m_Name: Escuela de Educacion basica
   m_EditorClassIdentifier: Assembly-CSharp::EventoGlobalData
-  nombreEvento: Presencia de plaga
-  descripcionAlOcurrir: Se detecta una plaga que puede afectar el desarrollo del
-    cultivo.
-  categoria: 3
-  probabilidadPorCiclo: 0.08
+  nombreEvento: Escuela de Educacion Basica
+  descripcionAlOcurrir: La comunidad propone invertir en mejorar la instalaciones
+    y calidad de la educacion en las escuelas de la vereda.
+  categoria: 2
+  probabilidadPorCiclo: 0.8
   esPersistente: 1
-  ciclosHastaAutoResolver: 2
-  momentoEfecto: 0
-  descripcionEfecto: Reduce en 25% el rendimiento de los cultivos.
+  ciclosHastaAutoResolver: 3
+  momentoEfecto: 1
+  descripcionEfecto: Aumenta en 10% precio de los cultivos permanentemente.
   ciclosEfectoDespuesDeResolver: 0
   esResolvible: 1
-  costoResolucion: 700000
+  costoResolucion: 2000000
   cultivoAfectado: {fileID: 0}
-  modificadorPrecio: 0
-  modificadorRendimientoGlobal: -0.25
+  modificadorPrecio: 0.1
+  modificadorRendimientoGlobal: 0
