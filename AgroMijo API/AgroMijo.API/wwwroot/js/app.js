@@ -1,9 +1,9 @@
 ﻿const API_URL = "";
 
 
-/* =========================================================
-   ELEMENTOS
-========================================================= */
+/* =========================================
+   ELEMENTOS DEL DOM
+   ========================================= */
 
 const profileIdInput =
     document.getElementById("profileId");
@@ -32,6 +32,9 @@ const resultsSection =
 const detailSection =
     document.getElementById("detailSection");
 
+const comparisonSection =
+    document.getElementById("comparisonSection");
+
 const reportsContainer =
     document.getElementById("reportsContainer");
 
@@ -50,12 +53,18 @@ const compareButton =
 const comparisonStatus =
     document.getElementById("comparisonStatus");
 
+const comparisonContent =
+    document.getElementById("comparisonContent");
 
-/* =========================================================
+const backFromComparisonButton =
+    document.getElementById(
+        "backFromComparisonButton"
+    );
+
+
+/* =========================================
    ESTADO
-========================================================= */
-
-let reportesSeleccionados = [];
+   ========================================= */
 
 let reportesActuales = [];
 
@@ -63,10 +72,12 @@ let paginaActual = 1;
 
 const REPORTES_POR_PAGINA = 10;
 
+let reportesSeleccionados = [];
 
-/* =========================================================
+
+/* =========================================
    EVENTOS
-========================================================= */
+   ========================================= */
 
 searchButton.addEventListener(
     "click",
@@ -82,20 +93,28 @@ backButton.addEventListener(
     "click",
     volverAReportes
 );
+
 compareButton.addEventListener(
     "click",
     compararSeleccionados
 );
 
+backFromComparisonButton.addEventListener(
+    "click",
+    volverAComparacion
+);
 
-/* =========================================================
-   BUSCAR
-========================================================= */
+
+/* =========================================
+   BÚSQUEDA
+   ========================================= */
 
 async function buscarReportes() {
 
     const profileId =
-        profileIdInput.value.trim().toUpperCase();
+        profileIdInput.value
+            .trim()
+            .toUpperCase();
 
     const fechaDesde =
         dateFromInput.value;
@@ -104,7 +123,11 @@ async function buscarReportes() {
         dateToInput.value;
 
 
-    if (!profileId && !fechaDesde && !fechaHasta) {
+    if (
+        !profileId &&
+        !fechaDesde &&
+        !fechaHasta
+    ) {
 
         mostrarMensaje(
             "Ingresa un perfil o selecciona un rango de fechas.",
@@ -150,10 +173,21 @@ async function buscarReportes() {
     );
 
 
-    resultsSection.classList.add("hidden");
-    detailSection.classList.add("hidden");
+    resultsSection.classList.add(
+        "hidden"
+    );
+
+    detailSection.classList.add(
+        "hidden"
+    );
+
+    comparisonSection.classList.add(
+        "hidden"
+    );
+
 
     reportsContainer.innerHTML = "";
+
     pagination.innerHTML = "";
 
 
@@ -162,7 +196,6 @@ async function buscarReportes() {
         let url;
 
 
-        // Perfil + fechas
         if (
             profileId &&
             fechaDesde &&
@@ -174,10 +207,9 @@ async function buscarReportes() {
                 `?desde=${encodeURIComponent(fechaDesde)}` +
                 `&hasta=${encodeURIComponent(fechaHasta)}` +
                 `&profileId=${encodeURIComponent(profileId)}`;
+
         }
 
-
-        // Solo fechas
         else if (
             fechaDesde &&
             fechaHasta
@@ -187,15 +219,15 @@ async function buscarReportes() {
                 `${API_URL}/api/reports/date` +
                 `?desde=${encodeURIComponent(fechaDesde)}` +
                 `&hasta=${encodeURIComponent(fechaHasta)}`;
+
         }
 
-
-        // Solo perfil
         else {
 
             url =
                 `${API_URL}/api/reports/profile/` +
                 encodeURIComponent(profileId);
+
         }
 
 
@@ -208,6 +240,7 @@ async function buscarReportes() {
             throw new Error(
                 "No se pudo consultar el servidor."
             );
+
         }
 
 
@@ -221,12 +254,23 @@ async function buscarReportes() {
                 : [reports];
 
 
+        /*
+         * Cada nueva búsqueda comienza
+         * sin partidas seleccionadas.
+         */
+        reportesSeleccionados = [];
+
+
         paginaActual = 1;
+
+
+        actualizarEstadoComparacion();
+
 
         mostrarReportes();
 
-
     }
+
     catch (error) {
 
         console.error(error);
@@ -235,26 +279,43 @@ async function buscarReportes() {
             "No se pudo conectar con el servidor.",
             true
         );
+
     }
+
 }
 
 
-/* =========================================================
+/* =========================================
    MOSTRAR REPORTES
-========================================================= */
+   ========================================= */
 
 function mostrarReportes() {
 
-    resultsSection.classList.remove("hidden");
+    resultsSection.classList.remove(
+        "hidden"
+    );
+
+    detailSection.classList.add(
+        "hidden"
+    );
+
+    comparisonSection.classList.add(
+        "hidden"
+    );
+
 
     reportsContainer.innerHTML = "";
+
     pagination.innerHTML = "";
 
 
-    if (reportesActuales.length === 0) {
+    if (
+        reportesActuales.length === 0
+    ) {
 
         resultsSummary.textContent =
             "No se encontraron reportes.";
+
 
         mostrarMensaje(
             "No se encontraron reportes para los filtros seleccionados.",
@@ -272,6 +333,7 @@ function mostrarReportes() {
     const inicio =
         (paginaActual - 1) *
         REPORTES_POR_PAGINA;
+
 
     const fin =
         inicio +
@@ -298,6 +360,7 @@ function mostrarReportes() {
 
     generarPaginacion();
 
+    actualizarEstadoComparacion();
 
     mostrarMensaje(
         "",
@@ -306,23 +369,28 @@ function mostrarReportes() {
 }
 
 
-/* =========================================================
-   TARJETA DE REPORTE
-========================================================= */
+/* =========================================
+   CREAR FILA DE REPORTE
+   ========================================= */
 
 function crearFilaReporte(report) {
 
-    const fila = document.createElement("tr");
+    const fila =
+        document.createElement("tr");
+
 
     const metricas =
         obtenerMetricasReporte(report);
+
 
     const estaSeleccionado =
         reportesSeleccionados.includes(
             report.reportId
         );
 
+
     fila.innerHTML = `
+
         <td class="comparison-cell">
 
             <input
@@ -334,51 +402,63 @@ function crearFilaReporte(report) {
 
         </td>
 
-        <td>
-            <span class="table-report-id">
-                ${escaparHtml(report.reportId)}
-            </span>
-        </td>
 
         <td>
+
             <div class="table-profile">
 
                 <strong>
-                    ${escaparHtml(report.profileAlias)}
+                    ${escaparHtml(
+        report.profileAlias
+    )}
                 </strong>
 
                 <span>
-                    ${escaparHtml(report.profileId)}
+                    ${escaparHtml(
+        report.profileId
+    )}
                 </span>
 
             </div>
+
         </td>
 
+
         <td>
-            ${escaparHtml(report.fechaPartida)}
+            ${escaparHtml(
+        report.fechaPartida
+    )}
         </td>
+
 
         <td>
             ${report.ciclosJugados}
         </td>
 
+
         <td>
             ${metricas.decisiones}
         </td>
+
 
         <td>
             ${metricas.eventos}
         </td>
 
+
         <td>
             ${metricas.cosechas}
         </td>
 
+
         <td class="money-cell">
+
             ${formatearDinero(
         report.presupuestoFinal
     )}
+
         </td>
+
 
         <td>
 
@@ -389,132 +469,54 @@ function crearFilaReporte(report) {
             </button>
 
         </td>
+
     `;
+
 
     const checkbox =
         fila.querySelector(
             ".report-checkbox"
         );
 
+
     checkbox.addEventListener(
         "change",
-        () => manejarSeleccionReporte(
-            report.reportId,
-            checkbox.checked
-        )
+        () => {
+
+            manejarSeleccionReporte(
+                report.reportId,
+                checkbox.checked
+            );
+
+        }
     );
+
 
     const detailButton =
         fila.querySelector(
             ".detail-button"
         );
 
+
     detailButton.addEventListener(
         "click",
-        () => mostrarDetalle(report)
+        () => {
+
+            mostrarDetalle(
+                report
+            );
+
+        }
     );
+
 
     return fila;
 }
-function manejarSeleccionReporte(
-    reportId,
-    seleccionado
-) {
-
-    if (seleccionado) {
-
-        if (
-            reportesSeleccionados.length >= 2
-        ) {
-            mostrarMensaje(
-                "Solo puedes seleccionar 2 partidas para compararlas.",
-                true
-            );
-
-            mostrarReportes();
-
-            return;
-        }
-
-        if (
-            !reportesSeleccionados.includes(
-                reportId
-            )
-        ) {
-            reportesSeleccionados.push(
-                reportId
-            );
-        }
-
-    }
-    else {
-
-        reportesSeleccionados =
-            reportesSeleccionados.filter(
-                id => id !== reportId
-            );
-    }
-
-    actualizarEstadoComparacion();
-}
-function actualizarEstadoComparacion() {
-
-    const cantidad =
-        reportesSeleccionados.length;
-
-    if (cantidad === 0) {
-
-        comparisonStatus.textContent =
-            "Selecciona 2 partidas para compararlas.";
-
-    }
-    else if (cantidad === 1) {
-
-        comparisonStatus.textContent =
-            "Selecciona una partida más para comparar.";
-
-    }
-    else {
-
-        comparisonStatus.textContent =
-            "2 partidas seleccionadas.";
-
-    }
-
-    compareButton.disabled =
-        cantidad !== 2;
-}
-function compararSeleccionados() {
-
-    if (
-        reportesSeleccionados.length !== 2
-    ) {
-        return;
-    }
-
-    const reportes =
-        reportesActuales.filter(
-            report =>
-                reportesSeleccionados.includes(
-                    report.reportId
-                )
-        );
-
-    console.log(
-        "Partidas seleccionadas:",
-        reportes
-    );
-
-    mostrarMensaje(
-        "Partidas listas para comparar.",
-        false
-    );
-}
 
 
-/* =========================================================
-   MÉTRICAS
-========================================================= */
+/* =========================================
+   MÉTRICAS DEL REPORTE
+   ========================================= */
 
 function obtenerMetricasReporte(report) {
 
@@ -527,46 +529,53 @@ function obtenerMetricasReporte(report) {
     let cosechas = 0;
 
 
-    let hayDatosDeDecisiones = false;
+    let hayDatosDeDecisiones =
+        false;
 
 
-    ciclos.forEach(ciclo => {
+    ciclos.forEach(
+        ciclo => {
 
-        if (
-            Array.isArray(
-                ciclo.decisionesTomadas
-            )
-        ) {
+            if (
+                Array.isArray(
+                    ciclo.decisionesTomadas
+                )
+            ) {
 
-            hayDatosDeDecisiones = true;
+                hayDatosDeDecisiones =
+                    true;
 
-            decisiones +=
-                ciclo.decisionesTomadas.length;
+                decisiones +=
+                    ciclo.decisionesTomadas.length;
+
+            }
+
+
+            if (
+                Array.isArray(
+                    ciclo.eventosOcurridos
+                )
+            ) {
+
+                eventos +=
+                    ciclo.eventosOcurridos.length;
+
+            }
+
+
+            if (
+                Array.isArray(
+                    ciclo.cosechasRealizadas
+                )
+            ) {
+
+                cosechas +=
+                    ciclo.cosechasRealizadas.length;
+
+            }
+
         }
-
-
-        if (
-            Array.isArray(
-                ciclo.eventosOcurridos
-            )
-        ) {
-
-            eventos +=
-                ciclo.eventosOcurridos.length;
-        }
-
-
-        if (
-            Array.isArray(
-                ciclo.cosechasRealizadas
-            )
-        ) {
-
-            cosechas +=
-                ciclo.cosechasRealizadas.length;
-        }
-
-    });
+    );
 
 
     return {
@@ -581,22 +590,494 @@ function obtenerMetricasReporte(report) {
         cosechas
 
     };
+
 }
 
 
-/* =========================================================
-   DETALLE
-========================================================= */
+/* =========================================
+   SELECCIÓN DE REPORTES
+   ========================================= */
+
+function manejarSeleccionReporte(
+    reportId,
+    seleccionado
+) {
+
+    if (seleccionado) {
+
+        if (
+            reportesSeleccionados.length >= 2
+        ) {
+
+            mostrarMensaje(
+                "Solo puedes seleccionar 2 partidas para compararlas.",
+                true
+            );
+
+
+            mostrarReportes();
+
+            return;
+        }
+
+
+        if (
+            !reportesSeleccionados.includes(
+                reportId
+            )
+        ) {
+
+            reportesSeleccionados.push(
+                reportId
+            );
+
+        }
+
+    }
+
+    else {
+
+        reportesSeleccionados =
+            reportesSeleccionados.filter(
+                id =>
+                    id !== reportId
+            );
+
+    }
+
+
+    actualizarEstadoComparacion();
+
+}
+
+
+/* =========================================
+   ESTADO DEL BOTÓN DE COMPARACIÓN
+   ========================================= */
+
+function actualizarEstadoComparacion() {
+
+    const cantidad =
+        reportesSeleccionados.length;
+
+
+    if (cantidad === 0) {
+
+        comparisonStatus.textContent =
+            "Selecciona 2 partidas para compararlas.";
+
+    }
+
+    else if (cantidad === 1) {
+
+        comparisonStatus.textContent =
+            "Selecciona una partida más para comparar.";
+
+    }
+
+    else {
+
+        comparisonStatus.textContent =
+            "2 partidas seleccionadas.";
+
+    }
+
+
+    compareButton.disabled =
+        cantidad !== 2;
+
+}
+
+
+/* =========================================
+   COMPARAR
+   ========================================= */
+
+function compararSeleccionados() {
+
+    if (
+        reportesSeleccionados.length !== 2
+    ) {
+
+        return;
+    }
+
+
+    const reportes =
+        reportesActuales.filter(
+            report =>
+                reportesSeleccionados.includes(
+                    report.reportId
+                )
+        );
+
+
+    if (
+        reportes.length !== 2
+    ) {
+
+        mostrarMensaje(
+            "No se pudieron encontrar las partidas seleccionadas.",
+            true
+        );
+
+        return;
+    }
+
+
+    mostrarComparacion(
+        reportes[0],
+        reportes[1]
+    );
+
+}
+
+
+/* =========================================
+   MOSTRAR COMPARACIÓN
+   ========================================= */
+
+function mostrarComparacion(
+    reporteA,
+    reporteB
+) {
+
+    resultsSection.classList.add(
+        "hidden"
+    );
+
+    detailSection.classList.add(
+        "hidden"
+    );
+
+    comparisonSection.classList.remove(
+        "hidden"
+    );
+
+
+    const metricasA =
+        obtenerMetricasReporte(
+            reporteA
+        );
+
+
+    const metricasB =
+        obtenerMetricasReporte(
+            reporteB
+        );
+
+
+    comparisonContent.innerHTML = `
+
+        <div class="comparison-header">
+
+            <h2>
+                Comparación de partidas
+            </h2>
+
+            <p>
+                Comparación de los resultados
+                registrados en las dos partidas seleccionadas.
+            </p>
+
+        </div>
+
+
+        <div class="comparison-table-wrapper">
+
+            <table class="comparison-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Métrica
+                        </th>
+
+                        <th>
+                            Partida 1
+                        </th>
+
+                        <th>
+                            Partida 2
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <tr>
+
+                        <th>
+                            Perfil
+                        </th>
+
+                        <td>
+
+                            ${escaparHtml(
+        reporteA.profileAlias
+    )}
+
+                            <span
+                                class="comparison-profile-id"
+                            >
+                                ${escaparHtml(
+        reporteA.profileId
+    )}
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            ${escaparHtml(
+        reporteB.profileAlias
+    )}
+
+                            <span
+                                class="comparison-profile-id"
+                            >
+                                ${escaparHtml(
+        reporteB.profileId
+    )}
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Fecha
+                        </th>
+
+                        <td>
+                            ${escaparHtml(
+        reporteA.fechaPartida
+    )}
+                        </td>
+
+                        <td>
+                            ${escaparHtml(
+        reporteB.fechaPartida
+    )}
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Ciclos jugados
+                        </th>
+
+                        <td>
+                            ${reporteA.ciclosJugados}
+                        </td>
+
+                        <td>
+                            ${reporteB.ciclosJugados}
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Decisiones tomadas
+                        </th>
+
+                        <td>
+                            ${metricasA.decisiones}
+                        </td>
+
+                        <td>
+                            ${metricasB.decisiones}
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Eventos presentados
+                        </th>
+
+                        <td>
+                            ${metricasA.eventos}
+                        </td>
+
+                        <td>
+                            ${metricasB.eventos}
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Cosechas realizadas
+                        </th>
+
+                        <td>
+                            ${metricasA.cosechas}
+                        </td>
+
+                        <td>
+                            ${metricasB.cosechas}
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Presupuesto inicial
+                        </th>
+
+                        <td>
+                            ${formatearDinero(
+        reporteA.presupuestoInicial
+    )}
+                        </td>
+
+                        <td>
+                            ${formatearDinero(
+        reporteB.presupuestoInicial
+    )}
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Presupuesto final
+                        </th>
+
+                        <td>
+                            ${formatearDinero(
+        reporteA.presupuestoFinal
+    )}
+                        </td>
+
+                        <td>
+                            ${formatearDinero(
+        reporteB.presupuestoFinal
+    )}
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Ganancia acumulada
+                        </th>
+
+                        <td>
+                            ${formatearDinero(
+        reporteA.gananciaAcumulada
+    )}
+                        </td>
+
+                        <td>
+                            ${formatearDinero(
+        reporteB.gananciaAcumulada
+    )}
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Gasto acumulado
+                        </th>
+
+                        <td>
+                            ${formatearDinero(
+        reporteA.gastoAcumulado
+    )}
+                        </td>
+
+                        <td>
+                            ${formatearDinero(
+        reporteB.gastoAcumulado
+    )}
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Razón de finalización
+                        </th>
+
+                        <td>
+                            ${escaparHtml(
+        reporteA.razonFin
+    )}
+                        </td>
+
+                        <td>
+                            ${escaparHtml(
+        reporteB.razonFin
+    )}
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================
+   DETALLE DE REPORTE
+   ========================================= */
 
 function mostrarDetalle(report) {
 
-    resultsSection.classList.add("hidden");
+    resultsSection.classList.add(
+        "hidden"
+    );
 
-    detailSection.classList.remove("hidden");
+    comparisonSection.classList.add(
+        "hidden"
+    );
+
+    detailSection.classList.remove(
+        "hidden"
+    );
 
 
     const metricas =
-        obtenerMetricasReporte(report);
+        obtenerMetricasReporte(
+            report
+        );
 
 
     reportDetail.innerHTML = `
@@ -604,27 +1085,41 @@ function mostrarDetalle(report) {
         <div class="detail-header">
 
             <h2>
-                Reporte ${escaparHtml(report.reportId)}
+                Reporte ${escaparHtml(
+        report.reportId
+    )}
             </h2>
+
 
             <div class="detail-profile">
 
                 Perfil:
+
                 <strong>
-                    ${escaparHtml(report.profileAlias)}
+                    ${escaparHtml(
+        report.profileAlias
+    )}
                 </strong>
 
-                (${escaparHtml(report.profileId)})
+                (
+                ${escaparHtml(
+        report.profileId
+    )}
+                )
 
                 <br>
 
                 Fecha:
-                ${escaparHtml(report.fechaPartida)}
+                ${escaparHtml(
+        report.fechaPartida
+    )}
 
                 <br>
 
                 Razón de finalización:
-                ${escaparHtml(report.razonFin)}
+                ${escaparHtml(
+        report.razonFin
+    )}
 
             </div>
 
@@ -757,12 +1252,13 @@ function mostrarDetalle(report) {
         </div>
 
     `;
+
 }
 
 
-/* =========================================================
+/* =========================================
    CICLOS
-========================================================= */
+   ========================================= */
 
 function generarPeriodos(periodos) {
 
@@ -776,6 +1272,7 @@ function generarPeriodos(periodos) {
                 No hay información de ciclos.
             </p>
         `;
+
     }
 
 
@@ -906,16 +1403,19 @@ function generarPeriodos(periodos) {
 
         }
     ).join("");
+
 }
 
 
-/* =========================================================
+/* =========================================
    DECISIONES
-========================================================= */
+   ========================================= */
 
 function generarDecisiones(decisiones) {
 
-    if (!Array.isArray(decisiones)) {
+    if (
+        !Array.isArray(decisiones)
+    ) {
 
         return `
 
@@ -926,18 +1426,23 @@ function generarDecisiones(decisiones) {
                 </strong>
 
                 <p class="decisions-unavailable">
+
                     Información no disponible para
                     partidas registradas antes de la
                     incorporación de este dato.
+
                 </p>
 
             </div>
 
         `;
+
     }
 
 
-    if (decisiones.length === 0) {
+    if (
+        decisiones.length === 0
+    ) {
 
         return `
 
@@ -955,6 +1460,7 @@ function generarDecisiones(decisiones) {
             </div>
 
         `;
+
     }
 
 
@@ -966,13 +1472,18 @@ function generarDecisiones(decisiones) {
                 Decisiones tomadas
             </strong>
 
+
             <ul class="decisions-list">
 
                 ${decisiones.map(
         decision => `
+
                         <li>
-                            ${escaparHtml(decision)}
+                            ${escaparHtml(
+            decision
+        )}
                         </li>
+
                     `
     ).join("")}
 
@@ -981,12 +1492,13 @@ function generarDecisiones(decisiones) {
         </div>
 
     `;
+
 }
 
 
-/* =========================================================
+/* =========================================
    GASTOS
-========================================================= */
+   ========================================= */
 
 function generarGastos(gastos) {
 
@@ -1010,6 +1522,7 @@ function generarGastos(gastos) {
             </div>
 
         `;
+
     }
 
 
@@ -1021,19 +1534,26 @@ function generarGastos(gastos) {
                 Gastos
             </strong>
 
+
             <ul>
 
                 ${gastos.map(
         gasto => `
+
                         <li>
+
                             ${escaparHtml(
             gasto.descripcion
         )}
+
                             —
+
                             ${formatearDinero(
             gasto.monto
         )}
+
                         </li>
+
                     `
     ).join("")}
 
@@ -1042,12 +1562,13 @@ function generarGastos(gastos) {
         </div>
 
     `;
+
 }
 
 
-/* =========================================================
+/* =========================================
    EVENTOS
-========================================================= */
+   ========================================= */
 
 function generarEventos(eventos) {
 
@@ -1071,6 +1592,7 @@ function generarEventos(eventos) {
             </div>
 
         `;
+
     }
 
 
@@ -1082,13 +1604,18 @@ function generarEventos(eventos) {
                 Eventos
             </strong>
 
+
             <ul>
 
                 ${eventos.map(
         evento => `
+
                         <li>
-                            ${escaparHtml(evento)}
+                            ${escaparHtml(
+            evento
+        )}
                         </li>
+
                     `
     ).join("")}
 
@@ -1097,12 +1624,13 @@ function generarEventos(eventos) {
         </div>
 
     `;
+
 }
 
 
-/* =========================================================
+/* =========================================
    COSECHAS
-========================================================= */
+   ========================================= */
 
 function generarCosechas(cosechas) {
 
@@ -1126,6 +1654,7 @@ function generarCosechas(cosechas) {
             </div>
 
         `;
+
     }
 
 
@@ -1137,13 +1666,18 @@ function generarCosechas(cosechas) {
                 Cosechas
             </strong>
 
+
             <ul>
 
                 ${cosechas.map(
         cosecha => `
+
                         <li>
-                            ${escaparHtml(cosecha)}
+                            ${escaparHtml(
+            cosecha
+        )}
                         </li>
+
                     `
     ).join("")}
 
@@ -1152,12 +1686,13 @@ function generarCosechas(cosechas) {
         </div>
 
     `;
+
 }
 
 
-/* =========================================================
+/* =========================================
    PAGINACIÓN
-========================================================= */
+   ========================================= */
 
 function generarPaginacion() {
 
@@ -1171,14 +1706,23 @@ function generarPaginacion() {
         );
 
 
-    if (totalPaginas <= 1)
+    if (
+        totalPaginas <= 1
+    ) {
+
         return;
+    }
 
 
     const botonAnterior =
-        document.createElement("button");
+        document.createElement(
+            "button"
+        );
 
-    botonAnterior.textContent = "‹";
+
+    botonAnterior.textContent =
+        "‹";
+
 
     botonAnterior.disabled =
         paginaActual === 1;
@@ -1188,11 +1732,14 @@ function generarPaginacion() {
         "click",
         () => {
 
-            if (paginaActual > 1) {
+            if (
+                paginaActual > 1
+            ) {
 
                 paginaActual--;
 
                 mostrarReportes();
+
             }
 
         }
@@ -1211,9 +1758,13 @@ function generarPaginacion() {
     ) {
 
         const boton =
-            document.createElement("button");
+            document.createElement(
+                "button"
+            );
 
-        boton.textContent = pagina;
+
+        boton.textContent =
+            pagina;
 
 
         if (
@@ -1223,6 +1774,7 @@ function generarPaginacion() {
             boton.classList.add(
                 "active"
             );
+
         }
 
 
@@ -1230,7 +1782,8 @@ function generarPaginacion() {
             "click",
             () => {
 
-                paginaActual = pagina;
+                paginaActual =
+                    pagina;
 
                 mostrarReportes();
 
@@ -1241,13 +1794,19 @@ function generarPaginacion() {
         pagination.appendChild(
             boton
         );
+
     }
 
 
     const botonSiguiente =
-        document.createElement("button");
+        document.createElement(
+            "button"
+        );
 
-    botonSiguiente.textContent = "›";
+
+    botonSiguiente.textContent =
+        "›";
+
 
     botonSiguiente.disabled =
         paginaActual === totalPaginas;
@@ -1279,27 +1838,53 @@ function generarPaginacion() {
 }
 
 
-/* =========================================================
-   VOLVER
-========================================================= */
+/* =========================================
+   NAVEGACIÓN
+   ========================================= */
 
 function volverAReportes() {
 
-    detailSection.classList.add("hidden");
+    detailSection.classList.add(
+        "hidden"
+    );
 
-    resultsSection.classList.remove("hidden");
+    comparisonSection.classList.add(
+        "hidden"
+    );
+
+    resultsSection.classList.remove(
+        "hidden"
+    );
 
 }
 
 
-/* =========================================================
-   LIMPIAR
-========================================================= */
+function volverAComparacion() {
+
+    comparisonSection.classList.add(
+        "hidden"
+    );
+
+    resultsSection.classList.remove(
+        "hidden"
+    );
+
+
+    mostrarReportes();
+
+}
+
+
+/* =========================================
+   LIMPIAR BÚSQUEDA
+   ========================================= */
 
 function limpiarBusqueda() {
 
     profileIdInput.value = "";
+
     dateFromInput.value = "";
+
     dateToInput.value = "";
 
 
@@ -1311,17 +1896,28 @@ function limpiarBusqueda() {
         "hidden"
     );
 
+    comparisonSection.classList.add(
+        "hidden"
+    );
+
 
     reportsContainer.innerHTML = "";
 
     reportDetail.innerHTML = "";
+
+    comparisonContent.innerHTML = "";
 
     pagination.innerHTML = "";
 
 
     reportesActuales = [];
 
+    reportesSeleccionados = [];
+
     paginaActual = 1;
+
+
+    actualizarEstadoComparacion();
 
 
     mostrarMensaje(
@@ -1332,9 +1928,9 @@ function limpiarBusqueda() {
 }
 
 
-/* =========================================================
-   FORMATO
-========================================================= */
+/* =========================================
+   FORMATEAR DINERO
+   ========================================= */
 
 function formatearDinero(valor) {
 
@@ -1342,24 +1938,30 @@ function formatearDinero(valor) {
         "es-CO",
         {
             style: "currency",
+
             currency: "COP",
+
             maximumFractionDigits: 0
         }
-    ).format(valor || 0);
+    ).format(
+        valor || 0
+    );
 
 }
 
 
-/* =========================================================
+/* =========================================
    MENSAJES
-========================================================= */
+   ========================================= */
 
 function mostrarMensaje(
     texto,
     esError
 ) {
 
-    message.textContent = texto;
+    message.textContent =
+        texto;
+
 
     message.className =
         esError
@@ -1369,9 +1971,9 @@ function mostrarMensaje(
 }
 
 
-/* =========================================================
-   SEGURIDAD HTML
-========================================================= */
+/* =========================================
+   ESCAPAR HTML
+   ========================================= */
 
 function escaparHtml(valor) {
 
@@ -1379,15 +1981,21 @@ function escaparHtml(valor) {
         valor === null ||
         valor === undefined
     ) {
+
         return "";
+
     }
 
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     div.textContent =
         String(valor);
+
 
     return div.innerHTML;
 

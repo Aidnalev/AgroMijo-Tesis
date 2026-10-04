@@ -13,10 +13,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{685F89F7-E6AE-7F71-B367-3DD91C2FA8F4}|AgroMijo.API.csproj|c:\\github\\agromijo tesis\\agromijo api\\agromijo.api\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{685F89F7-E6AE-7F71-B367-3DD91C2FA8F4}|AgroMijo.API.csproj|solutionrelative:wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{685F89F7-E6AE-7F71-B367-3DD91C2FA8F4}|AgroMijo.API.csproj|c:\\github\\agromijo tesis\\agromijo api\\agromijo.api\\controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{685F89F7-E6AE-7F71-B367-3DD91C2FA8F4}|AgroMijo.API.csproj|solutionrelative:controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
@@ -43,26 +39,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ReportsController.cs",
-              "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Controllers\\ReportsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ReportsController.cs",
-              "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\Controllers\\ReportsController.cs",
-              "RelativeToolTip": "Controllers\\ReportsController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-04T17:28:18.12Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "styles.css",
               "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\wwwroot\\css\\styles.css",
               "RelativeDocumentMoniker": "wwwroot\\css\\styles.css",
               "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\wwwroot\\css\\styles.css",
               "RelativeToolTip": "wwwroot\\css\\styles.css",
-              "ViewState": "AgIAAE0CAAAAAAAAAAAYwGYCAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAE8CAAAAAAAAAAAYwGYCAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2026-10-04T17:11:38.257Z",
               "EditorCaption": ""
