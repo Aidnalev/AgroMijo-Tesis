@@ -1,118 +1,252 @@
 # 🌱 AgroMijo
 
-> Videojuego serio para la práctica de la toma de decisiones en la gestión agrícola de Unidades Agrícolas Familiares (UAF) de la provincia comunera de Santander.
+> Videojuego serio para la práctica de la toma de decisiones en la gestión agrícola de Unidades Agrícolas Familiares (UAF) de la provincia Comunera de Santander.
 
-![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-yellow)
-![Motor](https://img.shields.io/badge/Unity-6000+-black)
-![Metodología](https://img.shields.io/badge/Metodología-RUP-blue)
-![Licencia](https://img.shields.io/badge/Licencia-Académica-green)
+![Estado](https://img.shields.io/badge/Estado-Videojuego%20finalizado-brightgreen)
+![Unity](https://img.shields.io/badge/Unity-6-black)
+![C%23](https://img.shields.io/badge/C%23-Programación-purple)
+![RUP](https://img.shields.io/badge/Metodología-RUP-blue)
+![Licencia](https://img.shields.io/badge/Proyecto-Académico-green)
 
 ---
 
 ## 📖 Descripción
 
-AgroMijo es un videojuego serio desarrollado como proyecto de grado de Ingeniería de Sistemas de la Universidad Industrial de Santander (UIS).
+**AgroMijo** es un videojuego serio desarrollado como proyecto de grado del programa de Ingeniería de Sistemas e Informática de la **Universidad Industrial de Santander (UIS)**.
 
-El proyecto busca brindar a jóvenes del entorno rural una herramienta interactiva que les permita practicar la toma de decisiones relacionadas con la gestión agrícola dentro de una Unidad Agrícola Familiar (UAF), mediante una experiencia de simulación donde puedan experimentar, analizar resultados y comprender las consecuencias de distintas estrategias productivas.
+El proyecto está orientado a jóvenes del entorno rural de la provincia Comunera de Santander y busca proporcionar un espacio interactivo para **practicar la toma de decisiones relacionadas con la gestión agrícola de una Unidad Agrícola Familiar (UAF)**.
 
-A través del juego, los usuarios administran recursos, planifican cultivos y enfrentan situaciones propias del entorno rural, permitiendo desarrollar una comprensión más integral de los procesos agrícolas y de gestión.
+Durante una partida, el jugador administra los recursos disponibles de una UAF, analiza las condiciones de diferentes parcelas, planifica cultivos, realiza inversiones y responde ante situaciones que pueden afectar el desarrollo de la producción.
+
+Las decisiones tomadas durante la partida generan consecuencias que permiten al jugador observar y analizar los resultados de sus estrategias productivas.
 
 ---
 
 ## 🎯 Objetivo
 
-Desarrollar un videojuego serio que permita a los jóvenes rurales practicar la toma de decisiones relacionadas con la gestión agrícola en Unidades Agrícolas Familiares (UAF), promoviendo el aprendizaje mediante simulación y experimentación en un entorno libre de riesgos reales.
+Desarrollar un videojuego serio que permita a jóvenes del entorno rural **practicar la toma de decisiones relacionadas con la gestión agrícola de Unidades Agrícolas Familiares (UAF)**, mediante un entorno interactivo en el que puedan experimentar diferentes alternativas y observar sus consecuencias sin asumir los riesgos asociados a una decisión en un contexto productivo real.
 
 ---
 
-## 🎮 Características Principales
+## 🎮 Funcionamiento general
 
-* Gestión de una Unidad Agrícola Familiar (UAF).
-* Planificación de cultivos.
-* Administración de recursos económicos.
-* Evaluación de estudios de suelo.
-* Gestión de disponibilidad de agua.
-* Consideración del estado de vías rurales.
-* Toma de decisiones sobre infraestructura.
-* Retroalimentación basada en resultados obtenidos.
-* Simulación de escenarios productivos agrícolas.
+Una partida de AgroMijo se desarrolla alrededor de una **Unidad Agrícola Familiar compuesta por cuatro parcelas** con características variables.
+
+El jugador dispone de recursos económicos que debe administrar para tomar decisiones relacionadas con la producción agrícola.
+
+Entre las acciones disponibles se encuentran:
+
+* Consultar las características de las parcelas.
+* Revisar las condiciones de suelo y disponibilidad de agua.
+* Consultar información relacionada con los cultivos.
+* Seleccionar cultivos para las parcelas.
+* Administrar los recursos económicos disponibles.
+* Realizar mejoras sobre las parcelas.
+* Atender eventos que pueden afectar el desarrollo de la actividad agrícola.
+* Consultar el estado y los resultados de la partida.
+* Finalizar la partida y registrar la información generada.
+
+El resultado de las decisiones depende de las condiciones de la UAF y de las situaciones que se presenten durante el desarrollo de la partida.
 
 ---
 
-## 🏡 Contexto del Proyecto
+## 🌾 Características principales
 
-Las Unidades Agrícolas Familiares representan una de las bases productivas más importantes del sector rural colombiano.
+### Gestión de la UAF
 
-Sin embargo, muchas decisiones agrícolas deben tomarse bajo condiciones de incertidumbre relacionadas con factores como:
+El jugador administra una unidad compuesta por cuatro parcelas que presentan diferentes condiciones.
 
-* Clima.
-* Disponibilidad de recursos.
-* Infraestructura rural.
-* Acceso a mercados.
-* Servicios de salud y educación.
+Cada parcela puede presentar características relacionadas con:
 
-AgroMijo busca representar estas dinámicas mediante mecánicas de juego que permitan comprender cómo las decisiones impactan el desempeño productivo y económico de una UAF.
+* Tipo de suelo.
+* Disponibilidad de agua.
+* Acceso vial.
+* Mejoras realizadas.
+* Cultivo establecido.
+
+### 🌱 Gestión de cultivos
+
+El jugador puede consultar información de los cultivos disponibles y seleccionar aquellos que considere apropiados para las condiciones de cada parcela.
+
+La información utilizada para la toma de decisiones contempla aspectos como:
+
+* Costo de semillas.
+* Rendimiento.
+* Duración del cultivo.
+* Jornales requeridos.
+* Compatibilidad con las condiciones del terreno.
+
+### 💰 Administración de recursos
+
+Las decisiones realizadas durante la partida tienen un impacto sobre los recursos económicos disponibles.
+
+El jugador debe considerar los costos de producción, las inversiones realizadas y los posibles resultados de sus decisiones.
+
+### 🏗️ Mejoras de las parcelas
+
+Las parcelas pueden recibir diferentes mejoras que modifican sus condiciones o los resultados de la producción.
+
+Entre ellas se encuentran:
+
+* Acceso vial.
+* Sistema de riego.
+* Fertilización.
+
+### 🌦️ Eventos
+
+Durante una partida pueden presentarse diferentes eventos que representan situaciones que pueden afectar las condiciones de la UAF.
+
+Los eventos pueden pertenecer a diferentes categorías y producir efectos sobre aspectos como:
+
+* Producción.
+* Economía.
+* Infraestructura.
+* Condiciones de las parcelas.
+
+El jugador debe interpretar cada situación y tomar las decisiones disponibles para responder ante ella.
+
+### 👤 Perfiles
+
+El sistema permite gestionar diferentes perfiles de jugador en un mismo dispositivo.
+
+Cada perfil utiliza un alias visible para el usuario y cuenta con un identificador que permite diferenciar las sesiones registradas para su posterior consulta.
+
+### 📊 Registro y consulta de información
+
+La información generada durante las partidas puede ser registrada mediante la API del proyecto.
+
+Los datos pueden ser consultados posteriormente mediante un **dashboard web**, permitiendo revisar información asociada a los perfiles y a las sesiones de juego.
+
+---
+
+## 🖥️ Componentes del sistema
+
+AgroMijo está compuesto actualmente por dos componentes principales:
+
+### 🎮 Videojuego
+
+Aplicación desarrollada con **Unity** y **C#**, encargada de implementar la experiencia de juego, las mecánicas de gestión agrícola, la interfaz y el registro de las sesiones.
+
+### 🌐 API
+
+Servicio web encargado de recibir y gestionar la información generada por el videojuego y proporcionar los datos necesarios para su posterior consulta.
+
+La API permite conectar el videojuego con los componentes externos utilizados para la persistencia y consulta de la información.
+
+### 📊 Dashboard
+
+Aplicación web destinada a la consulta de los registros generados durante las partidas.
+
+Permite realizar consultas utilizando diferentes criterios y visualizar la información registrada para facilitar el seguimiento y análisis de las sesiones.
+
+---
+
+## 🔄 Flujo general del sistema
+
+```text
+┌─────────────────────┐
+│      Jugador        │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│      AgroMijo       │
+│      Videojuego     │
+└──────────┬──────────┘
+           │
+           │ Registra información
+           ▼
+┌─────────────────────┐
+│     AgroMijo API    │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│   Persistencia de   │
+│     información     │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│      Dashboard      │
+│       Web           │
+└─────────────────────┘
+```
 
 ---
 
 ## 🛠️ Tecnologías
 
-| Tecnología   | Uso                       |
-| ------------ | ------------------------- |
-| Unity        | Desarrollo del videojuego |
-| C#           | Programación              |
-| StarUML      | Modelado UML              |
-| Git & GitHub | Control de versiones      |
+| Tecnología         | Uso                                              |
+| ------------------ | ------------------------------------------------ |
+| **Unity 6**        | Desarrollo del videojuego                        |
+| **C#**             | Programación del videojuego y lógica del sistema |
+| **ASP.NET / .NET** | Desarrollo de la API                             |
+| **Git**            | Control de versiones                             |
+| **GitHub**         | Gestión y almacenamiento del código fuente       |
+| **StarUML**        | Modelado del sistema durante el desarrollo       |
 
 ---
 
-## 📂 Estructura del Proyecto
+## 📂 Estructura del repositorio
+
+El repositorio contiene los diferentes componentes desarrollados para AgroMijo:
 
 ```text
-AgroMijo/
+AgroMijo-Tesis/
 │
-├── Assets/
-├── Packages/
-├── ProjectSettings/
-├── Documentation/
-│   ├── Diagramas UML/
-│   ├── Casos de Uso/
-│   └── Trabajo de Grado/
+├── AgroMijo Tesis/
+│   └── Proyecto de Unity
 │
-├── Builds/
+├── AgroMijo API/
+│   └── AgroMijo.API/
+│
+├── .gitignore
 └── README.md
 ```
 
----
-
-## 🚧 Estado Actual
-
-El proyecto se encuentra actualmente en desarrollo dentro de las fases definidas por la metodología Rational Unified Process (RUP):
-
-* Inicio
-* Elaboración
-* Construcción
-* Transición
+> Los documentos académicos, modelos y demás artefactos utilizados durante el desarrollo del trabajo de grado no necesariamente forman parte de este repositorio.
 
 ---
 
-## 👨‍💻 Autores
+## ✅ Estado del proyecto
 
-* Johan Sebastián Suárez Chacón
-* Miguel Daniel Velandia Pinilla
+El desarrollo de AgroMijo ha finalizado como producto de software del Trabajo de Grado II del programa de Ingeniería de Sistemas e Informática de la Universidad Industrial de Santander.
+
+El proyecto incluye el videojuego, los componentes necesarios para el registro de información generada durante las partidas y las herramientas desarrolladas para su consulta.
+---
+
+## 🎓 Proyecto académico
+
+**AgroMijo** es desarrollado como trabajo de grado de la:
+
+**Escuela de Ingeniería de Sistemas e Informática**
+**Universidad Industrial de Santander — UIS**
+
+### Autores
+
+* **Johan Sebastián Suárez Chacón**
+* **Miguel Daniel Velandia Pinilla**
 
 ### Director
 
-* Urbano Eliécer Gómez Prada
+* **Urbano Eliécer Gómez Prada**
 
 ---
 
-## 🎓 Proyecto Académico
+## 🌾 Lema
 
-Desarrollado como trabajo de grado de la Escuela de Ingeniería de Sistemas e Informática de la Universidad Industrial de Santander (UIS).
+> **“Aprender haciendo, decidir jugando.”**
+
+AgroMijo busca proporcionar un espacio interactivo en el que los jugadores puedan **practicar la toma de decisiones agrícolas, experimentar con diferentes alternativas y observar sus consecuencias** dentro de un entorno controlado.
 
 ---
 
-## 🌾 "Aprender haciendo, decidir jugando"
+## 📌 Repositorio
 
-AgroMijo busca acercar a las nuevas generaciones rurales a los procesos de planificación y gestión agrícola mediante una experiencia interactiva que combine aprendizaje, simulación y toma de decisiones.
+El código fuente del proyecto se encuentra disponible en:
+
+**[Aidnalev/AgroMijo-Tesis](https://github.com/Aidnalev/AgroMijo-Tesis)**
+
+Este repositorio corresponde al desarrollo académico del proyecto de grado.
+
