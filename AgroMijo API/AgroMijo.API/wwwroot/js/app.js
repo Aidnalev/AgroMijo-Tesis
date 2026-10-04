@@ -44,10 +44,18 @@ const pagination =
 const resultsSummary =
     document.getElementById("resultsSummary");
 
+const compareButton =
+    document.getElementById("compareButton");
+
+const comparisonStatus =
+    document.getElementById("comparisonStatus");
+
 
 /* =========================================================
    ESTADO
 ========================================================= */
+
+let reportesSeleccionados = [];
 
 let reportesActuales = [];
 
@@ -73,6 +81,10 @@ clearButton.addEventListener(
 backButton.addEventListener(
     "click",
     volverAReportes
+);
+compareButton.addEventListener(
+    "click",
+    compararSeleccionados
 );
 
 
@@ -277,7 +289,7 @@ function mostrarReportes() {
         report => {
 
             reportsContainer.appendChild(
-                crearTarjetaReporte(report)
+                crearFilaReporte(report)
             );
 
         }
@@ -298,184 +310,205 @@ function mostrarReportes() {
    TARJETA DE REPORTE
 ========================================================= */
 
-function crearTarjetaReporte(report) {
+function crearFilaReporte(report) {
 
-    const card =
-        document.createElement("div");
-
-    card.classList.add("report-card");
-
+    const fila = document.createElement("tr");
 
     const metricas =
         obtenerMetricasReporte(report);
 
+    const estaSeleccionado =
+        reportesSeleccionados.includes(
+            report.reportId
+        );
 
-    card.innerHTML = `
+    fila.innerHTML = `
+        <td class="comparison-cell">
 
-        <h3>
-            Reporte ${escaparHtml(report.reportId)}
-        </h3>
+            <input
+                type="checkbox"
+                class="report-checkbox"
+                data-report-id="${escaparHtml(report.reportId)}"
+                ${estaSeleccionado ? "checked" : ""}
+            >
 
-        <div class="report-id">
-            ID de partida
-        </div>
+        </td>
 
-
-        <div class="report-profile">
-
-            <strong>
-                Perfil
-            </strong>
-
-            ${escaparHtml(report.profileAlias)}
-            (${escaparHtml(report.profileId)})
-
-            <br>
-
-            <span class="report-id">
-                ${escaparHtml(report.fechaPartida)}
+        <td>
+            <span class="table-report-id">
+                ${escaparHtml(report.reportId)}
             </span>
+        </td>
 
-        </div>
-
-
-        <div class="report-metrics">
-
-            <div class="metric">
-
-                <span class="metric-label">
-                    Ciclos
-                </span>
-
-                <span class="metric-value">
-                    ${report.ciclosJugados}
-                </span>
-
-            </div>
-
-
-            <div class="metric">
-
-                <span class="metric-label">
-                    Decisiones
-                </span>
-
-                <span class="metric-value">
-                    ${metricas.decisiones}
-                </span>
-
-            </div>
-
-
-            <div class="metric">
-
-                <span class="metric-label">
-                    Eventos
-                </span>
-
-                <span class="metric-value">
-                    ${metricas.eventos}
-                </span>
-
-            </div>
-
-
-            <div class="metric">
-
-                <span class="metric-label">
-                    Cosechas
-                </span>
-
-                <span class="metric-value">
-                    ${metricas.cosechas}
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <div class="report-financial">
-
-            <div>
+        <td>
+            <div class="table-profile">
 
                 <strong>
-                    Presupuesto inicial
+                    ${escaparHtml(report.profileAlias)}
                 </strong>
 
-                ${formatearDinero(
-        report.presupuestoInicial
-    )}
+                <span>
+                    ${escaparHtml(report.profileId)}
+                </span>
 
             </div>
+        </td>
 
+        <td>
+            ${escaparHtml(report.fechaPartida)}
+        </td>
 
-            <div>
+        <td>
+            ${report.ciclosJugados}
+        </td>
 
-                <strong>
-                    Presupuesto final
-                </strong>
+        <td>
+            ${metricas.decisiones}
+        </td>
 
-                ${formatearDinero(
+        <td>
+            ${metricas.eventos}
+        </td>
+
+        <td>
+            ${metricas.cosechas}
+        </td>
+
+        <td class="money-cell">
+            ${formatearDinero(
         report.presupuestoFinal
     )}
+        </td>
 
-            </div>
-
-
-            <div>
-
-                <strong>
-                    Ganancia acumulada
-                </strong>
-
-                ${formatearDinero(
-        report.gananciaAcumulada
-    )}
-
-            </div>
-
-
-            <div>
-
-                <strong>
-                    Gasto acumulado
-                </strong>
-
-                ${formatearDinero(
-        report.gastoAcumulado
-    )}
-
-            </div>
-
-        </div>
-
-
-        <div class="report-actions">
+        <td>
 
             <button
-                class="detail-button"
-                data-report-id="${escaparHtml(report.reportId)}"
+                class="detail-button table-detail-button"
             >
-                Ver reporte completo
+                Ver
             </button>
 
-        </div>
-
+        </td>
     `;
 
+    const checkbox =
+        fila.querySelector(
+            ".report-checkbox"
+        );
+
+    checkbox.addEventListener(
+        "change",
+        () => manejarSeleccionReporte(
+            report.reportId,
+            checkbox.checked
+        )
+    );
 
     const detailButton =
-        card.querySelector(".detail-button");
-
+        fila.querySelector(
+            ".detail-button"
+        );
 
     detailButton.addEventListener(
         "click",
         () => mostrarDetalle(report)
     );
 
+    return fila;
+}
+function manejarSeleccionReporte(
+    reportId,
+    seleccionado
+) {
 
-    return card;
+    if (seleccionado) {
+
+        if (
+            reportesSeleccionados.length >= 2
+        ) {
+            mostrarMensaje(
+                "Solo puedes seleccionar 2 partidas para compararlas.",
+                true
+            );
+
+            mostrarReportes();
+
+            return;
+        }
+
+        if (
+            !reportesSeleccionados.includes(
+                reportId
+            )
+        ) {
+            reportesSeleccionados.push(
+                reportId
+            );
+        }
+
+    }
+    else {
+
+        reportesSeleccionados =
+            reportesSeleccionados.filter(
+                id => id !== reportId
+            );
+    }
+
+    actualizarEstadoComparacion();
+}
+function actualizarEstadoComparacion() {
+
+    const cantidad =
+        reportesSeleccionados.length;
+
+    if (cantidad === 0) {
+
+        comparisonStatus.textContent =
+            "Selecciona 2 partidas para compararlas.";
+
+    }
+    else if (cantidad === 1) {
+
+        comparisonStatus.textContent =
+            "Selecciona una partida más para comparar.";
+
+    }
+    else {
+
+        comparisonStatus.textContent =
+            "2 partidas seleccionadas.";
+
+    }
+
+    compareButton.disabled =
+        cantidad !== 2;
+}
+function compararSeleccionados() {
+
+    if (
+        reportesSeleccionados.length !== 2
+    ) {
+        return;
+    }
+
+    const reportes =
+        reportesActuales.filter(
+            report =>
+                reportesSeleccionados.includes(
+                    report.reportId
+                )
+        );
+
+    console.log(
+        "Partidas seleccionadas:",
+        reportes
+    );
+
+    mostrarMensaje(
+        "Partidas listas para comparar.",
+        false
+    );
 }
 
 

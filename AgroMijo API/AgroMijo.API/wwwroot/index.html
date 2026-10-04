@@ -110,9 +110,44 @@
             </div>
 
 
-            <div id="reportsContainer"></div>
+            <div class="table-wrapper">
 
+                <table class="reports-table">
 
+                    <thead>
+                        <tr>
+                            <th>Comparar</th>
+                            <th>Partida</th>
+                            <th>Perfil</th>
+                            <th>Fecha</th>
+                            <th>Ciclos</th>
+                            <th>Decisiones</th>
+                            <th>Eventos</th>
+                            <th>Cosechas</th>
+                            <th>Presupuesto final</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="reportsContainer"></tbody>
+
+                </table>
+
+            </div>
+
+            <div class="comparison-actions">
+
+                <span id="comparisonStatus">
+                    Selecciona 2 partidas para compararlas.
+                </span>
+
+                <button id="compareButton"
+                        class="secondary-button"
+                        disabled>
+                    Comparar partidas seleccionadas
+                </button>
+
+            </div>
             <!-- Paginación -->
 
             <div id="pagination"
