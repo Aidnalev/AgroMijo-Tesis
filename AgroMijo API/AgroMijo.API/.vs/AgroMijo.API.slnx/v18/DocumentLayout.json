@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{685F89F7-E6AE-7F71-B367-3DD91C2FA8F4}|AgroMijo.API.csproj|c:\\github\\agromijo tesis\\agromijo api\\agromijo.api\\wwwroot\\js\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{685F89F7-E6AE-7F71-B367-3DD91C2FA8F4}|AgroMijo.API.csproj|solutionrelative:wwwroot\\js\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{685F89F7-E6AE-7F71-B367-3DD91C2FA8F4}|AgroMijo.API.csproj|c:\\github\\agromijo tesis\\agromijo api\\agromijo.api\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{685F89F7-E6AE-7F71-B367-3DD91C2FA8F4}|AgroMijo.API.csproj|solutionrelative:wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{685F89F7-E6AE-7F71-B367-3DD91C2FA8F4}|AgroMijo.API.csproj|c:\\github\\agromijo tesis\\agromijo api\\agromijo.api\\wwwroot\\css\\styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{685F89F7-E6AE-7F71-B367-3DD91C2FA8F4}|AgroMijo.API.csproj|solutionrelative:wwwroot\\css\\styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{685F89F7-E6AE-7F71-B367-3DD91C2FA8F4}|AgroMijo.API.csproj|c:\\github\\agromijo tesis\\agromijo api\\agromijo.api\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{685F89F7-E6AE-7F71-B367-3DD91C2FA8F4}|AgroMijo.API.csproj|solutionrelative:wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{685F89F7-E6AE-7F71-B367-3DD91C2FA8F4}|AgroMijo.API.csproj|c:\\github\\agromijo tesis\\agromijo api\\agromijo.api\\wwwroot\\js\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{685F89F7-E6AE-7F71-B367-3DD91C2FA8F4}|AgroMijo.API.csproj|solutionrelative:wwwroot\\js\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,11 +22,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "app.js",
               "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\wwwroot\\js\\app.js",
               "RelativeDocumentMoniker": "wwwroot\\js\\app.js",
@@ -45,20 +45,20 @@
               "RelativeDocumentMoniker": "wwwroot\\css\\styles.css",
               "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\wwwroot\\css\\styles.css",
               "RelativeToolTip": "wwwroot\\css\\styles.css",
-              "ViewState": "AgIAAOECAAAAAAAAAAAYwPoCAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAPQBAAAAAAAAAAAUwBICAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2026-10-04T17:11:38.257Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "index.html",
               "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\wwwroot\\index.html",
               "RelativeDocumentMoniker": "wwwroot\\index.html",
               "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo API\\AgroMijo.API\\wwwroot\\index.html",
               "RelativeToolTip": "wwwroot\\index.html",
-              "ViewState": "AgIAABUBAAAAAAAAAAAYwCoBAAAHAAAAAAAAAA==",
+              "ViewState": "AgIAABYBAAAAAAAAAAAAACUBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2026-10-04T16:59:57.239Z",
               "EditorCaption": ""
