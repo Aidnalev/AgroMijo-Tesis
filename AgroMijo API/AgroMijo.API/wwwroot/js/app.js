@@ -76,6 +76,19 @@ let reportesSeleccionados = [];
 
 
 /* =========================================
+   GRÁFICOS
+   ========================================= */
+
+let budgetChart = null;
+
+let cycleFinancialChart = null;
+
+let comparisonFinancialChart = null;
+
+let comparisonActivityChart = null;
+
+
+/* =========================================
    EVENTOS
    ========================================= */
 
@@ -173,18 +186,7 @@ async function buscarReportes() {
     );
 
 
-    resultsSection.classList.add(
-        "hidden"
-    );
-
-    detailSection.classList.add(
-        "hidden"
-    );
-
-    comparisonSection.classList.add(
-        "hidden"
-    );
-
+    ocultarTodasLasSecciones();
 
     reportsContainer.innerHTML = "";
 
@@ -254,18 +256,14 @@ async function buscarReportes() {
                 : [reports];
 
 
-        /*
-         * Cada nueva búsqueda comienza
-         * sin partidas seleccionadas.
-         */
         reportesSeleccionados = [];
-
 
         paginaActual = 1;
 
 
-        actualizarEstadoComparacion();
+        destruirGraficos();
 
+        actualizarEstadoComparacion();
 
         mostrarReportes();
 
@@ -366,11 +364,12 @@ function mostrarReportes() {
         "",
         false
     );
+
 }
 
 
 /* =========================================
-   CREAR FILA DE REPORTE
+   CREAR FILA
    ========================================= */
 
 function crearFilaReporte(report) {
@@ -511,11 +510,12 @@ function crearFilaReporte(report) {
 
 
     return fila;
+
 }
 
 
 /* =========================================
-   MÉTRICAS DEL REPORTE
+   MÉTRICAS
    ========================================= */
 
 function obtenerMetricasReporte(report) {
@@ -525,7 +525,9 @@ function obtenerMetricasReporte(report) {
 
 
     let decisiones = 0;
+
     let eventos = 0;
+
     let cosechas = 0;
 
 
@@ -558,7 +560,11 @@ function obtenerMetricasReporte(report) {
             ) {
 
                 eventos +=
-                    ciclo.eventosOcurridos.length;
+                    ciclo.eventosOcurridos.filter(
+                        evento =>
+                            typeof evento === "string" &&
+                            evento.startsWith("[Nuevo]")
+                    ).length;
 
             }
 
@@ -595,7 +601,7 @@ function obtenerMetricasReporte(report) {
 
 
 /* =========================================
-   SELECCIÓN DE REPORTES
+   SELECCIÓN
    ========================================= */
 
 function manejarSeleccionReporte(
@@ -652,7 +658,7 @@ function manejarSeleccionReporte(
 
 
 /* =========================================
-   ESTADO DEL BOTÓN DE COMPARACIÓN
+   ESTADO COMPARACIÓN
    ========================================= */
 
 function actualizarEstadoComparacion() {
@@ -753,6 +759,9 @@ function mostrarComparacion(
     comparisonSection.classList.remove(
         "hidden"
     );
+
+
+    destruirGraficos();
 
 
     const metricasA =
@@ -1050,13 +1059,63 @@ function mostrarComparacion(
 
         </div>
 
+
+        <div class="comparison-charts">
+
+            <div class="chart-container">
+
+                <h3>
+                    Resultados económicos
+                </h3>
+
+                <div class="chart-canvas-wrapper">
+
+                    <canvas
+                        id="comparisonFinancialChart"
+                    ></canvas>
+
+                </div>
+
+            </div>
+
+
+            <div class="chart-container">
+
+                <h3>
+                    Actividad de las partidas
+                </h3>
+
+                <div class="chart-canvas-wrapper">
+
+                    <canvas
+                        id="comparisonActivityChart"
+                    ></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
     `;
+
+
+    crearGraficoComparacionEconomica(
+        reporteA,
+        reporteB
+    );
+
+
+    crearGraficoComparacionActividad(
+        reporteA,
+        reporteB
+    );
 
 }
 
 
 /* =========================================
-   DETALLE DE REPORTE
+   DETALLE
    ========================================= */
 
 function mostrarDetalle(report) {
@@ -1072,6 +1131,9 @@ function mostrarDetalle(report) {
     detailSection.classList.remove(
         "hidden"
     );
+
+
+    destruirGraficos();
 
 
     const metricas =
@@ -1238,6 +1300,40 @@ function mostrarDetalle(report) {
         </div>
 
 
+        <div class="chart-container">
+
+            <h3>
+                Evolución del presupuesto
+            </h3>
+
+            <div class="chart-canvas-wrapper">
+
+                <canvas
+                    id="budgetChart"
+                ></canvas>
+
+            </div>
+
+        </div>
+
+
+        <div class="chart-container">
+
+            <h3>
+                Ganancias y gastos por ciclo
+            </h3>
+
+            <div class="chart-canvas-wrapper">
+
+                <canvas
+                    id="cycleFinancialChart"
+                ></canvas>
+
+            </div>
+
+        </div>
+
+
         <h3 class="detail-section-title">
             Historial de ciclos
         </h3>
@@ -1252,6 +1348,595 @@ function mostrarDetalle(report) {
         </div>
 
     `;
+
+
+    crearGraficoPresupuesto(report);
+
+    crearGraficoFinancieroPorCiclo(report);
+
+}
+
+
+/* =========================================
+   GRÁFICO: PRESUPUESTO
+   ========================================= */
+
+function crearGraficoPresupuesto(report) {
+
+    const canvas =
+        document.getElementById(
+            "budgetChart"
+        );
+
+
+    if (!canvas) {
+        return;
+    }
+
+
+    const ciclos =
+        report.historialCiclos || [];
+
+
+    const etiquetas =
+        ciclos.map(
+            (ciclo, index) =>
+                `Ciclo ${ciclo.numeroCiclo ?? index + 1}`
+        );
+
+
+    const presupuestoInicial =
+        ciclos.map(
+            ciclo =>
+                ciclo.presupuestoInicial || 0
+        );
+
+
+    const presupuestoFinal =
+        ciclos.map(
+            ciclo =>
+                ciclo.presupuestoFinal || 0
+        );
+
+
+    budgetChart =
+        new Chart(
+            canvas,
+            {
+
+                type:
+                    "line",
+
+                data: {
+
+                    labels:
+                        etiquetas,
+
+                    datasets: [
+
+                        {
+
+                            label:
+                                "Presupuesto inicial",
+
+                            data:
+                                presupuestoInicial,
+
+                            tension:
+                                0.25
+
+                        },
+
+                        {
+
+                            label:
+                                "Presupuesto final",
+
+                            data:
+                                presupuestoFinal,
+
+                            tension:
+                                0.25
+
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    responsive:
+                        true,
+
+                    maintainAspectRatio:
+                        false,
+
+                    scales: {
+
+                        y: {
+
+                            ticks: {
+
+                                callback:
+                                    function (value) {
+
+                                        return formatearDineroCorto(
+                                            value
+                                        );
+
+                                    }
+
+                            }
+
+                        }
+
+                    },
+
+                    plugins: {
+
+                        tooltip: {
+
+                            callbacks: {
+
+                                label:
+                                    function (context) {
+
+                                        return (
+                                            context.dataset.label +
+                                            ": " +
+                                            formatearDinero(
+                                                context.raw
+                                            )
+                                        );
+
+                                    }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+}
+
+
+/* =========================================
+   GRÁFICO: GANANCIAS Y GASTOS POR CICLO
+   ========================================= */
+
+function crearGraficoFinancieroPorCiclo(
+    report
+) {
+
+    const canvas =
+        document.getElementById(
+            "cycleFinancialChart"
+        );
+
+
+    if (!canvas) {
+        return;
+    }
+
+
+    const ciclos =
+        report.historialCiclos || [];
+
+
+    const etiquetas =
+        ciclos.map(
+            (ciclo, index) =>
+                `Ciclo ${ciclo.numeroCiclo ?? index + 1}`
+        );
+
+
+    const ganancias =
+        ciclos.map(
+            ciclo =>
+                ciclo.gananciaTotal || 0
+        );
+
+
+    const gastos =
+        ciclos.map(
+            ciclo =>
+                ciclo.gastoTotal || 0
+        );
+
+
+    cycleFinancialChart =
+        new Chart(
+            canvas,
+            {
+
+                type:
+                    "bar",
+
+                data: {
+
+                    labels:
+                        etiquetas,
+
+                    datasets: [
+
+                        {
+
+                            label:
+                                "Ganancias",
+
+                            data:
+                                ganancias
+
+                        },
+
+                        {
+
+                            label:
+                                "Gastos",
+
+                            data:
+                                gastos
+
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    responsive:
+                        true,
+
+                    maintainAspectRatio:
+                        false,
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero:
+                                true,
+
+                            ticks: {
+
+                                callback:
+                                    function (value) {
+
+                                        return formatearDineroCorto(
+                                            value
+                                        );
+
+                                    }
+
+                            }
+
+                        }
+
+                    },
+
+                    plugins: {
+
+                        tooltip: {
+
+                            callbacks: {
+
+                                label:
+                                    function (context) {
+
+                                        return (
+                                            context.dataset.label +
+                                            ": " +
+                                            formatearDinero(
+                                                context.raw
+                                            )
+                                        );
+
+                                    }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+}
+
+
+/* =========================================
+   GRÁFICO: COMPARACIÓN ECONÓMICA
+   ========================================= */
+
+function crearGraficoComparacionEconomica(
+    reporteA,
+    reporteB
+) {
+
+    const canvas =
+        document.getElementById(
+            "comparisonFinancialChart"
+        );
+
+
+    if (!canvas) {
+        return;
+    }
+
+
+    comparisonFinancialChart =
+        new Chart(
+            canvas,
+            {
+
+                type:
+                    "bar",
+
+                data: {
+
+                    labels: [
+
+                        "Presupuesto final",
+
+                        "Ganancia",
+
+                        "Gastos"
+
+                    ],
+
+                    datasets: [
+
+                        {
+
+                            label:
+                                obtenerNombrePartida(
+                                    reporteA,
+                                    "Partida 1"
+                                ),
+
+                            data: [
+
+                                reporteA.presupuestoFinal || 0,
+
+                                reporteA.gananciaAcumulada || 0,
+
+                                reporteA.gastoAcumulado || 0
+
+                            ]
+
+                        },
+
+                        {
+
+                            label:
+                                obtenerNombrePartida(
+                                    reporteB,
+                                    "Partida 2"
+                                ),
+
+                            data: [
+
+                                reporteB.presupuestoFinal || 0,
+
+                                reporteB.gananciaAcumulada || 0,
+
+                                reporteB.gastoAcumulado || 0
+
+                            ]
+
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    responsive:
+                        true,
+
+                    maintainAspectRatio:
+                        false,
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero:
+                                true,
+
+                            ticks: {
+
+                                callback:
+                                    function (value) {
+
+                                        return formatearDineroCorto(
+                                            value
+                                        );
+
+                                    }
+
+                            }
+
+                        }
+
+                    },
+
+                    plugins: {
+
+                        tooltip: {
+
+                            callbacks: {
+
+                                label:
+                                    function (context) {
+
+                                        return (
+                                            context.dataset.label +
+                                            ": " +
+                                            formatearDinero(
+                                                context.raw
+                                            )
+                                        );
+
+                                    }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+}
+
+
+/* =========================================
+   GRÁFICO: COMPARACIÓN DE ACTIVIDAD
+   ========================================= */
+
+function crearGraficoComparacionActividad(
+    reporteA,
+    reporteB
+) {
+
+    const canvas =
+        document.getElementById(
+            "comparisonActivityChart"
+        );
+
+
+    if (!canvas) {
+        return;
+    }
+
+
+    const metricasA =
+        obtenerMetricasReporte(
+            reporteA
+        );
+
+
+    const metricasB =
+        obtenerMetricasReporte(
+            reporteB
+        );
+
+
+    comparisonActivityChart =
+        new Chart(
+            canvas,
+            {
+
+                type:
+                    "bar",
+
+                data: {
+
+                    labels: [
+
+                        "Decisiones",
+
+                        "Eventos",
+
+                        "Cosechas"
+
+                    ],
+
+                    datasets: [
+
+                        {
+
+                            label:
+                                obtenerNombrePartida(
+                                    reporteA,
+                                    "Partida 1"
+                                ),
+
+                            data: [
+
+                                convertirMetricaNumerica(
+                                    metricasA.decisiones
+                                ),
+
+                                metricasA.eventos,
+
+                                metricasA.cosechas
+
+                            ]
+
+                        },
+
+                        {
+
+                            label:
+                                obtenerNombrePartida(
+                                    reporteB,
+                                    "Partida 2"
+                                ),
+
+                            data: [
+
+                                convertirMetricaNumerica(
+                                    metricasB.decisiones
+                                ),
+
+                                metricasB.eventos,
+
+                                metricasB.cosechas
+
+                            ]
+
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    responsive:
+                        true,
+
+                    maintainAspectRatio:
+                        false,
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero:
+                                true,
+
+                            ticks: {
+
+                                precision:
+                                    0
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
 
 }
 
@@ -1856,6 +2541,9 @@ function volverAReportes() {
         "hidden"
     );
 
+
+    destruirGraficos();
+
 }
 
 
@@ -1870,13 +2558,15 @@ function volverAComparacion() {
     );
 
 
+    destruirGraficos();
+
     mostrarReportes();
 
 }
 
 
 /* =========================================
-   LIMPIAR BÚSQUEDA
+   LIMPIAR
    ========================================= */
 
 function limpiarBusqueda() {
@@ -1888,17 +2578,7 @@ function limpiarBusqueda() {
     dateToInput.value = "";
 
 
-    resultsSection.classList.add(
-        "hidden"
-    );
-
-    detailSection.classList.add(
-        "hidden"
-    );
-
-    comparisonSection.classList.add(
-        "hidden"
-    );
+    ocultarTodasLasSecciones();
 
 
     reportsContainer.innerHTML = "";
@@ -1917,6 +2597,8 @@ function limpiarBusqueda() {
     paginaActual = 1;
 
 
+    destruirGraficos();
+
     actualizarEstadoComparacion();
 
 
@@ -1924,6 +2606,135 @@ function limpiarBusqueda() {
         "",
         false
     );
+
+}
+
+
+/* =========================================
+   DESTRUIR GRÁFICOS
+   ========================================= */
+
+function destruirGraficos() {
+
+    if (budgetChart) {
+
+        budgetChart.destroy();
+
+        budgetChart = null;
+
+    }
+
+
+    if (cycleFinancialChart) {
+
+        cycleFinancialChart.destroy();
+
+        cycleFinancialChart = null;
+
+    }
+
+
+    if (comparisonFinancialChart) {
+
+        comparisonFinancialChart.destroy();
+
+        comparisonFinancialChart = null;
+
+    }
+
+
+    if (comparisonActivityChart) {
+
+        comparisonActivityChart.destroy();
+
+        comparisonActivityChart = null;
+
+    }
+
+}
+
+
+/* =========================================
+   OCULTAR SECCIONES
+   ========================================= */
+
+function ocultarTodasLasSecciones() {
+
+    resultsSection.classList.add(
+        "hidden"
+    );
+
+    detailSection.classList.add(
+        "hidden"
+    );
+
+    comparisonSection.classList.add(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================
+   NOMBRE DE PARTIDA
+   ========================================= */
+
+function obtenerNombrePartida(
+    report,
+    nombreAlternativo
+) {
+
+    if (
+        report.profileAlias &&
+        report.profileAlias.trim() !== ""
+    ) {
+
+        return report.profileAlias;
+
+    }
+
+
+    if (
+        report.profileId &&
+        report.profileId.trim() !== ""
+    ) {
+
+        return report.profileId;
+
+    }
+
+
+    return nombreAlternativo;
+
+}
+
+
+/* =========================================
+   MÉTRICA NUMÉRICA
+   ========================================= */
+
+function convertirMetricaNumerica(
+    valor
+) {
+
+    if (
+        typeof valor === "number"
+    ) {
+
+        return valor;
+
+    }
+
+
+    const convertido =
+        Number(valor);
+
+
+    return Number.isFinite(
+        convertido
+    )
+        ? convertido
+        : 0;
 
 }
 
@@ -1937,14 +2748,60 @@ function formatearDinero(valor) {
     return new Intl.NumberFormat(
         "es-CO",
         {
-            style: "currency",
+            style:
+                "currency",
 
-            currency: "COP",
+            currency:
+                "COP",
 
-            maximumFractionDigits: 0
+            maximumFractionDigits:
+                0
         }
     ).format(
         valor || 0
+    );
+
+}
+
+
+function formatearDineroCorto(
+    valor
+) {
+
+    if (
+        Math.abs(valor) >= 1000000
+    ) {
+
+        return (
+            "$" +
+            (valor / 1000000)
+                .toFixed(1) +
+            " M"
+        );
+
+    }
+
+
+    if (
+        Math.abs(valor) >= 1000
+    ) {
+
+        return (
+            "$" +
+            (valor / 1000)
+                .toFixed(0) +
+            " mil"
+        );
+
+    }
+
+
+    return (
+        "$" +
+        Number(valor || 0)
+            .toLocaleString(
+                "es-CO"
+            )
     );
 
 }

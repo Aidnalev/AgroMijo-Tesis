@@ -6,23 +6,12 @@
     box-sizing: border-box;
 }
 
+
 body {
     margin: 0;
-    padding: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background: #f5f6f7;
-    color: #333;
-}
-
-.container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 30px 20px 50px;
-}
-
-.hidden {
-    display: none !important;
+    background: #f4f6f5;
+    color: #222;
 }
 
 
@@ -31,15 +20,67 @@ body {
    ========================================= */
 
 .main-header {
-    margin-bottom: 30px;
+    background: #3c4e45;
+    color: white;
+    padding: 24px 32px;
 }
 
-    .main-header h1 {
-        margin: 0 0 6px;
-        font-size: 32px;
+
+.header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+
+.main-header h1 {
+    margin: 0 0 5px 0;
+    font-size: 30px;
+}
+
+
+.main-header p {
+    margin: 0;
+    opacity: 0.85;
+}
+
+
+/* =========================================
+   CONTENEDOR
+   ========================================= */
+
+.main-container {
+    width: min(1400px, 94%);
+    margin: 30px auto 60px;
+}
+
+
+/* =========================================
+   SECCIONES
+   ========================================= */
+
+.search-section,
+.results-section,
+.detail-section,
+.comparison-section {
+    background: white;
+    border-radius: 12px;
+    padding: 26px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+
+.section-header {
+    margin-bottom: 24px;
+}
+
+
+    .section-header h2 {
+        margin: 0 0 6px 0;
+        font-size: 24px;
     }
 
-    .main-header p {
+
+    .section-header p {
         margin: 0;
         color: #666;
     }
@@ -49,56 +90,49 @@ body {
    BÚSQUEDA
    ========================================= */
 
-.search-section {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 24px;
-    margin-bottom: 30px;
+.search-form {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr auto;
+    gap: 16px;
+    align-items: end;
 }
 
-    .search-section h2 {
-        margin-top: 0;
-        margin-bottom: 20px;
-    }
 
-.search-group {
-    margin-bottom: 20px;
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
 }
 
-    .search-group > label {
-        display: block;
-        margin-bottom: 7px;
+
+    .form-group label {
+        font-size: 14px;
         font-weight: 600;
     }
 
-    .search-group input {
+
+    .form-group input {
         width: 100%;
-        max-width: 320px;
-        padding: 12px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        font-size: 16px;
-    }
-
-.date-row {
-    display: flex;
-    gap: 20px;
-}
-
-    .date-row > div {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .date-row label {
-        margin-bottom: 7px;
+        height: 42px;
+        padding: 0 12px;
+        border: 1px solid #d4d8d6;
+        border-radius: 7px;
         font-size: 14px;
+        background: white;
     }
 
-    .date-row input {
-        max-width: 220px;
-    }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #3c4e45;
+            box-shadow: 0 0 0 2px rgba(60, 78, 69, 0.12);
+        }
+
+
+.search-actions {
+    display: flex;
+    gap: 8px;
+}
 
 
 /* =========================================
@@ -107,33 +141,40 @@ body {
 
 button {
     border: none;
-    border-radius: 6px;
-    padding: 10px 16px;
+    border-radius: 7px;
+    cursor: pointer;
     font-size: 14px;
     font-weight: 600;
-    cursor: pointer;
-    background: #333;
-    color: white;
+    padding: 10px 16px;
 }
 
-    button:hover {
-        opacity: 0.9;
-    }
 
     button:disabled {
         opacity: 0.5;
         cursor: not-allowed;
     }
 
-.secondary-button {
-    background: #e9ecef;
-    color: #333;
+
+.primary-button {
+    background: #3c4e45;
+    color: white;
 }
 
-.search-buttons {
-    display: flex;
-    gap: 10px;
+
+    .primary-button:hover:not(:disabled) {
+        background: #2f3f37;
+    }
+
+
+.secondary-button {
+    background: #e8ecea;
+    color: #29332f;
 }
+
+
+    .secondary-button:hover:not(:disabled) {
+        background: #dce2df;
+    }
 
 
 /* =========================================
@@ -141,17 +182,19 @@ button {
    ========================================= */
 
 .message {
-    min-height: 20px;
-    margin-top: 15px;
+    min-height: 22px;
+    margin-top: 16px;
     font-size: 14px;
 }
 
-    .message.error {
-        color: #b42318;
-    }
 
     .message.success {
-        color: #247a3d;
+        color: #3c4e45;
+    }
+
+
+    .message.error {
+        color: #a33a32;
     }
 
 
@@ -160,74 +203,83 @@ button {
    ========================================= */
 
 .results-section {
-    margin-top: 20px;
+    margin-top: 24px;
 }
+
 
 .results-header {
-    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
 }
 
-    .results-header h2 {
-        margin-bottom: 5px;
-    }
 
-.results-summary {
-    margin: 0;
+.comparison-controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+
+.comparison-status {
     color: #666;
+    font-size: 13px;
 }
 
 
 /* =========================================
-   TABLA DE REPORTES
+   TABLA
    ========================================= */
 
 .table-wrapper {
     width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background: white;
-    overflow: hidden;
+    overflow-x: auto;
 }
+
 
 .reports-table {
     width: 100%;
     border-collapse: collapse;
+    font-size: 14px;
 }
 
-    .reports-table thead {
-        background: #f3f4f6;
-    }
 
     .reports-table th {
-        padding: 14px 12px;
+        background: #eef1ef;
+        color: #34423b;
         text-align: left;
-        font-size: 13px;
         font-weight: 700;
-        color: #444;
-        border-bottom: 2px solid #ddd;
+        padding: 13px 12px;
+        border-bottom: 2px solid #dce1de;
         white-space: nowrap;
     }
 
+
     .reports-table td {
         padding: 13px 12px;
-        border-bottom: 1px solid #e5e5e5;
-        font-size: 14px;
-        color: #333;
+        border-bottom: 1px solid #e5e8e6;
         vertical-align: middle;
     }
 
+
     .reports-table tbody tr:hover {
-        background: #fafafa;
-    }
-
-    .reports-table tbody tr:last-child td {
-        border-bottom: none;
+        background: #fafbfa;
     }
 
 
-/* =========================================
-   PERFIL EN TABLA
-   ========================================= */
+.comparison-cell {
+    width: 80px;
+    text-align: center !important;
+}
+
+
+.report-checkbox {
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+}
+
 
 .table-profile {
     display: flex;
@@ -235,9 +287,11 @@ button {
     gap: 3px;
 }
 
+
     .table-profile strong {
-        font-size: 14px;
+        color: #29332f;
     }
+
 
     .table-profile span {
         font-size: 12px;
@@ -245,59 +299,22 @@ button {
     }
 
 
-/* =========================================
-   DINERO
-   ========================================= */
-
 .money-cell {
-    font-weight: 600;
     white-space: nowrap;
+    font-weight: 600;
 }
 
-
-/* =========================================
-   BOTÓN VER
-   ========================================= */
 
 .table-detail-button {
-    padding: 7px 14px;
-    font-size: 13px;
-    white-space: nowrap;
+    background: #e8ecea;
+    color: #29332f;
+    padding: 7px 12px;
 }
 
 
-/* =========================================
-   SELECCIÓN PARA COMPARACIÓN
-   ========================================= */
-
-.comparison-cell {
-    width: 70px;
-    text-align: center;
-}
-
-.report-checkbox {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-}
-
-.comparison-actions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 16px 4px;
-}
-
-#comparisonStatus {
-    font-size: 14px;
-    color: #666;
-}
-
-#compareButton:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
+    .table-detail-button:hover {
+        background: #dce2df;
+    }
 
 
 /* =========================================
@@ -309,126 +326,183 @@ button {
     justify-content: center;
     align-items: center;
     gap: 6px;
-    margin-top: 20px;
+    margin-top: 24px;
 }
+
 
     .pagination button {
         min-width: 36px;
         height: 36px;
-        padding: 6px 10px;
-        background: white;
-        color: #333;
-        border: 1px solid #ccc;
+        padding: 5px 9px;
+        background: #e8ecea;
+        color: #29332f;
     }
+
 
         .pagination button.active {
-            background: #333;
+            background: #3c4e45;
             color: white;
-            border-color: #333;
-        }
-
-        .pagination button:disabled {
-            opacity: 0.4;
         }
 
 
 /* =========================================
-   DETALLE
+   NAVEGACIÓN DEL DETALLE
    ========================================= */
 
-.detail-section {
-    margin-top: 20px;
-}
-
-.back-button {
-    margin-bottom: 20px;
-    background: #e9ecef;
-    color: #333;
-}
-
-.detail-header {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 24px;
-    margin-bottom: 20px;
-}
-
-    .detail-header h2 {
-        margin-top: 0;
-    }
-
-.detail-profile {
-    line-height: 1.7;
-    color: #555;
+.detail-navigation {
+    margin-bottom: 22px;
 }
 
 
 /* =========================================
-   RESUMEN DEL DETALLE
+   CABECERA DEL DETALLE
+   ========================================= */
+
+.detail-header {
+    border-bottom: 1px solid #e1e5e2;
+    padding-bottom: 20px;
+    margin-bottom: 22px;
+}
+
+
+    .detail-header h2 {
+        margin: 0 0 12px 0;
+        font-size: 26px;
+    }
+
+
+.detail-profile {
+    color: #666;
+    line-height: 1.8;
+}
+
+
+    .detail-profile strong {
+        color: #29332f;
+    }
+
+
+/* =========================================
+   RESUMEN
    ========================================= */
 
 .detail-summary {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 14px;
+    margin-bottom: 22px;
 }
+
 
 .metric {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
+    background: #f4f6f5;
+    border: 1px solid #e2e6e3;
+    border-radius: 9px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
 }
+
 
 .metric-label {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 13px;
     color: #666;
+    font-size: 13px;
 }
 
+
 .metric-value {
-    display: block;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
+    color: #29332f;
 }
 
 
 /* =========================================
-   FINANCIERO
+   INFORMACIÓN FINANCIERA
    ========================================= */
 
 .detail-financial {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
+    gap: 14px;
     margin-bottom: 30px;
 }
 
+
 .financial-card {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 18px;
+    border: 1px solid #e0e4e1;
+    border-radius: 9px;
+    padding: 17px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
 }
 
+
     .financial-card strong {
-        display: block;
-        margin-bottom: 7px;
         font-size: 13px;
         color: #666;
     }
 
 
+    .financial-card:not(strong) {
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+
 /* =========================================
-   HISTORIAL DE CICLOS
+   GRÁFICOS
+   ========================================= */
+
+.chart-container {
+    width: 100%;
+    height: 360px;
+    margin: 28px 0;
+    padding: 22px;
+    background: #fafbfa;
+    border: 1px solid #e1e5e2;
+    border-radius: 10px;
+}
+
+
+    .chart-container h3 {
+        margin: 0 0 18px 0;
+        font-size: 18px;
+        color: #29332f;
+    }
+
+
+.chart-canvas-wrapper {
+    position: relative;
+    width: 100%;
+    height: 270px;
+}
+
+
+.comparison-charts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 26px;
+}
+
+
+    .comparison-charts .chart-container {
+        margin: 0;
+    }
+
+
+/* =========================================
+   HISTORIAL
    ========================================= */
 
 .detail-section-title {
-    margin-bottom: 15px;
+    margin: 34px 0 16px;
+    font-size: 21px;
 }
+
 
 .periods-container {
     display: flex;
@@ -436,21 +510,33 @@ button {
     gap: 10px;
 }
 
+
 .period-card {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    border: 1px solid #dfe4e1;
+    border-radius: 9px;
+    background: #fafbfa;
+    overflow: hidden;
 }
+
 
     .period-card summary {
-        padding: 16px;
         cursor: pointer;
+        padding: 15px 18px;
         font-weight: 700;
+        color: #29332f;
     }
 
+
+        .period-card summary:hover {
+            background: #f0f3f1;
+        }
+
+
 .period-content {
-    padding: 0 16px 20px;
+    padding: 18px;
+    border-top: 1px solid #e1e5e2;
 }
+
 
 .period-summary {
     display: grid;
@@ -459,11 +545,14 @@ button {
     margin-bottom: 20px;
 }
 
+
     .period-summary > div {
-        background: #f7f7f7;
+        background: white;
+        border: 1px solid #e4e7e5;
+        border-radius: 7px;
         padding: 12px;
-        border-radius: 6px;
     }
+
 
     .period-summary strong {
         display: block;
@@ -473,43 +562,43 @@ button {
     }
 
 
-/* =========================================
-   DETALLES DEL CICLO
-   ========================================= */
-
 .period-detail {
     margin-top: 18px;
-    padding-top: 15px;
-    border-top: 1px solid #eee;
 }
+
 
     .period-detail strong {
         display: block;
         margin-bottom: 8px;
     }
 
+
     .period-detail ul {
-        margin-top: 8px;
-        padding-left: 20px;
+        margin: 0;
+        padding-left: 22px;
     }
 
+
     .period-detail li {
-        margin-bottom: 5px;
+        margin-bottom: 6px;
     }
+
 
 .decisions-unavailable {
     color: #777;
     font-style: italic;
 }
 
+
 .jornales {
-    margin-top: 18px;
-    padding-top: 15px;
-    border-top: 1px solid #eee;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid #e1e5e2;
 }
 
+
     .jornales p {
-        margin: 5px 0;
+        margin: 6px 0;
     }
 
 
@@ -518,63 +607,73 @@ button {
    ========================================= */
 
 .comparison-section {
-    margin-top: 20px;
+    margin-top: 24px;
 }
+
 
 .comparison-header {
-    margin-bottom: 24px;
+    margin-bottom: 22px;
 }
 
+
     .comparison-header h2 {
-        margin-bottom: 6px;
+        margin: 0 0 7px 0;
     }
+
 
     .comparison-header p {
         margin: 0;
         color: #666;
     }
 
+
 .comparison-table-wrapper {
     width: 100%;
     overflow-x: auto;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background: white;
 }
+
 
 .comparison-table {
     width: 100%;
     border-collapse: collapse;
 }
 
+
     .comparison-table th,
     .comparison-table td {
-        padding: 14px 16px;
-        border-bottom: 1px solid #e5e5e5;
+        padding: 13px 14px;
+        border-bottom: 1px solid #e1e5e2;
         text-align: left;
     }
 
+
     .comparison-table thead th {
-        background: #f3f4f6;
-        font-weight: 700;
+        background: #eef1ef;
+        color: #29332f;
     }
+
 
     .comparison-table tbody th {
-        width: 30%;
-        background: #fafafa;
-        font-weight: 600;
+        width: 32%;
+        color: #555;
+        background: #fafbfa;
     }
 
-    .comparison-table tbody tr:last-child th,
-    .comparison-table tbody tr:last-child td {
-        border-bottom: none;
-    }
 
 .comparison-profile-id {
     display: block;
-    margin-top: 3px;
+    margin-top: 4px;
     font-size: 12px;
     color: #777;
+}
+
+
+/* =========================================
+   UTILIDADES
+   ========================================= */
+
+.hidden {
+    display: none !important;
 }
 
 
@@ -582,37 +681,66 @@ button {
    RESPONSIVE
    ========================================= */
 
-@media (max-width: 900px) {
+@media ( max-width: 1000px ) {
+
+    .search-form {
+        grid-template-columns: 1fr 1fr;
+    }
+
+
+    .search-actions {
+        grid-column: 1 / -1;
+    }
+
+
+    .results-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
 
     .detail-summary,
     .detail-financial {
         grid-template-columns: repeat(2, 1fr);
     }
 
+
     .period-summary {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .comparison-actions {
-        flex-direction: column;
-        align-items: flex-start;
+
+    .comparison-charts {
+        grid-template-columns: 1fr;
     }
 }
 
 
-@media (max-width: 650px) {
+@media ( max-width: 650px ) {
 
-    .container {
-        padding: 20px 12px 40px;
+    .main-container {
+        width: 94%;
+        margin-top: 18px;
     }
 
-    .date-row {
-        flex-direction: column;
+
+    .search-section,
+    .results-section,
+    .detail-section,
+    .comparison-section {
+        padding: 18px;
     }
 
-        .date-row input {
-            max-width: 100%;
-        }
+
+    .search-form {
+        grid-template-columns: 1fr;
+    }
+
+
+    .search-actions {
+        grid-column: auto;
+    }
+
 
     .detail-summary,
     .detail-financial,
@@ -620,23 +748,15 @@ button {
         grid-template-columns: 1fr;
     }
 
-    .search-buttons {
+
+    .comparison-controls {
+        align-items: flex-start;
         flex-direction: column;
     }
 
-        .search-buttons button {
-            width: 100%;
-        }
 
-    /*
-     * En pantallas pequeñas la tabla puede necesitar
-     * desplazamiento horizontal.
-     */
-    .table-wrapper {
-        overflow-x: auto;
-    }
-
-    .reports-table {
-        min-width: 850px;
+    .chart-container {
+        height: 320px;
+        padding: 15px;
     }
 }

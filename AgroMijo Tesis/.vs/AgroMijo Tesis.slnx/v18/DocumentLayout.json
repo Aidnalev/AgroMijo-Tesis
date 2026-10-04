@@ -48,7 +48,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\Game\\GameManager.cs",
               "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Game\\GameManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\Game\\GameManager.cs",
-              "ViewState": "AgIAAMAAAAAAAAAAAAAkwCQBAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAOcBAAAAAAAAAIAwwHQBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-04T17:05:00.985Z",
               "EditorCaption": ""
@@ -61,7 +61,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\Game\\ReporteCiclo.cs",
               "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Game\\ReporteCiclo.cs",
               "RelativeToolTip": "Assets\\Scripts\\Game\\ReporteCiclo.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABgAAAA/AAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAmwBYAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-04T17:03:10.046Z",
               "EditorCaption": ""
@@ -76,8 +76,7 @@
               "RelativeToolTip": "Assets\\Scripts\\Profiles\\ProfileManager.cs",
               "ViewState": "AgIAANYAAAAAAAAAAAAYwOMAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-04T14:47:11.517Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-10-04T14:47:11.517Z"
             },
             {
               "$type": "Document",

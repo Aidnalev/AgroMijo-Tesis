@@ -9,105 +9,121 @@
           content="width=device-width, initial-scale=1.0">
 
     <title>
-        Consulta de reportes - AgroMijo
+        AgroMijo - Consulta de reportes
     </title>
 
     <link rel="stylesheet"
-          href="css/styles.css">
+          href="styles.css">
 
 </head>
 
+
 <body>
 
-    <main class="container">
+    <!-- =========================================
+         ENCABEZADO
+         ========================================= -->
 
-        <!-- =========================================
-             ENCABEZADO
-             ========================================= -->
+    <header class="main-header">
 
-        <header class="main-header">
+        <div class="header-content">
 
-            <h1>
-                AgroMijo
-            </h1>
+            <div>
 
-            <p>
-                Consulta y análisis de reportes de partidas
-            </p>
+                <h1>
+                    AgroMijo
+                </h1>
 
-        </header>
+                <p>
+                    Consulta de reportes de partidas
+                </p>
+
+            </div>
+
+        </div>
+
+    </header>
 
 
-        <!-- =========================================
+    <!-- =========================================
+         CONTENIDO PRINCIPAL
+         ========================================= -->
+
+    <main class="main-container">
+
+
+        <!-- =====================================
              BÚSQUEDA
-             ========================================= -->
+             ===================================== -->
 
         <section class="search-section">
 
-            <h2>
-                Consultar reportes
-            </h2>
+            <div class="section-header">
 
-            <div class="search-group">
+                <h2>
+                    Buscar reportes
+                </h2>
 
-                <label for="profileId">
-                    ID del perfil
-                </label>
-
-                <input type="text"
-                       id="profileId"
-                       placeholder="Ej. RF-A3F2"
-                       maxlength="7">
+                <p>
+                    Consulta las partidas registradas
+                    por perfil o por rango de fechas.
+                </p>
 
             </div>
 
 
-            <div class="search-group">
+            <div class="search-form">
 
-                <label>
-                    Rango de fechas
-                </label>
+                <div class="form-group">
 
-                <div class="date-row">
+                    <label for="profileId">
+                        ID del perfil
+                    </label>
 
-                    <div>
-
-                        <label for="dateFrom">
-                            Desde
-                        </label>
-
-                        <input type="date"
-                               id="dateFrom">
-
-                    </div>
-
-
-                    <div>
-
-                        <label for="dateTo">
-                            Hasta
-                        </label>
-
-                        <input type="date"
-                               id="dateTo">
-
-                    </div>
+                    <input type="text"
+                           id="profileId"
+                           placeholder="Ej. RF-8574">
 
                 </div>
 
-            </div>
+
+                <div class="form-group">
+
+                    <label for="dateFrom">
+                        Desde
+                    </label>
+
+                    <input type="date"
+                           id="dateFrom">
+
+                </div>
 
 
-            <div class="search-buttons">
+                <div class="form-group">
 
-                <button id="searchButton">
-                    Buscar
-                </button>
+                    <label for="dateTo">
+                        Hasta
+                    </label>
 
-                <button id="clearButton"
-                        class="secondary-button">
-                    Limpiar
-                </button>
+                    <input type="date"
+                           id="dateTo">
+
+                </div>
+
+
+                <div class="search-actions">
+
+                    <button id="searchButton"
+                            class="primary-button">
+                        Buscar
+                    </button>
+
+                    <button id="clearButton"
+                            class="secondary-button">
+                        Limpiar
+                    </button>
+
+                </div>
 
             </div>
 
@@ -118,14 +134,14 @@
         </section>
 
 
-        <!-- =========================================
+        <!-- =====================================
              RESULTADOS
-             ========================================= -->
+             ===================================== -->
 
         <section id="resultsSection"
                  class="results-section hidden">
 
-            <div class="results-header">
+            <div class="section-header results-header">
 
                 <div>
 
@@ -133,15 +149,30 @@
                         Partidas encontradas
                     </h2>
 
-                    <p id="resultsSummary"
-                       class="results-summary"></p>
+                    <p id="resultsSummary">
+                    </p>
+
+                </div>
+
+
+                <div class="comparison-controls">
+
+                    <span id="comparisonStatus"
+                          class="comparison-status">
+                        Selecciona 2 partidas
+                        para compararlas.
+                    </span>
+
+                    <button id="compareButton"
+                            class="primary-button"
+                            disabled>
+                        Comparar partidas
+                    </button>
 
                 </div>
 
             </div>
 
-
-            <!-- TABLA -->
 
             <div class="table-wrapper">
 
@@ -151,7 +182,7 @@
 
                         <tr>
 
-                            <th>
+                            <th class="comparison-cell">
                                 Comparar
                             </th>
 
@@ -183,7 +214,9 @@
                                 Presupuesto final
                             </th>
 
-                            <th></th>
+                            <th>
+                                Detalle
+                            </th>
 
                         </tr>
 
@@ -198,68 +231,68 @@
             </div>
 
 
-            <!-- COMPARACIÓN -->
-
-            <div class="comparison-actions">
-
-                <span id="comparisonStatus">
-                    Selecciona 2 partidas para compararlas.
-                </span>
-
-                <button id="compareButton"
-                        class="secondary-button"
-                        disabled>
-                    Comparar partidas seleccionadas
-                </button>
-
-            </div>
-
-
-            <!-- PAGINACIÓN -->
-
             <div id="pagination"
                  class="pagination"></div>
 
         </section>
 
 
-        <!-- =========================================
-             DETALLE DE PARTIDA
-             ========================================= -->
+        <!-- =====================================
+             DETALLE
+             ===================================== -->
 
         <section id="detailSection"
                  class="detail-section hidden">
 
-            <button id="backButton"
-                    class="back-button">
-                ← Volver a los reportes
-            </button>
+            <div class="detail-navigation">
 
-            <div id="reportDetail"></div>
+                <button id="backButton"
+                        class="secondary-button">
+                    ← Volver a reportes
+                </button>
+
+            </div>
+
+
+            <div id="reportDetail">
+            </div>
 
         </section>
 
 
-        <!-- =========================================
-             COMPARACIÓN DE PARTIDAS
-             ========================================= -->
+        <!-- =====================================
+             COMPARACIÓN
+             ===================================== -->
 
         <section id="comparisonSection"
                  class="comparison-section hidden">
 
-            <button id="backFromComparisonButton"
-                    class="back-button">
-                ← Volver a los reportes
-            </button>
+            <div class="detail-navigation">
 
-            <div id="comparisonContent"></div>
+                <button id="backFromComparisonButton"
+                        class="secondary-button">
+                    ← Volver a reportes
+                </button>
+
+            </div>
+
+
+            <div id="comparisonContent">
+            </div>
 
         </section>
 
     </main>
 
 
-    <script src="js/app.js"></script>
+    <!-- =========================================
+         CHART.JS
+         ========================================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <script src="app.js"></script>
 
 </body>
 
