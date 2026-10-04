@@ -884,7 +884,7 @@ function mostrarComparacion(
                     <tr>
 
                         <th>
-                            Ciclos jugados
+                            Periodos jugados
                         </th>
 
                         <td>
@@ -1193,7 +1193,7 @@ function mostrarDetalle(report) {
             <div class="metric">
 
                 <span class="metric-label">
-                    Ciclos
+                    Periodos
                 </span>
 
                 <span class="metric-value">
@@ -1320,7 +1320,7 @@ function mostrarDetalle(report) {
         <div class="chart-container">
 
             <h3>
-                Ganancias y gastos por ciclo
+                Ganancias y gastos por periodo
             </h3>
 
             <div class="chart-canvas-wrapper">
@@ -1335,7 +1335,7 @@ function mostrarDetalle(report) {
 
 
         <h3 class="detail-section-title">
-            Historial de ciclos
+            Historial de periodos
         </h3>
 
 
@@ -1381,7 +1381,7 @@ function crearGraficoPresupuesto(report) {
     const etiquetas =
         ciclos.map(
             (ciclo, index) =>
-                `Ciclo ${ciclo.numeroCiclo ?? index + 1}`
+                `Periodo ${ciclo.numeroCiclo ?? index + 1}`
         );
 
 
@@ -1507,7 +1507,7 @@ function crearGraficoPresupuesto(report) {
 
 
 /* =========================================
-   GRÁFICO: GANANCIAS Y GASTOS POR CICLO
+   GRÁFICO: GANANCIAS Y GASTOS POR PERIODO
    ========================================= */
 
 function crearGraficoFinancieroPorCiclo(
@@ -1532,7 +1532,7 @@ function crearGraficoFinancieroPorCiclo(
     const etiquetas =
         ciclos.map(
             (ciclo, index) =>
-                `Ciclo ${ciclo.numeroCiclo ?? index + 1}`
+                `Periodo ${ciclo.numeroCiclo ?? index + 1}`
         );
 
 
@@ -1942,7 +1942,7 @@ function crearGraficoComparacionActividad(
 
 
 /* =========================================
-   CICLOS
+   PERIODOS
    ========================================= */
 
 function generarPeriodos(periodos) {
@@ -1954,7 +1954,7 @@ function generarPeriodos(periodos) {
 
         return `
             <p>
-                No hay información de ciclos.
+                No hay información de Periodos.
             </p>
         `;
 
@@ -1974,7 +1974,7 @@ function generarPeriodos(periodos) {
                 <details class="period-card">
 
                     <summary>
-                        Ciclo ${numeroPeriodo}
+                        Periodo ${numeroPeriodo}
                     </summary>
 
 
@@ -2139,7 +2139,7 @@ function generarDecisiones(decisiones) {
 
                 <p>
                     No se registraron decisiones
-                    en este ciclo.
+                    en este periodo.
                 </p>
 
             </div>
