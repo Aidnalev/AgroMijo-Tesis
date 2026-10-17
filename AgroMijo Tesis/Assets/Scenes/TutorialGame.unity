@@ -519,6 +519,7 @@ MonoBehaviour:
   rendererCubo: {fileID: 22407177}
   colorVacio: {r: 0.8039216, g: 0.65882355, b: 0.49019608, a: 0.5882353}
   colorPlantado: {r: 0.34924504, g: 0.6603774, b: 0.30776075, a: 0.5882353}
+  colorSeleccionado: {r: 1, g: 0.85, b: 0.15, a: 1}
 --- !u!1 &34267812
 GameObject:
   m_ObjectHideFlags: 0
@@ -2214,6 +2215,7 @@ MonoBehaviour:
   rendererCubo: {fileID: 247536719}
   colorVacio: {r: 0.8039216, g: 0.65882355, b: 0.49019608, a: 0.5882353}
   colorPlantado: {r: 0.34924504, g: 0.6603774, b: 0.30776075, a: 0.5882353}
+  colorSeleccionado: {r: 1, g: 0.85, b: 0.15, a: 1}
 --- !u!1 &268927250
 GameObject:
   m_ObjectHideFlags: 0
@@ -4429,6 +4431,7 @@ MonoBehaviour:
   rendererCubo: {fileID: 415494128}
   colorVacio: {r: 0.8039216, g: 0.65882355, b: 0.49019608, a: 0.5882353}
   colorPlantado: {r: 0.34924504, g: 0.6603774, b: 0.30776075, a: 0.5882353}
+  colorSeleccionado: {r: 1, g: 0.85, b: 0.15, a: 1}
 --- !u!1 &416972518
 GameObject:
   m_ObjectHideFlags: 0
@@ -5065,6 +5068,7 @@ MonoBehaviour:
   rendererCubo: {fileID: 436452710}
   colorVacio: {r: 0.8039216, g: 0.65882355, b: 0.49019608, a: 0.5882353}
   colorPlantado: {r: 0.34924504, g: 0.6603774, b: 0.30776075, a: 0.5882353}
+  colorSeleccionado: {r: 1, g: 0.85, b: 0.15, a: 1}
 --- !u!1 &455240673
 GameObject:
   m_ObjectHideFlags: 0
@@ -12559,7 +12563,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1079294992
 GameObject:

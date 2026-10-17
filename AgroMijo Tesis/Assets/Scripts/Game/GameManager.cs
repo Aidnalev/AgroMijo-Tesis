@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("Todos los ScriptableObjects de parcela posibles (apunta a 12 assets).")]
     public List<ParcelaTemplateSO> parcelasPool = new List<ParcelaTemplateSO>();
     [Tooltip("Cuántas parcelas se seleccionan del pool al iniciar cada partida")]
-    public int cantidadParcelasASeleccionar = 6;
+    public int cantidadParcelasASeleccionar = 4;
 
     [Header("Condiciones de fin de partida")]
     [Tooltip("La partida termina al completar este número de ciclos")]
@@ -571,6 +571,14 @@ public class GameManager : MonoBehaviour
             ? historialCiclos[0].presupuestoInicial
             : presupuesto;
 
+        List<string> nombresParcelas = new List<string>();
+
+        foreach (Parcela parcela in parcelas)
+        {
+            if (parcela != null)
+                nombresParcelas.Add(parcela.nombreParcela);
+        }
+
         return new GameOverData
         {
             profileId          = ProfileManager.Instance?.CurrentProfile?.id ?? "",
@@ -578,6 +586,7 @@ public class GameManager : MonoBehaviour
             fechaPartida       = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm"),
             ciclosJugados      = cicloActual,
             razonFin           = razon,
+            parcelasAsignadas = nombresParcelas,
             presupuestoInicial = presupuestoInicio,
             presupuestoFinal   = presupuesto,
             gananciaAcumulada  = gananciaTotal,

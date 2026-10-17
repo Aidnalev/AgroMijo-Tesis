@@ -21,7 +21,7 @@ public class HUDManager : MonoBehaviour
         ActualizarHUD();
     }
 
-    // Conecta al botón "Avanzar ciclo"
+    // Conecta al botón "Avanzar periodo"
     // Flujo: cerrar panel → revisar decisiones → revisar jornales → ejecutar
     public void OnClickAvanzarCiclo()
     {

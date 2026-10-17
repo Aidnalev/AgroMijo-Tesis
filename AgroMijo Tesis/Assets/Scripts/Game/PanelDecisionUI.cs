@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -9,20 +10,21 @@ public class PanelDecisionUI : MonoBehaviour
     [Header("Estructura general")]
     public GameObject panelPrincipal;
     public TMP_Text textoTituloParcela;
-    public TMP_Text textoInfoParcela;  // muestra el tipo de suelo si ya fue estudiada
+    public TMP_Text textoInfoParcela;
 
     [Header("Submenú: opciones principales")]
     public GameObject panelOpcionesPrincipales;
-    public Button botonPlantar;   // se desactiva si la parcela ya tiene cultivo creciendo
-    public Button botonEstudiar;  // se desactiva si la parcela ya fue estudiada
-    public Button botonMejorar;   // se desactiva si la parcela ya tiene todas las mejoras
+    public Button botonPlantar;
+    public Button botonEstudiar;
+    public Button botonMejorar;
 
     [Header("Submenú: selección de cultivo")]
     public GameObject panelSeleccionCultivo;
-    public Transform  contenedorBotonesCultivo; // contenedor EXCLUSIVO para botones generados
-    public Button     botonCultivoPrefab;
+    public Transform contenedorBotonesCultivo;
+    public Button botonCultivoPrefab;
 
     private ParcelaUI parcelaActual;
+    private ParcelaMundo parcelaMundoActual;
 
     private void Awake()
     {
@@ -33,21 +35,41 @@ public class PanelDecisionUI : MonoBehaviour
     public void Abrir(ParcelaUI parcelaUI)
     {
         if (parcelaActual != null && parcelaActual != parcelaUI)
+        {
             parcelaActual.Cerrar();
 
+            if (parcelaMundoActual != null)
+                parcelaMundoActual.EstablecerSeleccionada(false);
+        }
+
         parcelaActual = parcelaUI;
+
+        // Busca el objeto 3D asociado a esta parcela.
+        parcelaMundoActual = null;
+
+        foreach (ParcelaMundo parcelaMundo in FindObjectsByType<ParcelaMundo>())
+        {
+            if (parcelaMundo.parcelaUI == parcelaUI)
+            {
+                parcelaMundoActual = parcelaMundo;
+                break;
+            }
+        }
+
+        if (parcelaMundoActual != null)
+            parcelaMundoActual.EstablecerSeleccionada(true);
+
         Parcela p = parcelaUI.parcelaAsociada;
 
         textoTituloParcela.text = p.nombreParcela;
+
         textoInfoParcela.text = p.estudiada
             ? $"Suelo: {p.tipoSuelo}"
             : "Suelo: desconocido  (estudia el terreno para revelar)";
 
-        // Plantar solo si la parcela está vacía Y no hay ya una decisión de plantar pendiente
-        botonPlantar.interactable  = p.estado == EstadoParcela.Vacia;
-        // Estudiar solo si aún no fue estudiada (pagar dos veces no tiene sentido)
+        botonPlantar.interactable = p.estado == EstadoParcela.Vacia;
         botonEstudiar.interactable = !p.estudiada;
-        botonMejorar.interactable  = p.nivelMejora < 3;
+        botonMejorar.interactable = p.nivelMejora < 3;
 
         panelOpcionesPrincipales.SetActive(true);
         panelSeleccionCultivo.SetActive(false);
@@ -56,15 +78,23 @@ public class PanelDecisionUI : MonoBehaviour
 
     public void Cerrar()
     {
-        parcelaActual?.Cerrar(); // cierra el panel de info de la parcela también
-        panelPrincipal.SetActive(false);
+        parcelaActual?.Cerrar();
+
+        if (parcelaMundoActual != null)
+            parcelaMundoActual.EstablecerSeleccionada(false);
+
+        parcelaMundoActual = null;
         parcelaActual = null;
+
+        panelPrincipal.SetActive(false);
     }
 
-    // ── Botón "Plantar cultivo" ───────────────────────────────────────────────
     public void OnClickPlantar()
     {
-        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.PlantarClickeado);
+        TutorialManager.Instancia?.NotificarAccion(
+            TutorialCondicion.PlantarClickeado
+        );
+
         GenerarBotonesDeCultivo();
         panelOpcionesPrincipales.SetActive(false);
         panelSeleccionCultivo.SetActive(true);
@@ -83,48 +113,77 @@ public class PanelDecisionUI : MonoBehaviour
 
         foreach (CultivoData cultivo in GameManager.Instancia.cultivosDisponibles)
         {
-            Button boton = Instantiate(botonCultivoPrefab, contenedorBotonesCultivo);
+            Button boton = Instantiate(
+                botonCultivoPrefab,
+                contenedorBotonesCultivo
+            );
+
             boton.GetComponentInChildren<TMP_Text>().text =
                 $"{cultivo.nombreCultivo}  (${cultivo.costoSemilla:N0})";
-            boton.onClick.AddListener(() => ConfirmarPlantar(cultivo));
+
+            boton.onClick.AddListener(
+                () => ConfirmarPlantar(cultivo)
+            );
         }
     }
 
     private void ConfirmarPlantar(CultivoData cultivo)
     {
-        GameManager.Instancia.GuardarDecisionPlantar(parcelaActual.parcelaAsociada, cultivo);
-        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.CultivoSeleccionado);
+        GameManager.Instancia.GuardarDecisionPlantar(
+            parcelaActual.parcelaAsociada,
+            cultivo
+        );
+
+        TutorialManager.Instancia?.NotificarAccion(
+            TutorialCondicion.CultivoSeleccionado
+        );
+
         FinalizarDecision();
     }
 
-    // ── Botón "Estudiar terreno" ──────────────────────────────────────────────
     public void OnClickEstudiar()
     {
-        GameManager.Instancia.GuardarDecisionEstudiar(parcelaActual.parcelaAsociada);
-        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.EstudiarClickeado);
+        GameManager.Instancia.GuardarDecisionEstudiar(
+            parcelaActual.parcelaAsociada
+        );
+
+        TutorialManager.Instancia?.NotificarAccion(
+            TutorialCondicion.EstudiarClickeado
+        );
+
         FinalizarDecision();
     }
 
-    // ── Botón "Mejorar drenaje" ───────────────────────────────────────────────
     public void OnClickMejorar()
     {
-        GameManager.Instancia.GuardarDecisionMejorar(parcelaActual.parcelaAsociada);
-        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.MejorarClickeado);
+        GameManager.Instancia.GuardarDecisionMejorar(
+            parcelaActual.parcelaAsociada
+        );
+
+        TutorialManager.Instancia?.NotificarAccion(
+            TutorialCondicion.MejorarClickeado
+        );
+
         FinalizarDecision();
     }
 
-    // ── Botón "Esperar" ───────────────────────────────────────────────────────
     public void OnClickEsperar()
     {
-        GameManager.Instancia.GuardarDecisionEsperar(parcelaActual.parcelaAsociada);
-        TutorialManager.Instancia?.NotificarAccion(TutorialCondicion.EsperarClickeado);
+        GameManager.Instancia.GuardarDecisionEsperar(
+            parcelaActual.parcelaAsociada
+        );
+
+        TutorialManager.Instancia?.NotificarAccion(
+            TutorialCondicion.EsperarClickeado
+        );
+
         FinalizarDecision();
     }
 
     private void FinalizarDecision()
     {
         parcelaActual.ActualizarVisual();
-        HUDManager.Instancia.ActualizarHUD(); // actualiza jornales comprometidos en tiempo real
+        HUDManager.Instancia.ActualizarHUD();
         Cerrar();
     }
 }

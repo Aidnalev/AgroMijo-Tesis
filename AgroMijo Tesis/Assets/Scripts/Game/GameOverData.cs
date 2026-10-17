@@ -19,6 +19,9 @@ public class GameOverData
     public int ciclosJugados;
     public string razonFin;
 
+    // Parcelas asignadas al iniciar la partida
+    public List<string> parcelasAsignadas = new List<string>();
+
     // Estado de sincronización con el servidor
     public bool sincronizado = false;
 

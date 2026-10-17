@@ -19,6 +19,7 @@ public class GameReport
     public float PresupuestoFinal { get; set; }
     public float GananciaAcumulada { get; set; }
     public float GastoAcumulado { get; set; }
+    public List<string> ParcelasAsignadas { get; set; } = new();
 
     public List<ReporteCiclo> HistorialCiclos { get; set; } = new();
 }

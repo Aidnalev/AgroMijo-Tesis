@@ -1141,6 +1141,12 @@ function mostrarDetalle(report) {
             report
         );
 
+    const parcelasAsignadas = Array.isArray(report.parcelasAsignadas)
+        ? report.parcelasAsignadas.filter(
+            nombre => typeof nombre === "string" && nombre.trim() !== ""
+        )
+        : [];
+
 
     reportDetail.innerHTML = `
 
@@ -1187,6 +1193,25 @@ function mostrarDetalle(report) {
 
         </div>
 
+        <div class="assigned-parcels">
+            <h3>Parcelas asignadas</h3>
+
+            ${
+                parcelasAsignadas.length > 0
+                    ? `
+                        <ul class="assigned-parcels-list">
+                            ${parcelasAsignadas.map(nombre => `
+                                <li>${escaparHtml(nombre)}</li>
+                            `).join("")}
+                        </ul>
+                    `
+                    : `
+                        <p class="assigned-parcels-empty">
+                            Información no disponible para este reporte.
+                        </p>
+                    `
+            }
+        </div>
 
         <div class="detail-summary">
 
