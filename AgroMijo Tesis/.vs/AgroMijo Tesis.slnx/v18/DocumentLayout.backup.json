@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\github\\agromijo tesis\\agromijo tesis\\assets\\scripts\\reports\\reportessyncmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\reports\\reportessyncmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\github\\agromijo tesis\\agromijo tesis\\assets\\scripts\\reports\\apiconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\reports\\apiconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\github\\agromijo tesis\\agromijo tesis\\assets\\scripts\\game\\gameoverdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\game\\gameoverdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\github\\agromijo tesis\\agromijo tesis\\assets\\scripts\\game\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\game\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\github\\agromijo tesis\\agromijo tesis\\assets\\scripts\\game\\paneldecisionui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\game\\paneldecisionui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -23,6 +39,58 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ReportesSyncManager.cs",
+              "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Reports\\ReportesSyncManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Reports\\ReportesSyncManager.cs",
+              "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Reports\\ReportesSyncManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Reports\\ReportesSyncManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-17T17:58:07.704Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ApiConfig.cs",
+              "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Reports\\ApiConfig.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Reports\\ApiConfig.cs",
+              "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Reports\\ApiConfig.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Reports\\ApiConfig.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-17T17:58:06.802Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GameOverData.cs",
+              "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Game\\GameOverData.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Game\\GameOverData.cs",
+              "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Game\\GameOverData.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Game\\GameOverData.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABMAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-17T17:50:21.387Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GameManager.cs",
+              "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Game\\GameManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Game\\GameManager.cs",
+              "ToolTip": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Game\\GameManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Game\\GameManager.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAhwBoAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-17T17:49:56.458Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "PanelDecisionUI.cs",
               "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Game\\PanelDecisionUI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Game\\PanelDecisionUI.cs",
@@ -35,7 +103,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "ParcelaMundo.cs",
               "DocumentMoniker": "C:\\GitHub\\AgroMijo Tesis\\AgroMijo Tesis\\Assets\\Scripts\\Game\\ParcelaMundo.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Game\\ParcelaMundo.cs",
@@ -43,8 +111,7 @@
               "RelativeToolTip": "Assets\\Scripts\\Game\\ParcelaMundo.cs",
               "ViewState": "AgIAABYAAAAAAAAAAAAkwCcAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-17T17:21:10.043Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-10-17T17:21:10.043Z"
             }
           ]
         }

@@ -157,7 +157,7 @@ public class GameReportRequest
     public string fechaPartida;
     public int ciclosJugados;
     public string razonFin;
-
+    public List<string> parcelasAsignadas;
     public float presupuestoInicial;
     public float presupuestoFinal;
     public float gananciaAcumulada;
@@ -175,11 +175,15 @@ public class GameReportRequest
         fechaPartida = data.fechaPartida;
         ciclosJugados = data.ciclosJugados;
         razonFin = data.razonFin;
+        parcelasAsignadas = data.parcelasAsignadas != null
+          ? new List<string>(data.parcelasAsignadas)
+          : new List<string>();
 
         presupuestoInicial = data.presupuestoInicial;
         presupuestoFinal = data.presupuestoFinal;
         gananciaAcumulada = data.gananciaAcumulada;
         gastoAcumulado = data.gastoAcumulado;
+
 
         historialCiclos =
             new List<ReporteCicloRequest>();
@@ -211,7 +215,7 @@ public class ReporteCicloRequest
 
     public bool esUltimoCiclo;
     public string razonFin;
-
+    public List<string> decisionesTomadas;
     public List<GastoRegistradoRequest> detalleGastos;
     public List<string> eventosOcurridos;
     public List<string> cosechasRealizadas;
@@ -251,7 +255,9 @@ public class ReporteCicloRequest
             new List<string>(
                 ciclo.eventosOcurridos
             );
-
+        decisionesTomadas = ciclo.decisionesTomadas != null
+            ? new List<string>(ciclo.decisionesTomadas)
+            : new List<string>();
         cosechasRealizadas =
             new List<string>(
                 ciclo.cosechasRealizadas

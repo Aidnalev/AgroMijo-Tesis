@@ -40,7 +40,7 @@ public class ReporteCiclo
 
     public bool EsUltimoCiclo { get; set; }
     public string RazonFin { get; set; } = string.Empty;
-
+    public List<string> DecisionesTomadas { get; set; } = new();
     public List<GastoRegistrado> DetalleGastos { get; set; } = new();
     public List<string> EventosOcurridos { get; set; } = new();
     public List<string> CosechasRealizadas { get; set; } = new();
